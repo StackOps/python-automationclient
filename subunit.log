@@ -1,0 +1,2324 @@
+time: 2013-08-20 09:12:42.174277Z
+tags: worker-2
+test: cinderclient.tests.test_base.BaseTest.test_findall_invalid_attribute
+time: 2013-08-20 09:12:42.176377Z
+successful: cinderclient.tests.test_base.BaseTest.test_findall_invalid_attribute [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:42.176710Z
+tags: worker-2
+test: cinderclient.tests.test_base.BaseTest.test_resource_repr
+time: 2013-08-20 09:12:42.177034Z
+successful: cinderclient.tests.test_base.BaseTest.test_resource_repr [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:42.174040Z
+tags: worker-0
+test: cinderclient.tests.test_base.BaseTest.test_getid
+time: 2013-08-20 09:12:42.175626Z
+successful: cinderclient.tests.test_base.BaseTest.test_getid [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.176929Z
+tags: worker-0
+test: cinderclient.tests.test_client.ClientTest.test_get_client_class_unknown
+time: 2013-08-20 09:12:42.177341Z
+successful: cinderclient.tests.test_client.ClientTest.test_get_client_class_unknown [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.177623Z
+tags: worker-0
+test: cinderclient.tests.test_client.ClientTest.test_get_client_class_v2
+time: 2013-08-20 09:12:42.177902Z
+successful: cinderclient.tests.test_client.ClientTest.test_get_client_class_v2 [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.178199Z
+tags: worker-0
+test: cinderclient.tests.test_http.ClientTest.test_get_reauth_0_retries
+time: 2013-08-20 09:12:42.178893Z
+successful: cinderclient.tests.test_http.ClientTest.test_get_reauth_0_retries [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.179214Z
+tags: worker-0
+test: cinderclient.tests.test_service_catalog.ServiceCatalogTest.test_building_a_service_catalog
+time: 2013-08-20 09:12:42.179701Z
+successful: cinderclient.tests.test_service_catalog.ServiceCatalogTest.test_building_a_service_catalog [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.188363Z
+tags: worker-1
+test: cinderclient.tests.test_client.ClientTest.test_get_client_class_v1
+time: 2013-08-20 09:12:42.189485Z
+successful: cinderclient.tests.test_client.ClientTest.test_get_client_class_v1 [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.190247Z
+tags: worker-1
+test: cinderclient.tests.test_http.ClientTest.test_auth_failure
+time: 2013-08-20 09:12:42.192512Z
+successful: cinderclient.tests.test_http.ClientTest.test_auth_failure [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.192818Z
+tags: worker-1
+test: cinderclient.tests.test_http.ClientTest.test_get
+time: 2013-08-20 09:12:42.193346Z
+successful: cinderclient.tests.test_http.ClientTest.test_get [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.199684Z
+tags: worker-3
+test: cinderclient.tests.test_base.BaseTest.test_eq
+time: 2013-08-20 09:12:42.200146Z
+successful: cinderclient.tests.test_base.BaseTest.test_eq [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:42.200496Z
+tags: worker-3
+test: cinderclient.tests.test_http.ClientTest.test_get_no_retry_400
+time: 2013-08-20 09:12:42.208597Z
+successful: cinderclient.tests.test_http.ClientTest.test_get_no_retry_400 [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:42.208967Z
+tags: worker-3
+test: cinderclient.tests.test_http.ClientTest.test_post
+time: 2013-08-20 09:12:42.209508Z
+successful: cinderclient.tests.test_http.ClientTest.test_post [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:42.194063Z
+tags: worker-1
+test: cinderclient.tests.test_shell.ShellTest.test_help_unknown_command
+time: 2013-08-20 09:12:42.245734Z
+successful: cinderclient.tests.test_shell.ShellTest.test_help_unknown_command [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.246068Z
+tags: worker-1
+test: cinderclient.tests.test_utils.FindResourceTestCase.test_find_by_integer_id
+time: 2013-08-20 09:12:42.246389Z
+successful: cinderclient.tests.test_utils.FindResourceTestCase.test_find_by_integer_id [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.246982Z
+tags: worker-1
+test: cinderclient.tests.test_utils.FindResourceTestCase.test_find_none
+time: 2013-08-20 09:12:42.247712Z
+successful: cinderclient.tests.test_utils.FindResourceTestCase.test_find_none [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.180000Z
+tags: worker-0
+test: cinderclient.tests.test_shell.ShellTest.test_help
+time: 2013-08-20 09:12:42.248457Z
+successful: cinderclient.tests.test_shell.ShellTest.test_help [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.248465Z
+tags: worker-1
+test: cinderclient.tests.v1.test_auth.AuthenticationTests.test_authenticate_failure
+time: 2013-08-20 09:12:42.249250Z
+successful: cinderclient.tests.v1.test_auth.AuthenticationTests.test_authenticate_failure [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.249530Z
+tags: worker-1
+test: cinderclient.tests.v1.test_auth.AuthenticationTests.test_authenticate_success
+time: 2013-08-20 09:12:42.250032Z
+successful: cinderclient.tests.v1.test_auth.AuthenticationTests.test_authenticate_success [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.249171Z
+tags: worker-0
+test: cinderclient.tests.test_utils.FindResourceTestCase.test_find_by_str_name
+time: 2013-08-20 09:12:42.249725Z
+successful: cinderclient.tests.test_utils.FindResourceTestCase.test_find_by_str_name [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.250311Z
+tags: worker-1
+test: cinderclient.tests.v1.test_availability_zone.AvailabilityZoneTest.test_list_availability_zone
+time: 2013-08-20 09:12:42.251060Z
+successful: cinderclient.tests.v1.test_availability_zone.AvailabilityZoneTest.test_list_availability_zone [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.249998Z
+tags: worker-0
+test: cinderclient.tests.test_utils.FindResourceTestCase.test_find_by_uuid
+time: 2013-08-20 09:12:42.250247Z
+successful: cinderclient.tests.test_utils.FindResourceTestCase.test_find_by_uuid [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.250504Z
+tags: worker-0
+test: cinderclient.tests.v1.contrib.test_list_extensions.ListExtensionsTests.test_list_extensions
+time: 2013-08-20 09:12:42.250927Z
+successful: cinderclient.tests.v1.contrib.test_list_extensions.ListExtensionsTests.test_list_extensions [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.251111Z
+tags: worker-0
+test: cinderclient.tests.v1.test_auth.AuthenticateAgainstKeystoneTests.test_ambiguous_endpoints
+time: 2013-08-20 09:12:42.251939Z
+successful: cinderclient.tests.v1.test_auth.AuthenticateAgainstKeystoneTests.test_ambiguous_endpoints [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+41
+Found more than one valid endpoint. Use a more restrictive filter0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.251821Z
+tags: worker-1
+test: cinderclient.tests.v1.test_services.ServicesTest.test_list_services_with_binary
+time: 2013-08-20 09:12:42.252553Z
+successful: cinderclient.tests.v1.test_services.ServicesTest.test_list_services_with_binary [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.252166Z
+tags: worker-0
+test: cinderclient.tests.v1.test_auth.AuthenticateAgainstKeystoneTests.test_authenticate_success
+time: 2013-08-20 09:12:42.252621Z
+successful: cinderclient.tests.v1.test_auth.AuthenticateAgainstKeystoneTests.test_authenticate_success [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.252815Z
+tags: worker-0
+test: cinderclient.tests.v1.test_auth.AuthenticationTests.test_auth_automatic
+time: 2013-08-20 09:12:42.253882Z
+successful: cinderclient.tests.v1.test_auth.AuthenticationTests.test_auth_automatic [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.252942Z
+tags: worker-1
+test: cinderclient.tests.v1.test_services.ServicesTest.test_list_services_with_host_binary
+time: 2013-08-20 09:12:42.254147Z
+successful: cinderclient.tests.v1.test_services.ServicesTest.test_list_services_with_host_binary [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.254429Z
+tags: worker-1
+test: cinderclient.tests.v1.test_services.ServicesTest.test_list_services_with_hostname
+time: 2013-08-20 09:12:42.254888Z
+successful: cinderclient.tests.v1.test_services.ServicesTest.test_list_services_with_hostname [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.254234Z
+tags: worker-0
+test: cinderclient.tests.v1.test_availability_zone.AvailabilityZoneTest.test_detail_availability_zone
+time: 2013-08-20 09:12:42.255069Z
+successful: cinderclient.tests.v1.test_availability_zone.AvailabilityZoneTest.test_detail_availability_zone [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.255322Z
+tags: worker-0
+test: cinderclient.tests.v1.test_quota_classes.QuotaClassSetsTest.test_class_quotas_get
+time: 2013-08-20 09:12:42.255636Z
+successful: cinderclient.tests.v1.test_quota_classes.QuotaClassSetsTest.test_class_quotas_get [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.255931Z
+tags: worker-0
+test: cinderclient.tests.v1.test_quotas.QuotaSetsTest.test_refresh_quota
+time: 2013-08-20 09:12:42.256311Z
+successful: cinderclient.tests.v1.test_quotas.QuotaSetsTest.test_refresh_quota [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.256575Z
+tags: worker-0
+test: cinderclient.tests.v1.test_quotas.QuotaSetsTest.test_tenant_quotas_defaults
+time: 2013-08-20 09:12:42.256887Z
+successful: cinderclient.tests.v1.test_quotas.QuotaSetsTest.test_tenant_quotas_defaults [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.257644Z
+tags: worker-0
+test: cinderclient.tests.v1.test_services.ServicesTest.test_services_disable
+time: 2013-08-20 09:12:42.258063Z
+successful: cinderclient.tests.v1.test_services.ServicesTest.test_services_disable [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.258314Z
+tags: worker-0
+test: cinderclient.tests.v1.test_shell.ShellTest.test_delete
+time: 2013-08-20 09:12:42.291614Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_delete [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.255180Z
+tags: worker-1
+test: cinderclient.tests.v1.test_shell.ShellTest.test_list_all_tenants
+time: 2013-08-20 09:12:42.296312Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_list_all_tenants [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+18A
++------+--------+--------------+------+-------------+----------+-------------+
+|  ID  | Status | Display Name | Size | Volume Type | Bootable | Attached to |
++------+--------+--------------+------+-------------+----------+-------------+
+| 1234 |        |              |      |             |          |     1234    |
++------+--------+--------------+------+-------------+----------+-------------+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.291938Z
+tags: worker-0
+test: cinderclient.tests.v1.test_shell.ShellTest.test_list_filter_display_name
+time: 2013-08-20 09:12:42.324689Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_list_filter_display_name [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+18A
++------+--------+--------------+------+-------------+----------+-------------+
+|  ID  | Status | Display Name | Size | Volume Type | Bootable | Attached to |
++------+--------+--------------+------+-------------+----------+-------------+
+| 1234 |        |              |      |             |          |     1234    |
++------+--------+--------------+------+-------------+----------+-------------+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.296672Z
+tags: worker-1
+test: cinderclient.tests.v1.test_shell.ShellTest.test_list_filter_status
+time: 2013-08-20 09:12:42.328910Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_list_filter_status [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+18A
++------+--------+--------------+------+-------------+----------+-------------+
+|  ID  | Status | Display Name | Size | Volume Type | Bootable | Attached to |
++------+--------+--------------+------+-------------+----------+-------------+
+| 1234 |        |              |      |             |          |     1234    |
++------+--------+--------------+------+-------------+----------+-------------+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.329303Z
+tags: worker-1
+test: cinderclient.tests.v1.test_shell.ShellTest.test_snapshot_reset_state
+time: 2013-08-20 09:12:42.362327Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_snapshot_reset_state [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.362637Z
+tags: worker-1
+test: cinderclient.tests.v1.test_shell.ShellTest.test_snapshot_reset_state_with_flag
+time: 2013-08-20 09:12:42.393716Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_snapshot_reset_state_with_flag [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.394056Z
+tags: worker-1
+test: cinderclient.tests.v1.test_types.TypesTest.test_delete
+time: 2013-08-20 09:12:42.394400Z
+successful: cinderclient.tests.v1.test_types.TypesTest.test_delete [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.394618Z
+tags: worker-1
+test: cinderclient.tests.v1.test_types.TypesTest.test_set_key
+time: 2013-08-20 09:12:42.394930Z
+successful: cinderclient.tests.v1.test_types.TypesTest.test_set_key [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.395207Z
+tags: worker-1
+test: cinderclient.tests.v1.test_volume_backups.VolumeBackupsTest.test_create
+time: 2013-08-20 09:12:42.395742Z
+successful: cinderclient.tests.v1.test_volume_backups.VolumeBackupsTest.test_create [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.395987Z
+tags: worker-1
+test: cinderclient.tests.v1.test_volume_backups.VolumeBackupsTest.test_restore
+time: 2013-08-20 09:12:42.396476Z
+successful: cinderclient.tests.v1.test_volume_backups.VolumeBackupsTest.test_restore [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.397088Z
+tags: worker-1
+test: cinderclient.tests.v1.test_volume_transfers.VolumeTRansfersTest.test_accept
+time: 2013-08-20 09:12:42.397903Z
+successful: cinderclient.tests.v1.test_volume_transfers.VolumeTRansfersTest.test_accept [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.398554Z
+tags: worker-1
+test: cinderclient.tests.v1.test_volume_transfers.VolumeTRansfersTest.test_delete
+time: 2013-08-20 09:12:42.399666Z
+successful: cinderclient.tests.v1.test_volume_transfers.VolumeTRansfersTest.test_delete [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.400367Z
+tags: worker-1
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_begin_detaching
+time: 2013-08-20 09:12:42.400862Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_begin_detaching [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.401492Z
+tags: worker-1
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_delete_volume
+time: 2013-08-20 09:12:42.401922Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_delete_volume [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.402156Z
+tags: worker-1
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_detach
+time: 2013-08-20 09:12:42.402483Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_detach [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.402776Z
+tags: worker-1
+test: cinderclient.tests.v2.test_auth.AuthenticateAgainstKeystoneTests.test_ambiguous_endpoints
+time: 2013-08-20 09:12:42.403470Z
+successful: cinderclient.tests.v2.test_auth.AuthenticateAgainstKeystoneTests.test_ambiguous_endpoints [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+41
+Found more than one valid endpoint. Use a more restrictive filter0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.403761Z
+tags: worker-1
+test: cinderclient.tests.v2.test_auth.AuthenticateAgainstKeystoneTests.test_authenticate_failure
+time: 2013-08-20 09:12:42.404252Z
+successful: cinderclient.tests.v2.test_auth.AuthenticateAgainstKeystoneTests.test_authenticate_failure [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.404531Z
+tags: worker-1
+test: cinderclient.tests.v2.test_availability_zone.AvailabilityZoneTest.test_detail_availability_zone
+time: 2013-08-20 09:12:42.405650Z
+successful: cinderclient.tests.v2.test_availability_zone.AvailabilityZoneTest.test_detail_availability_zone [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.406346Z
+tags: worker-1
+test: cinderclient.tests.v2.test_availability_zone.AvailabilityZoneTest.test_list_availability_zone
+time: 2013-08-20 09:12:42.407095Z
+successful: cinderclient.tests.v2.test_availability_zone.AvailabilityZoneTest.test_list_availability_zone [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.407692Z
+tags: worker-1
+test: cinderclient.tests.v2.test_quota_classes.QuotaClassSetsTest.test_refresh_quota
+time: 2013-08-20 09:12:42.408294Z
+successful: cinderclient.tests.v2.test_quota_classes.QuotaClassSetsTest.test_refresh_quota [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.409055Z
+tags: worker-1
+test: cinderclient.tests.v2.test_services.ServicesTest.test_services_enable
+time: 2013-08-20 09:12:42.409489Z
+successful: cinderclient.tests.v2.test_services.ServicesTest.test_services_enable [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.410053Z
+tags: worker-1
+test: cinderclient.tests.v2.test_shell.ShellTest.test_delete
+time: 2013-08-20 09:12:42.445114Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_delete [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.325077Z
+tags: worker-0
+test: cinderclient.tests.v1.test_shell.ShellTest.test_rename_snapshot
+time: 2013-08-20 09:12:42.455085Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_rename_snapshot [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.445431Z
+tags: worker-1
+test: cinderclient.tests.v2.test_shell.ShellTest.test_list_all_tenants
+time: 2013-08-20 09:12:42.480045Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_list_all_tenants [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+18F
++------+--------+---------------+------+-------------+----------+-------------+
+|  ID  | Status |      Name     | Size | Volume Type | Bootable | Attached to |
++------+--------+---------------+------+-------------+----------+-------------+
+| 1234 |        | sample-volume |      |             |          |     1234    |
++------+--------+---------------+------+-------------+----------+-------------+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.455405Z
+tags: worker-0
+test: cinderclient.tests.v1.test_shell.ShellTest.test_reset_state
+time: 2013-08-20 09:12:42.487341Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_reset_state [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.487654Z
+tags: worker-0
+test: cinderclient.tests.v1.test_shell.ShellTest.test_set_metadata_delete_keys
+time: 2013-08-20 09:12:42.518890Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_set_metadata_delete_keys [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.519199Z
+tags: worker-0
+test: cinderclient.tests.v1.test_shell.ShellTest.test_set_metadata_set
+time: 2013-08-20 09:12:42.550303Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_set_metadata_set [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.550659Z
+tags: worker-0
+test: cinderclient.tests.v1.test_types.TypesTest.test_create
+time: 2013-08-20 09:12:42.551154Z
+successful: cinderclient.tests.v1.test_types.TypesTest.test_create [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.551446Z
+tags: worker-0
+test: cinderclient.tests.v1.test_volume_backups.VolumeBackupsTest.test_delete
+time: 2013-08-20 09:12:42.552090Z
+successful: cinderclient.tests.v1.test_volume_backups.VolumeBackupsTest.test_delete [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.552327Z
+tags: worker-0
+test: cinderclient.tests.v1.test_volume_backups.VolumeBackupsTest.test_get
+time: 2013-08-20 09:12:42.552835Z
+successful: cinderclient.tests.v1.test_volume_backups.VolumeBackupsTest.test_get [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.553081Z
+tags: worker-0
+test: cinderclient.tests.v1.test_volume_backups.VolumeBackupsTest.test_list
+time: 2013-08-20 09:12:42.553579Z
+successful: cinderclient.tests.v1.test_volume_backups.VolumeBackupsTest.test_list [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.553849Z
+tags: worker-0
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_attach
+time: 2013-08-20 09:12:42.554170Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_attach [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.554443Z
+tags: worker-0
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_extend
+time: 2013-08-20 09:12:42.554786Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_extend [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.555027Z
+tags: worker-0
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_reserve
+time: 2013-08-20 09:12:42.555346Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_reserve [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.555610Z
+tags: worker-0
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_terminate_connection
+time: 2013-08-20 09:12:42.555859Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_terminate_connection [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.556174Z
+tags: worker-0
+test: cinderclient.tests.v2.test_auth.AuthenticationTests.test_auth_manual
+time: 2013-08-20 09:12:42.559023Z
+successful: cinderclient.tests.v2.test_auth.AuthenticationTests.test_auth_manual [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.559314Z
+tags: worker-0
+test: cinderclient.tests.v2.test_auth.AuthenticationTests.test_authenticate_success
+time: 2013-08-20 09:12:42.559853Z
+successful: cinderclient.tests.v2.test_auth.AuthenticationTests.test_authenticate_success [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.560147Z
+tags: worker-0
+test: cinderclient.tests.v2.test_quotas.QuotaSetsTest.test_refresh_quota
+time: 2013-08-20 09:12:42.560501Z
+successful: cinderclient.tests.v2.test_quotas.QuotaSetsTest.test_refresh_quota [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.560765Z
+tags: worker-0
+test: cinderclient.tests.v2.test_quotas.QuotaSetsTest.test_tenant_quotas_get
+time: 2013-08-20 09:12:42.561033Z
+successful: cinderclient.tests.v2.test_quotas.QuotaSetsTest.test_tenant_quotas_get [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.561328Z
+tags: worker-0
+test: cinderclient.tests.v2.test_shell.ShellTest.test_list_filter_status
+time: 2013-08-20 09:12:42.594054Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_list_filter_status [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+18F
++------+--------+---------------+------+-------------+----------+-------------+
+|  ID  | Status |      Name     | Size | Volume Type | Bootable | Attached to |
++------+--------+---------------+------+-------------+----------+-------------+
+| 1234 |        | sample-volume |      |             |          |     1234    |
++------+--------+---------------+------+-------------+----------+-------------+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.480416Z
+tags: worker-1
+test: cinderclient.tests.v2.test_shell.ShellTest.test_rename_snapshot
+time: 2013-08-20 09:12:42.617831Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_rename_snapshot [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.618172Z
+tags: worker-1
+test: cinderclient.tests.v2.test_shell.ShellTest.test_snapshot_list_filter_status_and_volume_id
+time: 2013-08-20 09:12:42.650278Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_snapshot_list_filter_status_and_volume_id [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+211
++--------------------------------------+--------------------------------------+-----------+------+------+
+|                  ID                  |              Volume ID               |   Status  | Name | Size |
++--------------------------------------+--------------------------------------+-----------+------+------+
+| 11111111-1111-1111-1111-111111111111 | 00000000-0000-0000-0000-000000000000 | available |      |  1   |
++--------------------------------------+--------------------------------------+-----------+------+------+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.650684Z
+tags: worker-1
+test: cinderclient.tests.v2.test_types.TypesTest.test_list_types
+time: 2013-08-20 09:12:42.651212Z
+successful: cinderclient.tests.v2.test_types.TypesTest.test_list_types [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.651775Z
+tags: worker-1
+test: cinderclient.tests.v2.test_types.TypesTest.test_unsset_keys
+time: 2013-08-20 09:12:42.652625Z
+successful: cinderclient.tests.v2.test_types.TypesTest.test_unsset_keys [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.653064Z
+tags: worker-1
+test: cinderclient.tests.v2.test_volume_backups.VolumeBackupsTest.test_get
+time: 2013-08-20 09:12:42.653346Z
+successful: cinderclient.tests.v2.test_volume_backups.VolumeBackupsTest.test_get [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.653608Z
+tags: worker-1
+test: cinderclient.tests.v2.test_volume_transfers.VolumeTRansfersTest.test_accept
+time: 2013-08-20 09:12:42.654054Z
+successful: cinderclient.tests.v2.test_volume_transfers.VolumeTRansfersTest.test_accept [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.654329Z
+tags: worker-1
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_begin_detaching
+time: 2013-08-20 09:12:42.654635Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_begin_detaching [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.654874Z
+tags: worker-1
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_delete_volume
+time: 2013-08-20 09:12:42.655351Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_delete_volume [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.655600Z
+tags: worker-1
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_roll_detaching
+time: 2013-08-20 09:12:42.655896Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_roll_detaching [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.656130Z
+tags: worker-1
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_unreserve
+time: 2013-08-20 09:12:42.656429Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_unreserve [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-1
+time: 2013-08-20 09:12:42.594416Z
+tags: worker-0
+test: cinderclient.tests.v2.test_shell.ShellTest.test_rename
+time: 2013-08-20 09:12:42.726932Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_rename [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.727195Z
+tags: worker-0
+test: cinderclient.tests.v2.test_shell.ShellTest.test_reset_state_with_flag
+time: 2013-08-20 09:12:42.757414Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_reset_state_with_flag [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.757665Z
+tags: worker-0
+test: cinderclient.tests.v2.test_shell.ShellTest.test_show
+time: 2013-08-20 09:12:42.808675Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_show [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+117
++-------------+-----------------------+
+|   Property  |         Value         |
++-------------+-----------------------+
+| attachments | [{'server_id': 1234}] |
+|      id     |          1234         |
+|     name    |     sample-volume     |
++-------------+-----------------------+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.809012Z
+tags: worker-0
+test: cinderclient.tests.v2.test_volume_backups.VolumeBackupsTest.test_restore
+time: 2013-08-20 09:12:42.809570Z
+successful: cinderclient.tests.v2.test_volume_backups.VolumeBackupsTest.test_restore [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.809876Z
+tags: worker-0
+test: cinderclient.tests.v2.test_volume_transfers.VolumeTRansfersTest.test_create
+time: 2013-08-20 09:12:42.810326Z
+successful: cinderclient.tests.v2.test_volume_transfers.VolumeTRansfersTest.test_create [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.810632Z
+tags: worker-0
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_delete_metadata
+time: 2013-08-20 09:12:42.810936Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_delete_metadata [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.811162Z
+tags: worker-0
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_reserve
+time: 2013-08-20 09:12:42.811493Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_reserve [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-0
+time: 2013-08-20 09:12:42.177350Z
+tags: worker-2
+test: cinderclient.tests.test_http.ClientTest.test_get_retry_400_socket
+time: 2013-08-20 09:12:43.179618Z
+successful: cinderclient.tests.test_http.ClientTest.test_get_retry_400_socket [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:42.209783Z
+tags: worker-3
+test: cinderclient.tests.test_http.ClientTest.test_retry_limit
+time: 2013-08-20 09:12:43.212206Z
+successful: cinderclient.tests.test_http.ClientTest.test_retry_limit [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.213302Z
+tags: worker-3
+test: cinderclient.tests.test_service_catalog.ServiceCatalogTest.test_alternate_service_type
+time: 2013-08-20 09:12:43.215180Z
+successful: cinderclient.tests.test_service_catalog.ServiceCatalogTest.test_alternate_service_type [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.216217Z
+tags: worker-3
+test: cinderclient.tests.test_utils.FindResourceTestCase.test_find_by_str_displayname
+time: 2013-08-20 09:12:43.217303Z
+successful: cinderclient.tests.test_utils.FindResourceTestCase.test_find_by_str_displayname [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.218268Z
+tags: worker-3
+test: cinderclient.tests.test_utils.PrintListTestCase.test_print_list_with_list
+time: 2013-08-20 09:12:43.222086Z
+successful: cinderclient.tests.test_utils.PrintListTestCase.test_print_list_with_list [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.224403Z
+tags: worker-3
+test: cinderclient.tests.v1.test_auth.AuthenticateAgainstKeystoneTests.test_auth_redirect
+time: 2013-08-20 09:12:43.225518Z
+successful: cinderclient.tests.v1.test_auth.AuthenticateAgainstKeystoneTests.test_auth_redirect [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.225762Z
+tags: worker-3
+test: cinderclient.tests.v1.test_auth.AuthenticateAgainstKeystoneTests.test_authenticate_tenant_id
+time: 2013-08-20 09:12:43.226433Z
+successful: cinderclient.tests.v1.test_auth.AuthenticateAgainstKeystoneTests.test_authenticate_tenant_id [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.226663Z
+tags: worker-3
+test: cinderclient.tests.v1.test_auth.AuthenticationTests.test_auth_manual
+time: 2013-08-20 09:12:43.227788Z
+successful: cinderclient.tests.v1.test_auth.AuthenticationTests.test_auth_manual [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.228153Z
+tags: worker-3
+test: cinderclient.tests.v1.test_quotas.QuotaSetsTest.test_update_quota
+time: 2013-08-20 09:12:43.228577Z
+successful: cinderclient.tests.v1.test_quotas.QuotaSetsTest.test_update_quota [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.228883Z
+tags: worker-3
+test: cinderclient.tests.v1.test_services.ServicesTest.test_services_enable
+time: 2013-08-20 09:12:43.229156Z
+successful: cinderclient.tests.v1.test_services.ServicesTest.test_services_enable [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.229440Z
+tags: worker-3
+test: cinderclient.tests.v1.test_shell.ShellTest.test_extract_metadata
+time: 2013-08-20 09:12:43.229894Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_extract_metadata [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.230149Z
+tags: worker-3
+test: cinderclient.tests.v1.test_shell.ShellTest.test_list
+time: 2013-08-20 09:12:43.262484Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_list [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+18A
++------+--------+--------------+------+-------------+----------+-------------+
+|  ID  | Status | Display Name | Size | Volume Type | Bootable | Attached to |
++------+--------+--------------+------+-------------+----------+-------------+
+| 1234 |        |              |      |             |          |     1234    |
++------+--------+--------------+------+-------------+----------+-------------+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.262837Z
+tags: worker-3
+test: cinderclient.tests.v1.test_shell.ShellTest.test_list_availability_zone
+time: 2013-08-20 09:12:43.295046Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_list_availability_zone [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+A1
++--------+---------------+
+|  Name  |     Status    |
++--------+---------------+
+| zone-1 |   available   |
+| zone-2 | not available |
++--------+---------------+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.295345Z
+tags: worker-3
+test: cinderclient.tests.v1.test_shell.ShellTest.test_snapshot_list_filter_status_and_volume_id
+time: 2013-08-20 09:12:43.326260Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_snapshot_list_filter_status_and_volume_id [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+239
++--------------------------------------+--------------------------------------+-----------+--------------+------+
+|                  ID                  |              Volume ID               |   Status  | Display Name | Size |
++--------------------------------------+--------------------------------------+-----------+--------------+------+
+| 11111111-1111-1111-1111-111111111111 | 00000000-0000-0000-0000-000000000000 | available |     None     |  1   |
++--------------------------------------+--------------------------------------+-----------+--------------+------+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.326585Z
+tags: worker-3
+test: cinderclient.tests.v1.test_types.TypesTest.test_list_types
+time: 2013-08-20 09:12:43.327136Z
+successful: cinderclient.tests.v1.test_types.TypesTest.test_list_types [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.327448Z
+tags: worker-3
+test: cinderclient.tests.v1.test_volume_transfers.VolumeTRansfersTest.test_get
+time: 2013-08-20 09:12:43.327758Z
+successful: cinderclient.tests.v1.test_volume_transfers.VolumeTRansfersTest.test_get [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.328004Z
+tags: worker-3
+test: cinderclient.tests.v1.test_volume_transfers.VolumeTRansfersTest.test_list
+time: 2013-08-20 09:12:43.328551Z
+successful: cinderclient.tests.v1.test_volume_transfers.VolumeTRansfersTest.test_list [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.328887Z
+tags: worker-3
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_roll_detaching
+time: 2013-08-20 09:12:43.329262Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_roll_detaching [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.329526Z
+tags: worker-3
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_set_metadata
+time: 2013-08-20 09:12:43.330282Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_set_metadata [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.330589Z
+tags: worker-3
+test: cinderclient.tests.v2.test_auth.AuthenticateAgainstKeystoneTests.test_auth_redirect
+time: 2013-08-20 09:12:43.331497Z
+successful: cinderclient.tests.v2.test_auth.AuthenticateAgainstKeystoneTests.test_auth_redirect [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.331798Z
+tags: worker-3
+test: cinderclient.tests.v2.test_auth.AuthenticateAgainstKeystoneTests.test_authenticate_tenant_id
+time: 2013-08-20 09:12:43.332501Z
+successful: cinderclient.tests.v2.test_auth.AuthenticateAgainstKeystoneTests.test_authenticate_tenant_id [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.332951Z
+tags: worker-3
+test: cinderclient.tests.v2.test_auth.AuthenticationTests.test_authenticate_failure
+time: 2013-08-20 09:12:43.333702Z
+successful: cinderclient.tests.v2.test_auth.AuthenticationTests.test_authenticate_failure [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.333991Z
+tags: worker-3
+test: cinderclient.tests.v2.test_quota_classes.QuotaClassSetsTest.test_class_quotas_get
+time: 2013-08-20 09:12:43.334308Z
+successful: cinderclient.tests.v2.test_quota_classes.QuotaClassSetsTest.test_class_quotas_get [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.334580Z
+tags: worker-3
+test: cinderclient.tests.v2.test_quota_classes.QuotaClassSetsTest.test_update_quota
+time: 2013-08-20 09:12:43.334886Z
+successful: cinderclient.tests.v2.test_quota_classes.QuotaClassSetsTest.test_update_quota [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.335134Z
+tags: worker-3
+test: cinderclient.tests.v2.test_quotas.QuotaSetsTest.test_tenant_quotas_defaults
+time: 2013-08-20 09:12:43.335420Z
+successful: cinderclient.tests.v2.test_quotas.QuotaSetsTest.test_tenant_quotas_defaults [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.335706Z
+tags: worker-3
+test: cinderclient.tests.v2.test_services.ServicesTest.test_list_services_with_hostname
+time: 2013-08-20 09:12:43.336264Z
+successful: cinderclient.tests.v2.test_services.ServicesTest.test_list_services_with_hostname [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.336523Z
+tags: worker-3
+test: cinderclient.tests.v2.test_services.ServicesTest.test_services_disable
+time: 2013-08-20 09:12:43.336828Z
+successful: cinderclient.tests.v2.test_services.ServicesTest.test_services_disable [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.337108Z
+tags: worker-3
+test: cinderclient.tests.v2.test_shell.ShellTest.test_list
+time: 2013-08-20 09:12:43.371138Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_list [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+18F
++------+--------+---------------+------+-------------+----------+-------------+
+|  ID  | Status |      Name     | Size | Volume Type | Bootable | Attached to |
++------+--------+---------------+------+-------------+----------+-------------+
+| 1234 |        | sample-volume |      |             |          |     1234    |
++------+--------+---------------+------+-------------+----------+-------------+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.371425Z
+tags: worker-3
+test: cinderclient.tests.v2.test_shell.ShellTest.test_reset_state
+time: 2013-08-20 09:12:43.402044Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_reset_state [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.402293Z
+tags: worker-3
+test: cinderclient.tests.v2.test_shell.ShellTest.test_set_metadata_delete_dict
+time: 2013-08-20 09:12:43.432747Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_set_metadata_delete_dict [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.433008Z
+tags: worker-3
+test: cinderclient.tests.v2.test_shell.ShellTest.test_set_metadata_set
+time: 2013-08-20 09:12:43.465189Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_set_metadata_set [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.465468Z
+tags: worker-3
+test: cinderclient.tests.v2.test_types.TypesTest.test_create
+time: 2013-08-20 09:12:43.465973Z
+successful: cinderclient.tests.v2.test_types.TypesTest.test_create [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.466266Z
+tags: worker-3
+test: cinderclient.tests.v2.test_volume_backups.VolumeBackupsTest.test_list
+time: 2013-08-20 09:12:43.466861Z
+successful: cinderclient.tests.v2.test_volume_backups.VolumeBackupsTest.test_list [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.467365Z
+tags: worker-3
+test: cinderclient.tests.v2.test_volume_transfers.VolumeTRansfersTest.test_delete
+time: 2013-08-20 09:12:43.468443Z
+successful: cinderclient.tests.v2.test_volume_transfers.VolumeTRansfersTest.test_delete [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.468720Z
+tags: worker-3
+test: cinderclient.tests.v2.test_volume_transfers.VolumeTRansfersTest.test_get
+time: 2013-08-20 09:12:43.469041Z
+successful: cinderclient.tests.v2.test_volume_transfers.VolumeTRansfersTest.test_get [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.469304Z
+tags: worker-3
+test: cinderclient.tests.v2.test_volume_transfers.VolumeTRansfersTest.test_list
+time: 2013-08-20 09:12:43.469865Z
+successful: cinderclient.tests.v2.test_volume_transfers.VolumeTRansfersTest.test_list [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.470215Z
+tags: worker-3
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_detach
+time: 2013-08-20 09:12:43.470598Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_detach [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.470848Z
+tags: worker-3
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_extend
+time: 2013-08-20 09:12:43.471180Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_extend [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.471433Z
+tags: worker-3
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_initialize_connection
+time: 2013-08-20 09:12:43.471758Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_initialize_connection [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.472024Z
+tags: worker-3
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_set_metadata
+time: 2013-08-20 09:12:43.472502Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_set_metadata [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.473158Z
+tags: worker-3
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_terminate_connection
+time: 2013-08-20 09:12:43.473595Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_terminate_connection [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-3
+time: 2013-08-20 09:12:43.180522Z
+tags: worker-2
+test: cinderclient.tests.test_http.ClientTest.test_get_retry_500
+time: 2013-08-20 09:12:44.183565Z
+successful: cinderclient.tests.test_http.ClientTest.test_get_retry_500 [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.184549Z
+tags: worker-2
+test: cinderclient.tests.test_service_catalog.ServiceCatalogTest.test_compatibility_service_type
+time: 2013-08-20 09:12:44.185442Z
+successful: cinderclient.tests.test_service_catalog.ServiceCatalogTest.test_compatibility_service_type [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.186299Z
+tags: worker-2
+test: cinderclient.tests.test_shell.ShellTest.test_help_on_subcommand
+time: 2013-08-20 09:12:44.236644Z
+successful: cinderclient.tests.test_shell.ShellTest.test_help_on_subcommand [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.236936Z
+tags: worker-2
+test: cinderclient.tests.test_utils.FindResourceTestCase.test_find_by_str_id
+time: 2013-08-20 09:12:44.237149Z
+successful: cinderclient.tests.test_utils.FindResourceTestCase.test_find_by_str_id [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.237329Z
+tags: worker-2
+test: cinderclient.tests.test_utils.PrintListTestCase.test_print_list_with_generator
+time: 2013-08-20 09:12:44.238223Z
+successful: cinderclient.tests.test_utils.PrintListTestCase.test_print_list_with_generator [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.238504Z
+tags: worker-2
+test: cinderclient.tests.v1.test_auth.AuthenticateAgainstKeystoneTests.test_authenticate_failure
+time: 2013-08-20 09:12:44.239502Z
+successful: cinderclient.tests.v1.test_auth.AuthenticateAgainstKeystoneTests.test_authenticate_failure [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.240071Z
+tags: worker-2
+test: cinderclient.tests.v1.test_quota_classes.QuotaClassSetsTest.test_refresh_quota
+time: 2013-08-20 09:12:44.240428Z
+successful: cinderclient.tests.v1.test_quota_classes.QuotaClassSetsTest.test_refresh_quota [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.240626Z
+tags: worker-2
+test: cinderclient.tests.v1.test_quota_classes.QuotaClassSetsTest.test_update_quota
+time: 2013-08-20 09:12:44.240960Z
+successful: cinderclient.tests.v1.test_quota_classes.QuotaClassSetsTest.test_update_quota [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.241255Z
+tags: worker-2
+test: cinderclient.tests.v1.test_quotas.QuotaSetsTest.test_tenant_quotas_get
+time: 2013-08-20 09:12:44.241546Z
+successful: cinderclient.tests.v1.test_quotas.QuotaSetsTest.test_tenant_quotas_get [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.241822Z
+tags: worker-2
+test: cinderclient.tests.v1.test_services.ServicesTest.test_list_services
+time: 2013-08-20 09:12:44.242350Z
+successful: cinderclient.tests.v1.test_services.ServicesTest.test_list_services [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.242674Z
+tags: worker-2
+test: cinderclient.tests.v1.test_shell.ShellTest.test_rename
+time: 2013-08-20 09:12:44.365329Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_rename [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.365587Z
+tags: worker-2
+test: cinderclient.tests.v1.test_shell.ShellTest.test_reset_state_with_flag
+time: 2013-08-20 09:12:44.397351Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_reset_state_with_flag [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.397770Z
+tags: worker-2
+test: cinderclient.tests.v1.test_shell.ShellTest.test_set_metadata_delete_dict
+time: 2013-08-20 09:12:44.429409Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_set_metadata_delete_dict [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.429669Z
+tags: worker-2
+test: cinderclient.tests.v1.test_shell.ShellTest.test_show
+time: 2013-08-20 09:12:44.463984Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_show [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+117
++-------------+-----------------------+
+|   Property  |         Value         |
++-------------+-----------------------+
+| attachments | [{'server_id': 1234}] |
+|      id     |          1234         |
+|     name    |     sample-volume     |
++-------------+-----------------------+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.464377Z
+tags: worker-2
+test: cinderclient.tests.v1.test_shell.ShellTest.test_snapshot_list_filter_volume_id
+time: 2013-08-20 09:12:44.498051Z
+successful: cinderclient.tests.v1.test_shell.ShellTest.test_snapshot_list_filter_volume_id [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+239
++--------------------------------------+--------------------------------------+-----------+--------------+------+
+|                  ID                  |              Volume ID               |   Status  | Display Name | Size |
++--------------------------------------+--------------------------------------+-----------+--------------+------+
+| 11111111-1111-1111-1111-111111111111 | 00000000-0000-0000-0000-000000000000 | available |     None     |  1   |
++--------------------------------------+--------------------------------------+-----------+--------------+------+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.498364Z
+tags: worker-2
+test: cinderclient.tests.v1.test_types.TypesTest.test_unsset_keys
+time: 2013-08-20 09:12:44.498618Z
+successful: cinderclient.tests.v1.test_types.TypesTest.test_unsset_keys [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.498806Z
+tags: worker-2
+test: cinderclient.tests.v1.test_volume_transfers.VolumeTRansfersTest.test_create
+time: 2013-08-20 09:12:44.499126Z
+successful: cinderclient.tests.v1.test_volume_transfers.VolumeTRansfersTest.test_create [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.499313Z
+tags: worker-2
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_create_volume
+time: 2013-08-20 09:12:44.499607Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_create_volume [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.499768Z
+tags: worker-2
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_delete_metadata
+time: 2013-08-20 09:12:44.499942Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_delete_metadata [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.500104Z
+tags: worker-2
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_initialize_connection
+time: 2013-08-20 09:12:44.500309Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_initialize_connection [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.500539Z
+tags: worker-2
+test: cinderclient.tests.v1.test_volumes.VolumesTest.test_unreserve
+time: 2013-08-20 09:12:44.500874Z
+successful: cinderclient.tests.v1.test_volumes.VolumesTest.test_unreserve [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.501163Z
+tags: worker-2
+test: cinderclient.tests.v2.contrib.test_list_extensions.ListExtensionsTests.test_list_extensions
+time: 2013-08-20 09:12:44.501630Z
+successful: cinderclient.tests.v2.contrib.test_list_extensions.ListExtensionsTests.test_list_extensions [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.501918Z
+tags: worker-2
+test: cinderclient.tests.v2.test_auth.AuthenticateAgainstKeystoneTests.test_authenticate_success
+time: 2013-08-20 09:12:44.502609Z
+successful: cinderclient.tests.v2.test_auth.AuthenticateAgainstKeystoneTests.test_authenticate_success [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.502871Z
+tags: worker-2
+test: cinderclient.tests.v2.test_auth.AuthenticationTests.test_auth_automatic
+time: 2013-08-20 09:12:44.504175Z
+successful: cinderclient.tests.v2.test_auth.AuthenticationTests.test_auth_automatic [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.504488Z
+tags: worker-2
+test: cinderclient.tests.v2.test_quotas.QuotaSetsTest.test_update_quota
+time: 2013-08-20 09:12:44.504899Z
+successful: cinderclient.tests.v2.test_quotas.QuotaSetsTest.test_update_quota [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.505124Z
+tags: worker-2
+test: cinderclient.tests.v2.test_services.ServicesTest.test_list_services
+time: 2013-08-20 09:12:44.505641Z
+successful: cinderclient.tests.v2.test_services.ServicesTest.test_list_services [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.505888Z
+tags: worker-2
+test: cinderclient.tests.v2.test_services.ServicesTest.test_list_services_with_binary
+time: 2013-08-20 09:12:44.506368Z
+successful: cinderclient.tests.v2.test_services.ServicesTest.test_list_services_with_binary [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.506609Z
+tags: worker-2
+test: cinderclient.tests.v2.test_services.ServicesTest.test_list_services_with_host_binary
+time: 2013-08-20 09:12:44.507111Z
+successful: cinderclient.tests.v2.test_services.ServicesTest.test_list_services_with_host_binary [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.507422Z
+tags: worker-2
+test: cinderclient.tests.v2.test_shell.ShellTest.test_list_availability_zone
+time: 2013-08-20 09:12:44.540163Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_list_availability_zone [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+A1
++--------+---------------+
+|  Name  |     Status    |
++--------+---------------+
+| zone-1 |   available   |
+| zone-2 | not available |
++--------+---------------+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.540435Z
+tags: worker-2
+test: cinderclient.tests.v2.test_shell.ShellTest.test_list_filter_name
+time: 2013-08-20 09:12:44.572855Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_list_filter_name [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+18F
++------+--------+---------------+------+-------------+----------+-------------+
+|  ID  | Status |      Name     | Size | Volume Type | Bootable | Attached to |
++------+--------+---------------+------+-------------+----------+-------------+
+| 1234 |        | sample-volume |      |             |          |     1234    |
++------+--------+---------------+------+-------------+----------+-------------+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.573149Z
+tags: worker-2
+test: cinderclient.tests.v2.test_shell.ShellTest.test_set_metadata_delete_keys
+time: 2013-08-20 09:12:44.606318Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_set_metadata_delete_keys [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.606656Z
+tags: worker-2
+test: cinderclient.tests.v2.test_shell.ShellTest.test_snapshot_list_filter_volume_id
+time: 2013-08-20 09:12:44.641199Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_snapshot_list_filter_volume_id [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+211
++--------------------------------------+--------------------------------------+-----------+------+------+
+|                  ID                  |              Volume ID               |   Status  | Name | Size |
++--------------------------------------+--------------------------------------+-----------+------+------+
+| 11111111-1111-1111-1111-111111111111 | 00000000-0000-0000-0000-000000000000 | available |      |  1   |
++--------------------------------------+--------------------------------------+-----------+------+------+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.641473Z
+tags: worker-2
+test: cinderclient.tests.v2.test_shell.ShellTest.test_snapshot_reset_state
+time: 2013-08-20 09:12:44.673488Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_snapshot_reset_state [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.673733Z
+tags: worker-2
+test: cinderclient.tests.v2.test_shell.ShellTest.test_snapshot_reset_state_with_flag
+time: 2013-08-20 09:12:44.704532Z
+successful: cinderclient.tests.v2.test_shell.ShellTest.test_snapshot_reset_state_with_flag [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.704814Z
+tags: worker-2
+test: cinderclient.tests.v2.test_types.TypesTest.test_delete
+time: 2013-08-20 09:12:44.705163Z
+successful: cinderclient.tests.v2.test_types.TypesTest.test_delete [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.705414Z
+tags: worker-2
+test: cinderclient.tests.v2.test_types.TypesTest.test_set_key
+time: 2013-08-20 09:12:44.705742Z
+successful: cinderclient.tests.v2.test_types.TypesTest.test_set_key [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.706010Z
+tags: worker-2
+test: cinderclient.tests.v2.test_volume_backups.VolumeBackupsTest.test_create
+time: 2013-08-20 09:12:44.706522Z
+successful: cinderclient.tests.v2.test_volume_backups.VolumeBackupsTest.test_create [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.706786Z
+tags: worker-2
+test: cinderclient.tests.v2.test_volume_backups.VolumeBackupsTest.test_delete
+time: 2013-08-20 09:12:44.707477Z
+successful: cinderclient.tests.v2.test_volume_backups.VolumeBackupsTest.test_delete [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.707771Z
+tags: worker-2
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_attach
+time: 2013-08-20 09:12:44.708125Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_attach [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
+time: 2013-08-20 09:12:44.708388Z
+tags: worker-2
+test: cinderclient.tests.v2.test_volumes.VolumesTest.test_create_volume
+time: 2013-08-20 09:12:44.708864Z
+successful: cinderclient.tests.v2.test_volumes.VolumesTest.test_create_volume [ multipart
+Content-Type: text/plain;charset="utf8"
+stderr
+0
+Content-Type: text/plain;charset="utf8"
+stdout
+0
+]
+tags: -worker-2
