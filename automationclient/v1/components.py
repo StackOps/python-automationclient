@@ -22,47 +22,25 @@ from automationclient import base
 class Component(base.Resource):
     """A Component is a Stackops or Openstack service to be deployed."""
     def __repr__(self):
-        return "<ComponentType: %s>" % self.name
+        return "<Component: %s>" % self.name
 
 
 class ComponentManager(base.ManagerWithFind):
-    """Manage :class:`VolumeType` resources."""
+    """Manage :class:`Component` resources."""
     resource_class = Component
 
     def list(self):
-        """Get a list of all volume types.
+        """Get a list of all component.
 
         :rtype: list of :class:`Component`.
         """
-        return self._list("/types", "volume_types")
+        return self._list("/components", "components")
 
-    def get(self, volume_type):
-        """Get a specific volume type.
+    def get(self, component):
+        """Get a specific component.
 
-        :param volume_type: The ID of the :class:`VolumeType` to get.
+        :param component: The ID (Name of the component) of the :class:
+        `Component` to get.
         :rtype: :class:`Component`
         """
-        return self._get("/types/%s" % base.getid(volume_type), "volume_type")
-
-    def delete(self, volume_type):
-        """Delete a specific volume_type.
-
-        :param volume_type: The ID of the :class:`VolumeType` to get.
-        """
-        self._delete("/types/%s" % base.getid(volume_type))
-
-    def create(self, name):
-        """Create a volume type.
-
-        :param name: Descriptive name of the volume type
-        :rtype: :class:`Component`
-        """
-
-        body = {
-            "volume_type": {
-                "name": name,
-            }
-        }
-
-        return self._create("/types", body, "volume_type")
-
+        return self._get("/components/%s" % base.getid(component), "component")

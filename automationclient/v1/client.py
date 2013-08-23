@@ -14,17 +14,7 @@
 #    under the License.
 
 from automationclient import client
-from automationclient.v1 import availability_zones
-from automationclient.v1 import limits
-from automationclient.v1 import quota_classes
-from automationclient.v1 import quotas
-from automationclient.v1 import services
-from automationclient.v1 import volumes
-from automationclient.v1 import volume_snapshots
-from automationclient.v1 import volume_types
-from automationclient.v1 import volume_backups
-from automationclient.v1 import volume_backups_restore
-from automationclient.v1 import volume_transfers
+from automationclient.v1 import components
 
 
 class Client(object):
@@ -37,7 +27,7 @@ class Client(object):
 
     Then call methods on its managers::
 
-        >>> client.volumes.list()
+        >>> client.components.list()
         ...
 
     """
@@ -53,20 +43,9 @@ class Client(object):
         # FIXME(comstud): Rename the api_key argument above when we
         # know it's not being used as keyword argument
         password = api_key
-        self.limits = limits.LimitsManager(self)
 
         # extensions
-        self.volumes = volumes.VolumeManager(self)
-        self.volume_snapshots = volume_snapshots.SnapshotManager(self)
-        self.volume_types = volume_types.VolumeTypeManager(self)
-        self.quota_classes = quota_classes.QuotaClassSetManager(self)
-        self.quotas = quotas.QuotaSetManager(self)
-        self.backups = volume_backups.VolumeBackupManager(self)
-        self.restores = volume_backups_restore.VolumeBackupRestoreManager(self)
-        self.transfers = volume_transfers.VolumeTransferManager(self)
-        self.services = services.ServiceManager(self)
-        self.availability_zones = \
-            availability_zones.AvailabilityZoneManager(self)
+        self.components = components.ComponentManager(self)
 
         # Add in any extensions...
         if extensions:

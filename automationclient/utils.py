@@ -154,7 +154,7 @@ def _print(pt, order):
 
 
 def print_list(objs, fields, formatters={}, order_by=None):
-    mixed_case_fields = ['serverId']
+    #mixed_case_fields = ['serverId']
     pt = prettytable.PrettyTable([f for f in fields], caching=False)
     pt.aligns = ['l' for f in fields]
 
@@ -164,10 +164,10 @@ def print_list(objs, fields, formatters={}, order_by=None):
             if field in formatters:
                 row.append(formatters[field](o))
             else:
-                if field in mixed_case_fields:
-                    field_name = field.replace(' ', '_')
-                else:
-                    field_name = field.lower().replace(' ', '_')
+                #if field in mixed_case_fields:
+                field_name = field.replace(' ', '_')
+                #else:
+                field_name = field.lower().replace(' ', '_')
                 data = getattr(o, field_name, '')
                 row.append(data)
         pt.add_row(row)
