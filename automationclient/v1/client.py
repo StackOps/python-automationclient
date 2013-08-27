@@ -14,7 +14,7 @@
 #    under the License.
 
 from automationclient import client
-from automationclient.v1 import components
+from automationclient.v1 import components, architectures
 
 
 class Client(object):
@@ -46,6 +46,7 @@ class Client(object):
 
         # extensions
         self.components = components.ComponentManager(self)
+        self.architectures = architectures.ArchitectureManager(self)
 
         # Add in any extensions...
         if extensions:

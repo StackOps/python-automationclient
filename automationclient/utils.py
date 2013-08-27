@@ -14,11 +14,14 @@
 #    under the License.
 
 from __future__ import print_function
+from functools import reduce
 
 import os
 import re
 import sys
 import uuid
+import operator
+import cStringIO
 
 import six
 import prettytable
@@ -29,9 +32,11 @@ from automationclient.openstack.common import strutils
 
 def arg(*args, **kwargs):
     """Decorator for CLI args."""
+
     def _decorator(func):
         add_arg(func, *args, **kwargs)
         return func
+
     return _decorator
 
 
@@ -129,9 +134,11 @@ def service_type(stype):
         def mymethod(f):
             ...
     """
+
     def inner(f):
         f.service_type = stype
         return f
+
     return inner
 
 
@@ -155,6 +162,10 @@ def _print(pt, order):
 
 def print_list(objs, fields, formatters={}, order_by=None):
     #mixed_case_fields = ['serverId']
+    #print(objs, '\n')
+    #print(fields, '\n')
+    #print(formatters, '\n')
+    #print('\nfin\n')
     pt = prettytable.PrettyTable([f for f in fields], caching=False)
     pt.aligns = ['l' for f in fields]
 
@@ -165,7 +176,7 @@ def print_list(objs, fields, formatters={}, order_by=None):
                 row.append(formatters[field](o))
             else:
                 #if field in mixed_case_fields:
-                field_name = field.replace(' ', '_')
+                #field_name = field.replace(' ', '_')
                 #else:
                 field_name = field.lower().replace(' ', '_')
                 data = getattr(o, field_name, '')
@@ -175,6 +186,57 @@ def print_list(objs, fields, formatters={}, order_by=None):
     if order_by is None:
         order_by = fields[0]
     _print(pt, order_by)
+
+
+def print_indent_list(rows, hasHeader=False, headerChar='-', delim=' | ',
+                      justify='left', separateRows=False, prefix='',
+                      postfix='', wrapfunc=lambda x: x):
+    """Indents a table by column.
+       - rows: A sequence of sequences of items, one sequence per row.
+       - hasHeader: True if the first row consists of the columns' names.
+       - headerChar: Character to be used for the row separator line
+         (if hasHeader==True or separateRows==True).
+       - delim: The column delimiter.
+       - justify: Determines how are data justified in their column.
+         Valid values are 'left','right' and 'center'.
+       - separateRows: True if rows are to be separated by a line
+         of 'headerChar's.
+       - prefix: A string prepended to each printed row.
+       - postfix: A string appended to each printed row.
+       - wrapfunc: A function f(text) for wrapping text; each element in
+         the table is first wrapped by this function."""
+    # closure for breaking logical rows to physical, using wrapfunc
+    def rowWrapper(row):
+        newRows = [wrapfunc(item).split('\n') for item in row]
+        return [[substr or '' for substr in item] for item in map(None,
+                                                                  *newRows)]
+
+        # break each logical row into one or more physical ones
+
+    logicalRows = [rowWrapper(row) for row in rows]
+    # columns of physical rows
+    columns = map(None, *reduce(operator.add, logicalRows))
+    # get the maximum of each column by the string length of its items
+    maxWidths = [max([len(str(item)) for item in column])
+                 for column in columns]
+    rowSeparator = headerChar * (len(prefix) + len(postfix) + sum(maxWidths)
+                                 + len(delim) * (len(maxWidths) - 1))
+    # select the appropriate justify method
+    justify = {'center': str.center, 'right': str.rjust,
+               'left': str.ljust}[justify.lower()]
+    output = cStringIO.StringIO()
+    if separateRows:
+        print >> output, rowSeparator
+    for physicalRows in logicalRows:
+        for row in physicalRows:
+            print >> output, prefix + delim.join([justify(str(item), width)
+                                                  for (item, width) in
+                                                  zip(row,
+                                                      maxWidths)]) + postfix
+        if separateRows or hasHeader:
+            print >> output, rowSeparator
+        hasHeader = False
+    return output.getvalue()
 
 
 def print_dict(d, property="Property"):
@@ -221,7 +283,7 @@ def find_resource(manager, name_or_id):
                     return manager.find(display_name=name_or_id)
                 except exceptions.NotFound:
                     msg = "No %s with a name or ID of '%s' exists." % \
-                        (manager.resource_class.__name__.lower(), name_or_id)
+                          (manager.resource_class.__name__.lower(), name_or_id)
                     raise exceptions.CommandError(msg)
     except exceptions.NoUniqueMatch:
         msg = ("Multiple %s matches found for '%s', use an ID to be more"
@@ -278,6 +340,7 @@ def import_class(import_str):
     __import__(mod_str)
     return getattr(sys.modules[mod_str], class_str)
 
+
 _slugify_strip_re = re.compile(r'[^\w\s-]')
 _slugify_hyphenate_re = re.compile(r'[-\s]+')
 
@@ -292,6 +355,7 @@ def slugify(value):
     From Django's "django/template/defaultfilters.py".
     """
     import unicodedata
+
     if not isinstance(value, six.text_type):
         value = six.text_type(value)
     value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')

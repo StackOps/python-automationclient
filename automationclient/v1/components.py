@@ -14,7 +14,7 @@
 # limitations under the License.
 
 
-"""Component Type interface."""
+"""Component interface."""
 
 from automationclient import base
 
@@ -44,3 +44,13 @@ class ComponentManager(base.ManagerWithFind):
         :rtype: :class:`Component`
         """
         return self._get("/components/%s" % base.getid(component), "component")
+
+    def get_services(self, component):
+        """Get a list of services by a specific component.
+
+        :param component: The ID (Name of the component) of the :class:
+        `Component` to get its services.
+        :rtype: :class:`Component`
+        """
+        return self._get("/components/%s/services" % base.getid(component),
+                         "component")

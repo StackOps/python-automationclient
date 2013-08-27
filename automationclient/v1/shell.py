@@ -21,6 +21,8 @@ import argparse
 import os
 import sys
 import time
+import logging
+import json
 
 from automationclient import utils
 
@@ -62,23 +64,14 @@ def _find_component(cs, component):
     return utils.find_resource(cs.components, component)
 
 
-def _print_component(component):
-    utils.print_dict(component._info)
+def _find_architecture(cs, architecture):
+    """Get a architecture by ID."""
+    return utils.find_resource(cs.architectures, architecture)
 
 
-@utils.arg('component', metavar='<component>', help='ID of the component.')
-@utils.service_type('automation')
-def do_component_show(cs, args):
-    """Show details about a component."""
-    component = _find_component(cs, args.component)
-    _print_component(component)
-
-
-def do_endpoints(cs, args):
-    """Discover endpoints that get returned from the authenticate services."""
-    catalog = cs.client.service_catalog.catalog
-    for e in catalog['access']['serviceCatalog']:
-        utils.print_dict(e['endpoints'][0], e['name'])
+def _find_node(cs, node):
+    """Get a node by ID."""
+    return utils.find_resource(cs.nodes, node)
 
 
 @utils.service_type('automation')
@@ -86,3 +79,140 @@ def do_component_list(cs, args):
     """List all the components that are available on automation."""
     components = cs.components.list()
     utils.print_list(components, ['_links', 'name', 'properties'])
+
+
+@utils.arg('component', metavar='<component-id>', help='ID of the component.')
+@utils.service_type('automation')
+def do_component_show(cs, args):
+    """Show details about a component."""
+    component = _find_component(cs, args.component)
+    utils.print_dict(component._info)
+
+
+@utils.arg('component', metavar='<component-id>', help='ID of the component.')
+@utils.service_type('automation')
+def do_component_services(cs, args):
+    """List all the services by a component."""
+    component = cs.components.get_services(args.component)
+    utils.print_list(component, ['Name', 'Links', 'description'])
+
+
+@utils.service_type('automation')
+def do_architecture_list(cs, args):
+    """List all the architectures that are available on automation."""
+    architectures = cs.architectures.list()
+    utils.print_list(architectures, ['_links', 'name', 'profiles', 'id'])
+
+
+@utils.arg('architecture', metavar='<architecture-id>',
+           help='ID of the architecture.')
+@utils.service_type('automation')
+def do_architecture_show(cs, args):
+    """Show details about an architecture."""
+    architecture = _find_architecture(cs, args.architecture)
+    utils.print_dict(architecture._info)
+
+
+@utils.arg('architecture', metavar='<architecture-file>',
+           help='File with extension *.archs describing the '
+                'new architecture to create.')
+@utils.service_type('automation')
+def do_architecture_create(cs, args):
+    """Add a new architecture."""
+    architecture = cs.architectures.create(args.architecture)
+    utils.print_list(architecture, ['_links', 'name', 'profiles', 'id',
+                                    'profiles'])
+
+
+@utils.arg('architecture', metavar='<architecture>',
+           help='ID of the architecture to delete.')
+@utils.service_type('automation')
+def do_architecture_delete(cs, args):
+    """Remove a specific architecture."""
+    architecture = _find_architecture(cs, args.architecture)
+    architecture.delete()
+
+
+@utils.service_type('automation')
+def do_node_list(cs, args):
+    """List all the nodes in the pool."""
+    nodes = cs.nodes.list()
+    utils.print_list(nodes, ['_links', 'name', 'profiles', 'id'])
+
+
+@utils.arg('node', metavar='<nodes-id>', help='ID of the node.')
+@utils.service_type('automation')
+def do_node_show(cs, args):
+    """Show details about a node."""
+    node = _find_node(cs, args.node)
+    utils.print_dict(node._info)
+
+
+@utils.arg('node', metavar='<node-id>', help='ID of the node.')
+@utils.arg('lom_ip', metavar='<lom-ip>',
+           default=None,
+           help='New lom_ip for the node.')
+@utils.arg('lom_mac', metavar='<lom-mac>',
+           default=None,
+           help='New lom_mac for the node')
+@utils.service_type('automation')
+def do_node_update(cs, args):
+    """Update a node."""
+    kwargs = {}
+    if args.lomp_ip is not None:
+        kwargs['lom_ip'] = args.lomp_ip
+    if args.lom_mac is not None:
+        kwargs['lom_mac'] = args.lom_mac
+    _find_node(cs, args.node).update(**kwargs)
+
+
+@utils.arg('node', metavar='<node>',
+           help='ID of the node to delete.')
+@utils.service_type('automation')
+def do_node_delete(cs, args):
+    """Remove a specific node from pool."""
+    node = _find_node(cs, args.node)
+    node.delete()
+
+
+@utils.arg('node', metavar='<node>',
+           help='ID of the node to activate.')
+@utils.service_type('automation')
+def do_node_activate(cs, args):
+    """Activate a specific node in the pool."""
+    node = _find_node(cs, args.node)
+    node.activate()
+
+
+@utils.arg('node', metavar='<node>',
+           help='ID of the node to power on.')
+@utils.service_type('automation')
+def do_node_power_on(cs, args):
+    """Power on a specific node in the pool."""
+    node = _find_node(cs, args.node)
+    node.poweron()
+
+
+@utils.arg('node', metavar='<node>',
+           help='ID of the node to power off.')
+@utils.service_type('automation')
+def do_node_power_off(cs, args):
+    """Power off a specific node in the pool."""
+    node = _find_node(cs, args.node)
+    node.poweroff()
+
+
+@utils.arg('node', metavar='<node>',
+           help='ID of the node to reboot.')
+@utils.service_type('automation')
+def do_node_reboot(cs, args):
+    """Reboot a specific node in the pool."""
+    node = _find_node(cs, args.node)
+    node.reboot()
+
+
+def do_endpoints(cs, args):
+    """Discover endpoints that get returned from the authenticate services."""
+    catalog = cs.client.service_catalog.catalog
+    for e in catalog['access']['serviceCatalog']:
+        utils.print_dict(e['endpoints'][0], e['name'])
