@@ -25,7 +25,6 @@ import six
 
 from automationclient import exceptions
 from automationclient import utils
-from automationclient.v2 import availability_zones
 
 
 def _poll_for_status(poll_fn, obj_id, action, final_ok_states,

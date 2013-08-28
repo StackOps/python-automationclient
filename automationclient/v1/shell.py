@@ -78,7 +78,7 @@ def _find_node(cs, node):
 def do_component_list(cs, args):
     """List all the components that are available on automation."""
     components = cs.components.list()
-    utils.print_list(components, ['_links', 'name', 'properties'])
+    utils.print_list(components, ['name', 'properties'])
 
 
 @utils.arg('component', metavar='<component-id>', help='ID of the component.')
@@ -94,14 +94,14 @@ def do_component_show(cs, args):
 def do_component_services(cs, args):
     """List all the services by a component."""
     component = cs.components.get_services(args.component)
-    utils.print_list(component, ['Name', 'Links', 'description'])
+    utils.print_list(component, ['Name', 'description'])
 
 
 @utils.service_type('automation')
 def do_architecture_list(cs, args):
     """List all the architectures that are available on automation."""
     architectures = cs.architectures.list()
-    utils.print_list(architectures, ['_links', 'name', 'profiles', 'id'])
+    utils.print_list(architectures, ['id', 'name', 'profiles', '_links'])
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -137,10 +137,10 @@ def do_architecture_delete(cs, args):
 def do_node_list(cs, args):
     """List all the nodes in the pool."""
     nodes = cs.nodes.list()
-    utils.print_list(nodes, ['_links', 'name', 'profiles', 'id'])
+    utils.print_list(nodes, ['id', 'name', 'mac', 'status', 'connection_data'])
 
 
-@utils.arg('node', metavar='<nodes-id>', help='ID of the node.')
+@utils.arg('node', metavar='<mac>', help='Mac of the node.')
 @utils.service_type('automation')
 def do_node_show(cs, args):
     """Show details about a node."""
@@ -181,34 +181,67 @@ def do_node_delete(cs, args):
 def do_node_activate(cs, args):
     """Activate a specific node in the pool."""
     node = _find_node(cs, args.node)
-    node.activate()
+    cs.nodes.activate()
 
 
-@utils.arg('node', metavar='<node>',
-           help='ID of the node to power on.')
+@utils.arg('node', metavar='<mac>',
+           help='Mac of the node to power on.')
+@utils.arg('lom_user', metavar='<lom-user>',
+           help='lom_user credential.')
+@utils.arg('lom_password', metavar='<lom-password>',
+           help='lom_password for lom_user credential')
 @utils.service_type('automation')
 def do_node_power_on(cs, args):
     """Power on a specific node in the pool."""
+    kwargs = {'lom_user': args.lomp_user, 'lom_password': args.lom_password}
     node = _find_node(cs, args.node)
-    node.poweron()
+    cs.nodes.poweron(node, **kwargs)
 
 
-@utils.arg('node', metavar='<node>',
-           help='ID of the node to power off.')
+@utils.arg('node', metavar='<node-mac>',
+           help='Mac of the node to power off.')
+@utils.arg('lom-user', metavar='<lom-user>',
+           help='lom-user credential.')
+@utils.arg('lom-password', metavar='<lom-password>',
+           help='lom-password for lom_user credential')
 @utils.service_type('automation')
 def do_node_power_off(cs, args):
     """Power off a specific node in the pool."""
+    kwargs = {'lom_user': args.lomp_user, 'lom_password': args.lom_password}
     node = _find_node(cs, args.node)
-    node.poweroff()
+    cs.nodes.poweroff(node, **kwargs)
 
 
-@utils.arg('node', metavar='<node>',
-           help='ID of the node to reboot.')
+@utils.arg('node', metavar='<mac>',
+           help='Mac of the node to reboot.')
+@utils.arg('lom_user', metavar='<lom-user>',
+           help='lom_user credential.')
+@utils.arg('lom_password', metavar='<lom-password>',
+           help='lom_password for lom_user credential')
 @utils.service_type('automation')
 def do_node_reboot(cs, args):
     """Reboot a specific node in the pool."""
+    kwargs = {'lom_user': args.lomp_user, 'lom_password': args.lom_password}
     node = _find_node(cs, args.node)
-    node.reboot()
+    cs.nodes.reboot(node, **kwargs)
+
+
+@utils.arg('node', metavar='<mac>',
+           help='Mac of the node to shutdown.')
+@utils.service_type('automation')
+def do_node_shutdown(cs, args):
+    """Shutdown a specific node in the pool."""
+    node = _find_node(cs, args.node)
+    node.shutdown()
+    cs.nodes.shutdown(node)
+
+@utils.arg('node', metavar='<mac>',
+           help='Mac of the node to soft reboot.')
+@utils.service_type('automation')
+def do_node_soft_reboot(cs, args):
+    """Soft reboot a specific node in the pool."""
+    node = _find_node(cs, args.node)
+    cs.node.soft_reboot(node)
 
 
 def do_endpoints(cs, args):

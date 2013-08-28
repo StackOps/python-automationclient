@@ -53,32 +53,50 @@ class NodeManager(base.ManagerWithFind):
         """
         return self._action('activate', node, {'node': node})
 
-    def power_on(self, node):
+    def power_on(self, node, **kwargs):
         """
         Power on a node.
 
         :param node: Node to power on
         """
 
-        return self._action('poweron', node, {'node': node})
+        return self._action('poweron', node, **kwargs)
 
-    def power_off(self, node):
+    def power_off(self, node, **kwargs):
         """
         Power off a node.
 
         :param node: Node to power off
         """
 
-        return self._action('poweroff', node, {'node': node})
+        return self._action('poweroff', node, **kwargs)
 
-    def reboot(self, node):
+    def reboot(self, node, **kwargs):
         """
         Reboot a node.
 
         :param node: Node to reboot
         """
 
-        return self._action('reboot', node, {'node': node})
+        return self._action('reboot', node, **kwargs)
+
+    def shutdown(self, node):
+        """
+        Shutdown a node.
+
+        :param node: Node to shutdown
+        """
+
+        return self._action('shutdown', node, {'node': node})
+
+    def soft_reboot(self, node):
+        """
+        Soft reboot a node.
+
+        :param node: Node to soft reboot
+        """
+
+        return self._action('soft_reboot', node, {'node': node})
 
     def update(self, node, **kwargs):
         """
@@ -101,11 +119,13 @@ class NodeManager(base.ManagerWithFind):
         """
         self._delete("/pool/devices/%s" % base.getid(node))
 
-    def _action(self, action, node, info=None, **kwargs):
+    def _action(self, action, node, **kwargs):
         """
         Perform a node action.
         """
-        body = {action: info}
-        self.run_hooks('modify_body_for_action', body, **kwargs)
+        body = {"node": kwargs}
+        #self.run_hooks('modify_body_for_action', body, **kwargs)
         url = '/pool/devices/%s/%s' % (base.getid(node), action)
+        print(url)
+        print(kwargs)
         return self.api.client.post(url, body=body)
