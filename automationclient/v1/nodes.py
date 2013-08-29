@@ -107,9 +107,7 @@ class NodeManager(base.ManagerWithFind):
         if not kwargs:
             return
 
-        body = {"node": kwargs}
-
-        self._update("/pool/devices/%s" % base.getid(node), body)
+        self._update("/pool/devices/%s" % node.mac, kwargs)
 
     def delete(self, node):
         """

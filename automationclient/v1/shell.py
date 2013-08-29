@@ -148,7 +148,7 @@ def do_node_show(cs, args):
     utils.print_dict(node._info)
 
 
-@utils.arg('node', metavar='<node-id>', help='ID of the node.')
+@utils.arg('mac', metavar='<mac-id>', help='MAC of the node.')
 @utils.arg('lom_ip', metavar='<lom-ip>',
            default=None,
            help='New lom_ip for the node.')
@@ -158,12 +158,14 @@ def do_node_show(cs, args):
 @utils.service_type('automation')
 def do_node_update(cs, args):
     """Update a node."""
-    kwargs = {}
-    if args.lomp_ip is not None:
-        kwargs['lom_ip'] = args.lomp_ip
-    if args.lom_mac is not None:
-        kwargs['lom_mac'] = args.lom_mac
-    _find_node(cs, args.node).update(**kwargs)
+
+    options = {
+        'lom_ip': args.lom_ip,
+        'lom_mac': args.lom_mac
+    }
+
+    node = _find_node(cs, args.mac)
+    cs.nodes.update(node, **options)
 
 
 @utils.arg('node', metavar='<node>',
