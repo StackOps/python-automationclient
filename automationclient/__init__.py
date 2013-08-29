@@ -14,11 +14,9 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-__all__ = ['__version__']
+from automationclient.openstack.common import version
 
-import pbr.version
-
-version_info = pbr.version.VersionInfo('python-automationclient')
+version_info = version.VersionInfo('python-automationclient')
 # We have a circular import problem when we first run python setup.py sdist
 # It's harmless, so deflect it.
 try:

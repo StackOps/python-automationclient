@@ -36,7 +36,7 @@ next steps:
 1. Go to the directory ``python-automationclient``
 2. Once on the directory run the command ``python tool/install_venv.py`` to create a virtual environment
    to work on it
-3. Install the python-automationclient throught the command ``PBR_VERSION=0.5.21 python setup.py install``
+3. Install the python-automationclient throught the command ``python setup.py install``
 4. This is all!! Start to contribute....
 
 
