@@ -45,13 +45,13 @@ class NodeManager(base.ManagerWithFind):
         """
         return self._get("/pool/devices/%s" % base.getid(node), "node")
 
-    def activate(self, node):
+    def activate(self, node, **kwargs):
         """
         Activate a node.
 
         :param node: Node to activate
         """
-        return self._action('activate', node, {'node': node})
+        return self._action('activate', node, **kwargs)
 
     def power_on(self, node, **kwargs):
         """
@@ -87,7 +87,7 @@ class NodeManager(base.ManagerWithFind):
         :param node: Node to shutdown
         """
 
-        return self._action('shutdown', node, {'node': node})
+        return self._action('shutdown', node)
 
     def soft_reboot(self, node):
         """
@@ -96,7 +96,7 @@ class NodeManager(base.ManagerWithFind):
         :param node: Node to soft reboot
         """
 
-        return self._action('soft_reboot', node, {'node': node})
+        return self._action('soft_reboot', node)
 
     def update(self, node, **kwargs):
         """
@@ -123,9 +123,9 @@ class NodeManager(base.ManagerWithFind):
         """
         Perform a node action.
         """
-        body = {"node": kwargs}
+        body = kwargs
         #self.run_hooks('modify_body_for_action', body, **kwargs)
-        url = '/pool/devices/%s/%s' % (base.getid(node), action)
+        url = '/pool/devices/%s/%s' % (node.mac, action)
         print(url)
-        print(kwargs)
+        print(body)
         return self.api.client.post(url, body=body)
