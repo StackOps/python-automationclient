@@ -109,21 +109,20 @@ class NodeManager(base.ManagerWithFind):
 
         self._update("/pool/devices/%s" % node.mac, kwargs)
 
-    def delete(self, node):
+    def delete(self, node, **kwargs):
         """
         Delete a node in the pool.
 
         :param node: The :class:`Node` to delete.
         """
-        self._delete("/pool/devices/%s" % base.getid(node))
 
-    def _action(self, action, node, **kwargs):
+        self._action('delete', node, **kwargs)
+
+    def _action(self, url, node, **kwargs):
         """
         Perform a node action.
         """
-        body = kwargs
+
         #self.run_hooks('modify_body_for_action', body, **kwargs)
-        url = '/pool/devices/%s/%s' % (node.mac, action)
-        print(url)
-        print(body)
-        return self.api.client.post(url, body=body)
+        url = '/pool/devices/%s/%s' % (node.mac, url)
+        return self.api.client.post(url, body=kwargs)

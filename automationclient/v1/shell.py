@@ -168,13 +168,28 @@ def do_node_update(cs, args):
     cs.nodes.update(node, **options)
 
 
-@utils.arg('node', metavar='<node>',
-           help='ID of the node to delete.')
+@utils.arg('mac', metavar='<mac>',
+           help='MAC of the node to delete.')
+@utils.arg('--action', metavar='<action>', default='nothing',
+           help='Action to perform after node is deleted')
+@utils.arg('--lom-user', metavar='<lom-user>',
+           help='Out-of-band user')
+@utils.arg('--lom-password', metavar='<lom-password>',
+           help='Out-of-Band user password')
 @utils.service_type('automation')
 def do_node_delete(cs, args):
     """Remove a specific node from pool."""
-    node = _find_node(cs, args.node)
-    node.delete()
+
+    options = {'action': args.action}
+
+    if args.lom_user is not None:
+        options['lom_user'] = args.lom_user
+
+    if args.lom_password is not None:
+        options['lom_password'] = args.lom_password
+
+    node = _find_node(cs, args.mac)
+    cs.nodes.delete(node, **options)
 
 
 @utils.arg('mac', metavar='<mac>',
