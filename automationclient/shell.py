@@ -39,9 +39,9 @@ from automationclient import utils
 from automationclient.v1 import shell as shell_v1
 from automationclient.v2 import shell as shell_v2
 
-DEFAULT_OS_VOLUME_API_VERSION = "1"
-DEFAULT_CINDER_ENDPOINT_TYPE = 'publicURL'
-DEFAULT_CINDER_SERVICE_TYPE = 'volume'
+DEFAULT_OS_AUTOMATION_API_VERSION = "1"
+DEFAULT_AUTOMATION_ENDPOINT_TYPE = 'publicURL'
+DEFAULT_AUTOMATION_SERVICE_TYPE = 'automation'
 
 logger = logging.getLogger(__name__)
 
@@ -91,14 +91,14 @@ class StackopsAutomationShell(object):
 
         parser.add_argument('--debug',
                             action='store_true',
-                            default=utils.env('CINDERCLIENT_DEBUG',
+                            default=utils.env('AUTOMATIONCLIENT_DEBUG',
                                               default=False),
                             help="Print debugging output")
 
         parser.add_argument('--os-username',
                             metavar='<auth-user-name>',
                             default=utils.env('OS_USERNAME',
-                                              'CINDER_USERNAME'),
+                                              'AUTOMATION_USERNAME'),
                             help='Defaults to env[OS_USERNAME].')
         parser.add_argument('--os_username',
                             help=argparse.SUPPRESS)
@@ -106,7 +106,7 @@ class StackopsAutomationShell(object):
         parser.add_argument('--os-password',
                             metavar='<auth-password>',
                             default=utils.env('OS_PASSWORD',
-                                              'CINDER_PASSWORD'),
+                                              'AUTOMATION_PASSWORD'),
                             help='Defaults to env[OS_PASSWORD].')
         parser.add_argument('--os_password',
                             help=argparse.SUPPRESS)
@@ -114,7 +114,7 @@ class StackopsAutomationShell(object):
         parser.add_argument('--os-tenant-name',
                             metavar='<auth-tenant-name>',
                             default=utils.env('OS_TENANT_NAME',
-                                              'CINDER_PROJECT_ID'),
+                                              'AUTOMATION_PROJECT_ID'),
                             help='Defaults to env[OS_TENANT_NAME].')
         parser.add_argument('--os_tenant_name',
                             help=argparse.SUPPRESS)
@@ -122,7 +122,7 @@ class StackopsAutomationShell(object):
         parser.add_argument('--os-tenant-id',
                             metavar='<auth-tenant-id>',
                             default=utils.env('OS_TENANT_ID',
-                                              'CINDER_TENANT_ID'),
+                                              'AUTOMATION_TENANT_ID'),
                             help='Defaults to env[OS_TENANT_ID].')
         parser.add_argument('--os_tenant_id',
                             help=argparse.SUPPRESS)
@@ -130,7 +130,7 @@ class StackopsAutomationShell(object):
         parser.add_argument('--os-auth-url',
                             metavar='<auth-url>',
                             default=utils.env('OS_AUTH_URL',
-                                              'CINDER_URL'),
+                                              'AUTOMATION_URL'),
                             help='Defaults to env[OS_AUTH_URL].')
         parser.add_argument('--os_auth_url',
                             help=argparse.SUPPRESS)
@@ -138,49 +138,49 @@ class StackopsAutomationShell(object):
         parser.add_argument('--os-region-name',
                             metavar='<region-name>',
                             default=utils.env('OS_REGION_NAME',
-                                              'CINDER_REGION_NAME'),
+                                              'AUTOMATION_REGION_NAME'),
                             help='Defaults to env[OS_REGION_NAME].')
         parser.add_argument('--os_region_name',
                             help=argparse.SUPPRESS)
 
         parser.add_argument('--service-type',
                             metavar='<service-type>',
-                            help='Defaults to volume for most actions')
+                            help='Defaults to automation for most actions')
         parser.add_argument('--service_type',
                             help=argparse.SUPPRESS)
 
         parser.add_argument('--service-name',
                             metavar='<service-name>',
-                            default=utils.env('CINDER_SERVICE_NAME'),
-                            help='Defaults to env[CINDER_SERVICE_NAME]')
+                            default=utils.env('AUTOMATION_SERVICE_NAME'),
+                            help='Defaults to env[AUTOMATION_SERVICE_NAME]')
         parser.add_argument('--service_name',
                             help=argparse.SUPPRESS)
 
-        parser.add_argument('--volume-service-name',
+        '''parser.add_argument('--volume-service-name',
                             metavar='<volume-service-name>',
-                            default=utils.env('CINDER_VOLUME_SERVICE_NAME'),
-                            help='Defaults to env[CINDER_VOLUME_SERVICE_NAME]')
+                            default=utils.env('AUTOMATION_VOLUME_SERVICE_NAME'),
+                            help='Defaults to env[AUTOMATION_VOLUME_SERVICE_NAME]')'''
         parser.add_argument('--volume_service_name',
                             help=argparse.SUPPRESS)
 
         parser.add_argument('--endpoint-type',
                             metavar='<endpoint-type>',
-                            default=utils.env('CINDER_ENDPOINT_TYPE',
+                            default=utils.env('AUTOMATION_ENDPOINT_TYPE',
                                               default=
-                                              DEFAULT_CINDER_ENDPOINT_TYPE),
-                            help='Defaults to env[CINDER_ENDPOINT_TYPE] or '
-                            + DEFAULT_CINDER_ENDPOINT_TYPE + '.')
+                                              DEFAULT_AUTOMATION_ENDPOINT_TYPE),
+                            help='Defaults to env[AUTOMATION_ENDPOINT_TYPE] or '
+                            + DEFAULT_AUTOMATION_ENDPOINT_TYPE + '.')
         parser.add_argument('--endpoint_type',
                             help=argparse.SUPPRESS)
 
-        parser.add_argument('--os-volume-api-version',
-                            metavar='<volume-api-ver>',
-                            default=utils.env('OS_VOLUME_API_VERSION',
+        parser.add_argument('--os-automation-api-version',
+                            metavar='<automation-api-ver>',
+                            default=utils.env('OS_AUTOMATION_API_VERSION',
                                               default=
-                                              DEFAULT_OS_VOLUME_API_VERSION),
+                                              DEFAULT_OS_AUTOMATION_API_VERSION),
                             help='Accepts 1 or 2,defaults '
-                                 'to env[OS_VOLUME_API_VERSION].')
-        parser.add_argument('--os_volume_api_version',
+                                 'to env[OS_AUTOMATION_API_VERSION].')
+        parser.add_argument('--os_automation_api_version',
                             help=argparse.SUPPRESS)
 
         parser.add_argument('--os-cacert',
@@ -191,7 +191,7 @@ class StackopsAutomationShell(object):
                             'Defaults to env[OS_CACERT]')
 
         parser.add_argument('--insecure',
-                            default=utils.env('CINDERCLIENT_INSECURE',
+                            default=utils.env('AUTOMATIONCLIENT_INSECURE',
                                               default=False),
                             action='store_true',
                             help=argparse.SUPPRESS)
@@ -215,17 +215,17 @@ class StackopsAutomationShell(object):
 
         # alias for --os-password, left in for backwards compatibility
         parser.add_argument('--apikey', '--password', dest='apikey',
-                            default=utils.env('CINDER_API_KEY'),
+                            default=utils.env('AUTOMATION_API_KEY'),
                             help=argparse.SUPPRESS)
 
         # alias for --os-tenant-name, left in for backward compatibility
         parser.add_argument('--projectid', '--tenant_name', dest='projectid',
-                            default=utils.env('CINDER_PROJECT_ID'),
+                            default=utils.env('AUTOMATION_PROJECT_ID'),
                             help=argparse.SUPPRESS)
 
         # alias for --os-auth-url, left in for backward compatibility
         parser.add_argument('--url', '--auth_url', dest='url',
-                            default=utils.env('CINDER_URL'),
+                            default=utils.env('AUTOMATION_URL'),
                             help=argparse.SUPPRESS)
 
         return parser
@@ -267,7 +267,7 @@ class StackopsAutomationShell(object):
 
     def _discover_via_python_path(self, version):
         for (module_loader, name, ispkg) in pkgutil.iter_modules():
-            if name.endswith('python_cinderclient_ext'):
+            if name.endswith('python_automationclient_ext'):
                 if not hasattr(module_loader, 'load_module'):
                     # Python 2.6 compat: actually get an ImpImporter obj
                     module_loader = module_loader.find_module(name)
@@ -342,11 +342,11 @@ class StackopsAutomationShell(object):
 
         # build available subcommands based on version
         self.extensions = self._discover_extensions(
-            options.os_volume_api_version)
+            options.os_automation_api_version)
         self._run_extension_hooks('__pre_parse_args__')
 
         subcommand_parser = self.get_subcommand_parser(
-            options.os_volume_api_version)
+            options.os_automation_api_version)
         self.parser = subcommand_parser
 
         if options.help or not argv:
@@ -378,10 +378,10 @@ class StackopsAutomationShell(object):
              args.url, args.region_name, args.os_cacert)
 
         if not endpoint_type:
-            endpoint_type = DEFAULT_CINDER_ENDPOINT_TYPE
+            endpoint_type = DEFAULT_AUTOMATION_ENDPOINT_TYPE
 
         if not service_type:
-            service_type = DEFAULT_CINDER_SERVICE_TYPE
+            service_type = DEFAULT_AUTOMATION_SERVICE_TYPE
             service_type = utils.get_service_type(args.func) or service_type
 
         #FIXME(usrleon): Here should be restrict for project id same as
@@ -433,7 +433,7 @@ class StackopsAutomationShell(object):
                 "You must provide an auth url "
                 "via either --os-auth-url or env[OS_AUTH_URL]")
 
-        self.cs = client.Client(options.os_volume_api_version, os_username,
+        self.cs = client.Client(options.os_automation_api_version, os_username,
                                 os_password, os_tenant_name, os_auth_url,
                                 insecure, region_name=os_region_name,
                                 tenant_id=os_tenant_id,
@@ -450,18 +450,18 @@ class StackopsAutomationShell(object):
             if not utils.isunauthenticated(args.func):
                 self.cs.authenticate()
         except exc.Unauthorized:
-            raise exc.CommandError("Invalid OpenStack Cinder credentials.")
+            raise exc.CommandError("Invalid OpenStack Automation credentials.")
         except exc.AuthorizationFailure:
             raise exc.CommandError("Unable to authorize user")
 
-        ''''endpoint_api_version = self.cs.get_volume_api_version_from_endpoint
+        ''''endpoint_api_version = self.cs.get_automation_api_version_from_endpoint
         ()
-        if endpoint_api_version != options.os_volume_api_version:
+        if endpoint_api_version != options.os_automation_api_version:
             msg = (("Volume API version is set to %s "
                     "but you are accessing a %s endpoint. "
-                    "Change its value via either --os-volume-api-version "
-                    "or env[OS_VOLUME_API_VERSION]")
-                   % (options.os_volume_api_version, endpoint_api_version))
+                    "Change its value via either --os-automation-api-version "
+                    "or env[OS_AUTOMATION_API_VERSION]")
+                   % (options.os_automation_api_version, endpoint_api_version))
             raise exc.InvalidAPIVersion(msg)'''
 
         args.func(self.cs, args)
@@ -475,7 +475,7 @@ class StackopsAutomationShell(object):
         """Print arguments for bash_completion.
 
         Prints all of the commands and options to stdout so that the
-        cinder.bash_completion script doesn't have to hard code them.
+        automation.bash_completion script doesn't have to hard code them.
         """
         commands = set()
         options = set()
@@ -520,7 +520,7 @@ def main():
             StackopsAutomationShell().main(map(strutils.safe_decode,
                                                sys.argv[1:]))
     except KeyboardInterrupt:
-        print("... terminating cinder client", file=sys.stderr)
+        print("... terminating automation client", file=sys.stderr)
         sys.exit(130)
     except Exception as e:
         logger.debug(e, exc_info=1)

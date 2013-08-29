@@ -36,8 +36,9 @@ next steps:
 1. Go to the directory ``python-automationclient``
 2. Once on the directory run the command ``python tool/install_venv.py`` to create a virtual environment
    to work on it
-3. Install the python-automationclient throught the command ``python setup.py install``
-4. This is all!! Start to contribute....
+3. Activate the virtual environment with the command source ``.venv/bin/activate``
+4. Install the python-automationclient throught the command ``python setup.py install``
+5. This is all!! Start to contribute....
 
 
 Command-line API
@@ -46,41 +47,41 @@ Installing this package gets you a shell command, ``automation``, that you
 can use to interact with any Stackops Automation compatible API..
 
 You'll need to provide your Stackops Automation username, password and tenant_name.
-You can do this with the ``--os-auto-username``, ``--os-auto-password`` and  ``--os-auto-tenant-name``
+You can do this with the ``--os-username``, ``--os-password`` and  ``--os-tenant-name``
 params, but it's easier to just set them as environment variables::
 
-    export OS_AUTO_USERNAME=stackops
-    export OS_AUTO_PASSWORD=secret
-    export OS_AUTO_TENANT_NAME=service
+    export OS_USERNAME=stackops
+    export OS_PASSWORD=secret
+    export OS_TENANT_NAME=service
 
-You will also need to define the authentication url with ``--os-auto-auth-url``
-and the version of the API with ``--auto-version``.  Or set them as an environment
+You will also need to define the authentication url with ``--os-auth-url``
+and the version of the API with ``--version``.  Or set them as an environment
 variables as well::
 
-    export OS_AUTO_AUTH_URL=http://example.com:5000/v2.0/
-    export OS_AUTO_VERSION=1
+    export OS_AUTH_URL=http://example.com:5000/v2.0/
+    export OS_VERSION=1
 
 As Stackops Automation used Keystone, you need to set the AUTOMATION_URL to the keystone
 endpoint::
 
-    export OS_AUTO_AUTH_URL=http://example.com:5000/v2.0/
+    export OS_AUTH_URL=http://example.com:5000/v2.0/
 
 Since Keystone can return multiple regions in the Service Catalog, you
-can specify the one you want with ``--os-auto-region-name`` (or
-``export OS_AUTO_REGION_NAME``). It defaults to the first in the list returned.
+can specify the one you want with ``--os-region-name`` (or
+``export OS_REGION_NAME``). It defaults to the first in the list returned.
 
 You'll find complete documentation on the shell by running
 ``automation help``::
 
-    usage: cinder [--debug] [--os-auto-username <auto-auth-user-name>]
-                  [--os-auto-password <auto-auth-password>]
-                  [--os-auto-tenant-name <auto-auth-tenant-name>] [--os-auto-auth-url <auto-auth-url>]
-                  [--os-auto-region-name <region-name>] [--auto-service-type <auto-service-type>]
-                  [--auto-service-name <auto-service-name>]
-                  [--auto-service-name <auto-service-name>]
-                  [--auto-endpoint-type <auto-endpoint-type>]
-                  [--os-auto-version <auto-compute-ver>]
-                  [--os-auto-cacert <ca-auto-certificate>] [--auto-retries <auto-retries>]
+    usage: cinder [--debug] [--os-username <auth-user-name>]
+                  [--os-password <auth-password>]
+                  [--os-tenant-name <auth-tenant-name>] [--os-auth-url <auth-url>]
+                  [--os-region-name <region-name>] [--service-type <service-type>]
+                  [--service-name <service-name>]
+                  [--service-name <service-name>]
+                  [--endpoint-type <endpoint-type>]
+                  [--os-version <-compute-ver>]
+                  [--os-cacert <ca-certificate>] [--retries <auto-retries>]
                   <subcommand> ...
 
     Command-line interface to the Stackops Automation API..
@@ -97,30 +98,30 @@ You'll find complete documentation on the shell by running
 
     Optional arguments:
       --debug               Print debugging output
-      --os-auto-username <auth-auto-user-name>
-                            Defaults to env[OS_AUTO_USERNAME].
-      --os-auto-password <auth-auto-password>
-                            Defaults to env[OS_AUTO_PASSWORD].
-      --os-auto-tenant-name <auth-auto-tenant-name>
-                            Defaults to env[OS_AUTO_TENANT_NAME].
-      --os-auto-auth-url <auto-auth-url>
-                            Defaults to env[OS_AUTO_AUTH_URL].
-      --os-auto-region-name <auto-region-name>
-                            Defaults to env[OS_AUTO_REGION_NAME].
-      --auto-service-type <auto-service-type>
+      --os-username <auth-user-name>
+                            Defaults to env[OS_USERNAME].
+      --os-password <auth-password>
+                            Defaults to env[OS_PASSWORD].
+      --os-tenant-name <auth-tenant-name>
+                            Defaults to env[OS_TENANT_NAME].
+      --os-auth-url <auth-url>
+                            Defaults to env[OS_AUTH_URL].
+      --os-region-name <region-name>
+                            Defaults to env[OS_REGION_NAME].
+      ---service-type <service-type>
                             Defaults to compute for most actions
-      --auto-service-name <auto-service-name>
-                            Defaults to env[AUTOMATION_SERVICE_NAME]
-      --auto-service-name <auto-service-name>
-                            Defaults to env[AUTOMATION_SERVICE_NAME]
-      --auto-endpoint-type <auto-endpoint-type>
-                            Defaults to env[AUTOMATION_ENDPOINT_TYPE] or publicURL.
-      --os-auto-api-version <auto-api-ver>
-                            Accepts 1,defaults to env[OS_AUTO_API_VERSION].
-      --os-auto-cacert <ca-auto-certificate>
+      --service-name <service-name>
+                            Defaults to env[SERVICE_NAME]
+      --service-name <service-name>
+                            Defaults to env[SERVICE_NAME]
+      --endpoint-type <endpoint-type>
+                            Defaults to env[ENDPOINT_TYPE] or publicURL.
+      --os-api-version <api-ver>
+                            Accepts 1,defaults to env[OS_API_VERSION].
+      --os-cacert <ca-certificate>
                             Specify a CA bundle file to use in verifying a TLS
-                            (https) server certificate. Defaults to env[OS_AUTO_CACERT]
-      --auto-retries <auto-retries>   Number of retries.
+                            (https) server certificate. Defaults to env[OS_CACERT]
+      --retries <auto-retries>   Number of retries.
 
 Python API
 ----------

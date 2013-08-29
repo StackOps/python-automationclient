@@ -25,6 +25,7 @@ import cStringIO
 
 import six
 import prettytable
+import json
 
 from automationclient import exceptions
 from automationclient.openstack.common import strutils
@@ -180,7 +181,10 @@ def print_list(objs, fields, formatters={}, order_by=None):
                 #else:
                 field_name = field.lower().replace(' ', '_')
                 data = getattr(o, field_name, '')
-                row.append(data)
+                if isinstance(data, dict):
+                    row.append(json.dumps(data))
+                else:
+                    row.append(data)
         pt.add_row(row)
 
     if order_by is None:
@@ -240,6 +244,13 @@ def print_indent_list(rows, hasHeader=False, headerChar='-', delim=' | ',
 
 
 def print_dict(d, property="Property"):
+    """
+
+    :param d:
+    :param property:
+    """
+    print(d)
+    print(property)
     pt = prettytable.PrettyTable([property, 'Value'], caching=False)
     pt.aligns = ['l', 'l']
     [pt.add_row(list(r)) for r in six.iteritems(d)]

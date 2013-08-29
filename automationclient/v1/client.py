@@ -87,5 +87,5 @@ class Client(object):
         """
         self.client.authenticate()
 
-    #def get_volume_api_version_from_endpoint(self):
-    #    return self.client.get_volume_api_version_from_endpoint()
+    #def get_automation_api_version_from_endpoint(self):
+    #    return self.client.get_automation_api_version_from_endpoint()
