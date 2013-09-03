@@ -1,3 +1,4 @@
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
 # Copyright 2013 OpenStack LLC
 # All Rights Reserved.
 #
@@ -131,7 +132,7 @@ def service_type(stype):
     """
     Adds 'service_type' attribute to decorated function.
     Usage:
-        @service_type('volume')
+        @service_type('automation')
         def mymethod(f):
             ...
     """
@@ -162,11 +163,6 @@ def _print(pt, order):
 
 
 def print_list(objs, fields, formatters={}, order_by=None):
-    #mixed_case_fields = ['serverId']
-    #print(objs, '\n')
-    #print(fields, '\n')
-    #print(formatters, '\n')
-    #print('\nfin\n')
     pt = prettytable.PrettyTable([f for f in fields], caching=False)
     pt.aligns = ['l' for f in fields]
 
@@ -176,9 +172,6 @@ def print_list(objs, fields, formatters={}, order_by=None):
             if field in formatters:
                 row.append(formatters[field](o))
             else:
-                #if field in mixed_case_fields:
-                #field_name = field.replace(' ', '_')
-                #else:
                 field_name = field.lower().replace(' ', '_')
                 data = getattr(o, field_name, '')
                 if isinstance(data, dict):
@@ -249,12 +242,28 @@ def print_dict(d, property="Property"):
     :param d:
     :param property:
     """
-    print(d)
-    print(property)
     pt = prettytable.PrettyTable([property, 'Value'], caching=False)
     pt.aligns = ['l', 'l']
     [pt.add_row(list(r)) for r in six.iteritems(d)]
     _print(pt, property)
+
+
+def remove_values_from_manager_dict(manager, keys):
+    final_dict = {}
+    for key, value in manager._info.items():
+        if key not in keys:
+            final_dict.update({key: value})
+    return final_dict
+
+
+def check_json_value_for_dict(data):
+    final_dict= {}
+    for key, value in data.items():
+        if isinstance(value, dict):
+            final_dict.update({key: json.dumps(value)})
+        else:
+            final_dict.update({key: value})
+    return final_dict
 
 
 def find_resource(manager, name_or_id):

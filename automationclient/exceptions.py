@@ -173,3 +173,10 @@ def from_response(response, body):
                    request_id=request_id)
     else:
         return cls(code=response.status_code, request_id=request_id)
+
+
+#TODO - 1. The REST Stackops API must to be review to handle
+#TODO - errors like Openstack
+def customize_stackops_from_response(response, body):
+    return ClientException(code=response.status_code,
+                           message=body['failure']['description'])

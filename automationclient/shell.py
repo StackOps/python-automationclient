@@ -158,8 +158,10 @@ class StackopsAutomationShell(object):
 
         '''parser.add_argument('--volume-service-name',
                             metavar='<volume-service-name>',
-                            default=utils.env('AUTOMATION_VOLUME_SERVICE_NAME'),
-                            help='Defaults to env[AUTOMATION_VOLUME_SERVICE_NAME]')'''
+                            default=
+                            utils.env('AUTOMATION_VOLUME_SERVICE_NAME'),
+                            help='Defaults to env
+                            [AUTOMATION_VOLUME_SERVICE_NAME]')'''
         parser.add_argument('--volume_service_name',
                             help=argparse.SUPPRESS)
 
@@ -167,9 +169,11 @@ class StackopsAutomationShell(object):
                             metavar='<endpoint-type>',
                             default=utils.env('AUTOMATION_ENDPOINT_TYPE',
                                               default=
-                                              DEFAULT_AUTOMATION_ENDPOINT_TYPE),
-                            help='Defaults to env[AUTOMATION_ENDPOINT_TYPE] or '
-                            + DEFAULT_AUTOMATION_ENDPOINT_TYPE + '.')
+                                              DEFAULT_AUTOMATION_ENDPOINT_TYPE
+                                              ),
+                            help='Defaults to env[AUTOMATION_ENDPOINT_TYPE] '
+                                 'or ' + DEFAULT_AUTOMATION_ENDPOINT_TYPE +
+                                 '.')
         parser.add_argument('--endpoint_type',
                             help=argparse.SUPPRESS)
 
@@ -177,7 +181,8 @@ class StackopsAutomationShell(object):
                             metavar='<automation-api-ver>',
                             default=utils.env('OS_AUTOMATION_API_VERSION',
                                               default=
-                                              DEFAULT_OS_AUTOMATION_API_VERSION),
+                                              DEFAULT_OS_AUTOMATION_API_VERSION
+                                              ),
                             help='Accepts 1 or 2,defaults '
                                  'to env[OS_AUTOMATION_API_VERSION].')
         parser.add_argument('--os_automation_api_version',
@@ -454,7 +459,8 @@ class StackopsAutomationShell(object):
         except exc.AuthorizationFailure:
             raise exc.CommandError("Unable to authorize user")
 
-        ''''endpoint_api_version = self.cs.get_automation_api_version_from_endpoint
+        ''''endpoint_api_version = self.cs.
+        get_automation_api_version_from_endpoint
         ()
         if endpoint_api_version != options.os_automation_api_version:
             msg = (("Volume API version is set to %s "
