@@ -100,7 +100,9 @@ class DeviceManager(base.ManagerWithFind):
 
     def update(self, device, **kwargs):
         """
-        Update the lom_ip or lom_mac for a device.
+        Update the lom_ip, lom_mac, management_network_ip,
+        management_network_netmask, management_network_gateway,
+        management_network_dns
 
         :param device: The :class:`Device` to update.
         """
