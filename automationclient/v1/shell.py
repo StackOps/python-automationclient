@@ -1,6 +1,7 @@
 # Copyright 2010 Jacob Kaplan-Moss
-
 # Copyright 2011 OpenStack LLC.
+
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
 # All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -17,12 +18,9 @@
 
 from __future__ import print_function
 
-import argparse
-import os
+
 import sys
 import time
-import logging
-import json
 
 from automationclient import utils
 
@@ -69,16 +67,153 @@ def _find_architecture(cs, architecture):
     return utils.find_resource(cs.architectures, architecture)
 
 
-def _find_node(cs, node):
-    """Get a node by ID."""
-    return utils.find_resource(cs.nodes, node)
+def _find_device(cs, device):
+    """Get a device by ID."""
+    return utils.find_resource(cs.devices, device)
+
+
+@utils.service_type('automation')
+def do_device_list(cs, args):
+    """List all the devices in the pool."""
+    devices = cs.devices.list()
+    utils.print_list(devices, ['id', 'name', 'mac', 'status',
+                               'connection_data'])
+
+
+@utils.arg('mac', metavar='<mac>', help='Mac of the device.')
+@utils.service_type('automation')
+def do_device_show(cs, args):
+    """Show details about a device."""
+    device = _find_device(cs, args.mac)
+    keys = ['_links', 'hardware_profile']
+    final_dict = utils.remove_values_from_manager_dict(device, keys)
+    final_dict = utils.check_json_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
+
+
+@utils.arg('mac', metavar='<mac>', help='MAC of the device.')
+@utils.arg('lom_ip', metavar='<lom-ip>',
+           default=None,
+           help='New lom_ip for the device.')
+@utils.arg('lom_mac', metavar='<lom-mac>',
+           default=None,
+           help='New lom_mac for the device')
+@utils.service_type('automation')
+def do_device_update(cs, args):
+    """Update a device."""
+
+    options = {
+        'lom_ip': args.lom_ip,
+        'lom_mac': args.lom_mac
+    }
+
+    device = _find_device(cs, args.mac)
+    cs.devices.update(device, **options)
+    do_device_show(cs, args)
+
+
+@utils.arg('mac', metavar='<mac>',
+           help='MAC of the device to delete.')
+@utils.arg('--action', metavar='<action>', default='nothing',
+           help='Action to perform after device is deleted')
+@utils.arg('--lom-user', metavar='<lom-user>',
+           help='Out-of-band user')
+@utils.arg('--lom-password', metavar='<lom-password>',
+           help='Out-of-Band user password')
+@utils.service_type('automation')
+def do_device_delete(cs, args):
+    """Remove a specific device from pool."""
+
+    options = {'action': args.action}
+
+    if args.lom_user is not None:
+        options['lom_user'] = args.lom_user
+
+    if args.lom_password is not None:
+        options['lom_password'] = args.lom_password
+
+    device = _find_device(cs, args.mac)
+    cs.devices.delete(device, **options)
+
+
+@utils.arg('mac', metavar='<mac>',
+           help='ID of the device to activate.')
+@utils.arg('zone_id', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone to activate the device')
+@utils.service_type('automation')
+def do_device_activate(cs, args):
+    """Activate a specific device in the pool."""
+    kwargs = {'zone_id': args.zone_id}
+    device = _find_device(cs, args.mac)
+    cs.devices.activate(device, **kwargs)
+
+
+@utils.arg('mac', metavar='<mac>',
+           help='Mac of the device to power on.')
+@utils.arg('lom_user', metavar='<lom-user>',
+           help='lom_user credential.')
+@utils.arg('lom_password', metavar='<lom-password>',
+           help='lom_password for lom_user credential')
+@utils.service_type('automation')
+def do_device_power_on(cs, args):
+    """Power on a specific device in the pool."""
+    kwargs = {'lom_user': args.lom_user, 'lom_password': args.lom_password}
+    device = _find_device(cs, args.mac)
+    cs.devices.power_on(device, **kwargs)
+
+
+@utils.arg('mac', metavar='<mac>',
+           help='Mac of the device to power off.')
+@utils.arg('lom_user', metavar='<lom-user>',
+           help='lom_user credential.')
+@utils.arg('lom_password', metavar='<lom-password>',
+           help='lom_password for lom_user credential')
+@utils.service_type('automation')
+def do_device_power_off(cs, args):
+    """Power off a specific device in the pool."""
+    kwargs = {'lom_user': args.lom_user, 'lom_password': args.lom_password}
+    device = _find_device(cs, args.mac)
+    cs.devices.power_off(device, **kwargs)
+
+
+@utils.arg('mac', metavar='<mac>',
+           help='Mac of the device to reboot.')
+@utils.arg('lom_user', metavar='<lom-user>',
+           help='lom_user credential.')
+@utils.arg('lom_password', metavar='<lom-password>',
+           help='lom_password for lom_user credential')
+@utils.service_type('automation')
+def do_device_reboot(cs, args):
+    """Reboot a specific device in the pool."""
+    kwargs = {'lom_user': args.lom_user, 'lom_password': args.lom_password}
+    device = _find_device(cs, args.mac)
+    cs.devices.reboot(device, **kwargs)
+
+
+@utils.arg('mac', metavar='<mac>',
+           help='Mac of the device to shutdown.')
+@utils.service_type('automation')
+def do_device_shutdown(cs, args):
+    """Shutdown a specific device in the pool."""
+    device = _find_device(cs, args.mac)
+    cs.devices.shutdown(device)
+
+
+@utils.arg('mac', metavar='<mac>',
+           help='Mac of the device to soft reboot.')
+@utils.service_type('automation')
+def do_device_soft_reboot(cs, args):
+    """Soft reboot a specific device in the pool."""
+    device = _find_device(cs, args.mac)
+    cs.devices.soft_reboot(device)
 
 
 @utils.service_type('automation')
 def do_component_list(cs, args):
     """List all the components that are available on automation."""
     components = cs.components.list()
-    utils.print_list(components, ['name', 'properties'])
+    utils.print_list(components, ['name', 'properties'], pretty='pretty')
 
 
 @utils.arg('component', metavar='<component-id>', help='ID of the component.')
@@ -86,15 +221,19 @@ def do_component_list(cs, args):
 def do_component_show(cs, args):
     """Show details about a component."""
     component = _find_component(cs, args.component)
-    utils.print_dict(component._info)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(component, keys)
+    final_dict = utils.check_json_pretty_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
 
 
 @utils.arg('component', metavar='<component-id>', help='ID of the component.')
 @utils.service_type('automation')
 def do_component_services(cs, args):
     """List all the services by a component."""
-    component = cs.components.get_services(args.component)
-    utils.print_list(component, ['Name', 'description'])
+    component = _find_component(cs, args.component)
+    services = cs.services.list(component)
+    utils.print_list(services, ['Name', 'description', '_links'])
 
 
 @utils.service_type('automation')
@@ -131,142 +270,6 @@ def do_architecture_delete(cs, args):
     """Remove a specific architecture."""
     architecture = _find_architecture(cs, args.architecture)
     architecture.delete()
-
-
-@utils.service_type('automation')
-def do_device_list(cs, args):
-    """List all the devices in the pool."""
-    nodes = cs.nodes.list()
-    utils.print_list(nodes, ['id', 'name', 'mac', 'status', 'connection_data'])
-
-
-@utils.arg('mac', metavar='<mac>', help='Mac of the node.')
-@utils.service_type('automation')
-def do_device_show(cs, args):
-    """Show details about a device."""
-    node = _find_node(cs, args.mac)
-    keys = ['_links', 'hardware_profile']
-    final_dict = utils.remove_values_from_manager_dict(node, keys)
-    final_dict = utils.check_json_value_for_dict(final_dict)
-    utils.print_dict(final_dict)
-
-
-@utils.arg('mac', metavar='<mac>', help='MAC of the node.')
-@utils.arg('lom_ip', metavar='<lom-ip>',
-           default=None,
-           help='New lom_ip for the node.')
-@utils.arg('lom_mac', metavar='<lom-mac>',
-           default=None,
-           help='New lom_mac for the node')
-@utils.service_type('automation')
-def do_device_update(cs, args):
-    """Update a device."""
-
-    options = {
-        'lom_ip': args.lom_ip,
-        'lom_mac': args.lom_mac
-    }
-
-    node = _find_node(cs, args.mac)
-    cs.nodes.update(node, **options)
-    do_device_show(cs, args)
-
-
-@utils.arg('mac', metavar='<mac>',
-           help='MAC of the node to delete.')
-@utils.arg('--action', metavar='<action>', default='nothing',
-           help='Action to perform after node is deleted')
-@utils.arg('--lom-user', metavar='<lom-user>',
-           help='Out-of-band user')
-@utils.arg('--lom-password', metavar='<lom-password>',
-           help='Out-of-Band user password')
-@utils.service_type('automation')
-def do_device_delete(cs, args):
-    """Remove a specific device from pool."""
-
-    options = {'action': args.action}
-
-    if args.lom_user is not None:
-        options['lom_user'] = args.lom_user
-
-    if args.lom_password is not None:
-        options['lom_password'] = args.lom_password
-
-    node = _find_node(cs, args.mac)
-    cs.nodes.delete(node, **options)
-
-
-@utils.arg('mac', metavar='<mac>',
-           help='ID of the node to activate.')
-@utils.arg('zone_id', metavar='<zone-id>',
-           type=int,
-           help='ID of the zone to activate the node')
-@utils.service_type('automation')
-def do_device_activate(cs, args):
-    """Activate a specific device in the pool."""
-    kwargs = {'zone_id': args.zone_id}
-    node = _find_node(cs, args.mac)
-    cs.nodes.activate(node, **kwargs)
-
-
-@utils.arg('mac', metavar='<mac>',
-           help='Mac of the node to power on.')
-@utils.arg('lom_user', metavar='<lom-user>',
-           help='lom_user credential.')
-@utils.arg('lom_password', metavar='<lom-password>',
-           help='lom_password for lom_user credential')
-@utils.service_type('automation')
-def do_device_power_on(cs, args):
-    """Power on a specific device in the pool."""
-    kwargs = {'lom_user': args.lom_user, 'lom_password': args.lom_password}
-    node = _find_node(cs, args.mac)
-    cs.nodes.power_on(node, **kwargs)
-
-
-@utils.arg('mac', metavar='<mac>',
-           help='Mac of the node to power off.')
-@utils.arg('lom_user', metavar='<lom-user>',
-           help='lom_user credential.')
-@utils.arg('lom_password', metavar='<lom-password>',
-           help='lom_password for lom_user credential')
-@utils.service_type('automation')
-def do_device_power_off(cs, args):
-    """Power off a specific device in the pool."""
-    kwargs = {'lom_user': args.lom_user, 'lom_password': args.lom_password}
-    node = _find_node(cs, args.mac)
-    cs.nodes.power_off(node, **kwargs)
-
-
-@utils.arg('mac', metavar='<mac>',
-           help='Mac of the node to reboot.')
-@utils.arg('lom_user', metavar='<lom-user>',
-           help='lom_user credential.')
-@utils.arg('lom_password', metavar='<lom-password>',
-           help='lom_password for lom_user credential')
-@utils.service_type('automation')
-def do_device_reboot(cs, args):
-    """Reboot a specific device in the pool."""
-    kwargs = {'lom_user': args.lom_user, 'lom_password': args.lom_password}
-    node = _find_node(cs, args.mac)
-    cs.nodes.reboot(node, **kwargs)
-
-
-@utils.arg('mac', metavar='<mac>',
-           help='Mac of the node to shutdown.')
-@utils.service_type('automation')
-def do_device_shutdown(cs, args):
-    """Shutdown a specific device in the pool."""
-    node = _find_node(cs, args.mac)
-    cs.nodes.shutdown(node)
-
-
-@utils.arg('mac', metavar='<mac>',
-           help='Mac of the node to soft reboot.')
-@utils.service_type('automation')
-def do_device_soft_reboot(cs, args):
-    """Soft reboot a specific device in the pool."""
-    node = _find_node(cs, args.mac)
-    cs.nodes.soft_reboot(node)
 
 
 def do_endpoints(cs, args):

@@ -1,6 +1,7 @@
 # Copyright 2010 Jacob Kaplan-Moss
-
 # Copyright 2011 OpenStack LLC.
+
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
 # All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may

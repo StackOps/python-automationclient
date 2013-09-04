@@ -1,5 +1,6 @@
-# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
 # Copyright 2013 OpenStack LLC
+
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
 # All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -162,7 +163,7 @@ def _print(pt, order):
         print(strutils.safe_encode(pt.get_string(sortby=order)))
 
 
-def print_list(objs, fields, formatters={}, order_by=None):
+def print_list(objs, fields, formatters={}, order_by=None, pretty=None):
     pt = prettytable.PrettyTable([f for f in fields], caching=False)
     pt.aligns = ['l' for f in fields]
 
@@ -175,7 +176,11 @@ def print_list(objs, fields, formatters={}, order_by=None):
                 field_name = field.lower().replace(' ', '_')
                 data = getattr(o, field_name, '')
                 if isinstance(data, dict):
-                    row.append(json.dumps(data))
+                    if pretty:
+                        row.append(json.dumps(data, sort_keys=True, indent=4,
+                                              separators=(',', ': ')))
+                    else:
+                        row.append(json.dumps(data))
                 else:
                     row.append(data)
         pt.add_row(row)
@@ -257,10 +262,21 @@ def remove_values_from_manager_dict(manager, keys):
 
 
 def check_json_value_for_dict(data):
-    final_dict= {}
+    final_dict = {}
     for key, value in data.items():
         if isinstance(value, dict):
             final_dict.update({key: json.dumps(value)})
+        else:
+            final_dict.update({key: value})
+    return final_dict
+
+
+def check_json_pretty_value_for_dict(data):
+    final_dict = {}
+    for key, value in data.items():
+        if isinstance(value, dict):
+            final_dict.update({key: json.dumps(value, sort_keys=True, indent=4,
+                                               separators=(',', ': '))})
         else:
             final_dict.update({key: value})
     return final_dict

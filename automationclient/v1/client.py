@@ -1,4 +1,6 @@
 # Copyright 2013 OpenStack LLC
+
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
 # All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -14,7 +16,7 @@
 #    under the License.
 
 from automationclient import client
-from automationclient.v1 import components, architectures, nodes
+from automationclient.v1 import devices, components, services, architectures
 
 
 class Client(object):
@@ -45,9 +47,10 @@ class Client(object):
         password = api_key
 
         # extensions
+        self.devices = devices.DeviceManager(self)
         self.components = components.ComponentManager(self)
+        self.services = services.ServiceManager(self)
         self.architectures = architectures.ArchitectureManager(self)
-        self.nodes = nodes.NodeManager(self)
 
         # Add in any extensions...
         if extensions:

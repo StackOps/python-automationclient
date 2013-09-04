@@ -14,33 +14,27 @@
 # limitations under the License.
 
 
-"""Component interface."""
+"""Services interface."""
 
 from automationclient import base
 
 
-class Component(base.Resource):
-    """A Component is a Stackops or Openstack service to be deployed."""
+class Service(base.Resource):
+    """A Service is an extension of Component Class."""
     def __repr__(self):
-        return "<Component: %s>" % self.name
+        return "<Service: %s>" % self.name
 
 
-class ComponentManager(base.ManagerWithFind):
-    """Manage :class:`Component` resources."""
-    resource_class = Component
+class ServiceManager(base.ManagerWithFind):
+    """Manage :class:`Service` resources."""
+    resource_class = Service
 
-    def list(self):
-        """Get a list of all component.
-
-        :rtype: list of :class:`Component`.
-        """
-        return self._list("/components", "components")
-
-    def get(self, component):
-        """Get a specific component.
+    def list(self, component):
+        """Get a list of services by a specific component.
 
         :param component: The ID (Name of the component) of the :class:
-        `Component` to get.
+        `Component` to get its services.
         :rtype: :class:`Component`
         """
-        return self._get("/components/%s" % base.getid(component), "component")
+        return self._list("/components/%s/services" % component.name,
+                          "services")
