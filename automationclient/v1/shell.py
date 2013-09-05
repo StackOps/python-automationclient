@@ -102,16 +102,17 @@ def do_device_show(cs, args):
 @utils.arg('management_network_ip', metavar='<management-network-ip>',
            default=None,
            help='New IP for management network of the device')
-@utils.arg('management_network_netmask', metavar='<management-network-netmask>',
+@utils.arg('management_network_netmask',
+           metavar='<management-network-netmask>',
            default=None,
            help='New netmask for the management network of the device')
-@utils.arg('management_network_gateway', metavar='<management-network-gateway>',
+@utils.arg('management_network_gateway',
+           metavar='<management-network-gateway>',
            default=None,
            help='New gateway for the management network of the device')
 @utils.arg('management_network_dns', metavar='<management-network-dns>',
            default=None,
            help='New DNS for the management network of the device')
-
 @utils.service_type('automation')
 def do_device_update(cs, args):
     """Update a device."""
@@ -119,10 +120,10 @@ def do_device_update(cs, args):
     options = {
         'lom_ip': args.lom_ip,
         'lom_mac': args.lom_mac,
-        'management_network_ip':args.management_network_ip,
+        'management_network_ip': args.management_network_ip,
         'management_network_netmask': args.management_network_netmask,
         'management_network_gateway': args.management_network_gateway,
-        'management_network_dns' : args.management_network_dns
+        'management_network_dns': args.management_network_dns
     }
 
     device = _find_device(cs, args.mac)

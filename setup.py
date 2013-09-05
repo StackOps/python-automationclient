@@ -32,7 +32,6 @@
 import os
 import setuptools
 
-
 from automationclient.openstack.common import setup
 
 requires = setup.parse_requirements()
@@ -43,7 +42,6 @@ project = 'python-automationclient'
 
 def read_file(file_name):
     return open(os.path.join(os.path.dirname(__file__), file_name)).read()
-
 
 setuptools.setup(
     name=project,

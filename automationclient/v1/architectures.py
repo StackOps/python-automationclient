@@ -16,8 +16,6 @@
 
 """Architecture interface."""
 
-import ast
-
 from automationclient import base
 
 
