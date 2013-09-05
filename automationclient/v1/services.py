@@ -20,7 +20,7 @@ from automationclient import base
 
 
 class Service(base.Resource):
-    """A Service is an extension of Component Class."""
+    """A Service is an extension of a Component class."""
     def __repr__(self):
         return "<Service: %s>" % self.name
 

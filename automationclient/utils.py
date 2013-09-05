@@ -277,6 +277,12 @@ def check_json_pretty_value_for_dict(data):
         if isinstance(value, dict):
             final_dict.update({key: json.dumps(value, sort_keys=True, indent=4,
                                                separators=(',', ': '))})
+        elif isinstance(value, list):
+            print(key, value)
+            for val in value:
+                final_dict.update({key: json.dumps(val, sort_keys=True,
+                                                   indent=4,
+                                                   separators=(',', ': '))})
         else:
             final_dict.update({key: value})
     return final_dict

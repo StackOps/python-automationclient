@@ -21,6 +21,7 @@ from __future__ import print_function
 
 import sys
 import time
+import ast
 
 from automationclient import utils
 
@@ -257,7 +258,7 @@ def do_component_services(cs, args):
 def do_architecture_list(cs, args):
     """List all the architectures that are available on automation."""
     architectures = cs.architectures.list()
-    utils.print_list(architectures, ['id', 'name', 'profiles', '_links'])
+    utils.print_list(architectures, ['id', 'name', 'profiles'])
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -266,18 +267,30 @@ def do_architecture_list(cs, args):
 def do_architecture_show(cs, args):
     """Show details about an architecture."""
     architecture = _find_architecture(cs, args.architecture)
-    utils.print_dict(architecture._info)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(architecture, keys)
+    final_dict = utils.check_json_pretty_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
 
 
 @utils.arg('architecture', metavar='<architecture-file>',
-           help='File with extension *.archs describing the '
+           help='File with extension *.arc describing the '
                 'new architecture to create.')
 @utils.service_type('automation')
 def do_architecture_create(cs, args):
-    """Add a new architecture."""
-    architecture = cs.architectures.create(args.architecture)
-    utils.print_list(architecture, ['_links', 'name', 'profiles', 'id',
-                                    'profiles'])
+    """Add a new architecture.
+    :param cs:
+    :param args:
+    """
+    contents = open(args.architecture)
+    lines = contents.readlines()
+    architecture_file = ''.join([line.strip() for line in lines])
+    architecture_file = ast.literal_eval(architecture_file)
+    architecture = cs.architectures.create(architecture_file)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(architecture, keys)
+    final_dict = utils.check_json_pretty_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
 
 
 @utils.arg('architecture', metavar='<architecture>',
@@ -286,7 +299,18 @@ def do_architecture_create(cs, args):
 def do_architecture_delete(cs, args):
     """Remove a specific architecture."""
     architecture = _find_architecture(cs, args.architecture)
-    architecture.delete()
+    cs.architectures.delete(architecture)
+
+
+@utils.arg('architecture', metavar='<architecture>',
+           help='ID of the architecture to get its template.')
+@utils.service_type('automation')
+def do_architecture_template(cs, args):
+    """Get template from a specific architecture."""
+    architecture = _find_architecture(cs, args.architecture)
+    profile = cs.profiles.template(architecture)
+    final_dict = utils.check_json_pretty_value_for_dict(profile._info)
+    utils.print_dict(final_dict)
 
 
 def do_endpoints(cs, args):

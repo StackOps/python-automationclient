@@ -180,5 +180,10 @@ def from_response(response, body):
 #TODO - 1. The REST Stackops API must to be review to handle
 #TODO - errors like Openstack
 def customize_stackops_from_response(response, body):
-    return ClientException(code=response.status_code,
-                           message=body['failure']['description'])
+    for key in body.keys():
+        if key == 'message':
+            return ClientException(code=response.status_code,
+                                   message=body['message'])
+        elif key == 'failure':
+            return ClientException(code=response.status_code,
+                                   message=body['failure']['description'])

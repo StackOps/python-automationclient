@@ -16,6 +16,8 @@
 
 """Architecture interface."""
 
+import ast
+
 from automationclient import base
 
 
@@ -54,7 +56,8 @@ class ArchitectureManager(base.ManagerWithFind):
         :param architecture: Architecture JSON format define
         """
 
-        body = {'architecture': architecture}
+        body = architecture
+
         return self._create('/archs', body, 'architecture')
 
     def delete(self, architecture):
