@@ -24,6 +24,7 @@ import time
 import ast
 import fnmatch
 import os
+import json
 
 from automationclient import utils
 
@@ -332,8 +333,7 @@ def do_architecture_template(cs, args):
     """Get template from a specific architecture."""
     architecture = _find_architecture(cs, args.architecture)
     profile = cs.profiles.template(architecture)
-    final_dict = utils.check_json_pretty_value_for_dict(profile._info)
-    utils.print_dict(final_dict)
+    print (json.dumps({'profile': profile._info}))
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
