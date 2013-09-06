@@ -22,6 +22,8 @@ from __future__ import print_function
 import sys
 import time
 import ast
+import fnmatch
+import os
 
 from automationclient import utils
 
@@ -58,6 +60,21 @@ def _poll_for_status(poll_fn, obj_id, action, final_ok_states,
             time.sleep(poll_period)
 
 
+def _validate_extension_file(file, extension):
+    ext = os.path.splitext(file)[-1].lower()
+    if ext == ".%s" % extension:
+        pass
+    else:
+        print("\nError: The file %s must have .%s extension"
+              % (file, extension))
+        raise SystemExit
+
+
+def _find_device(cs, device):
+    """Get a device by ID."""
+    return utils.find_resource(cs.devices, device)
+
+
 def _find_component(cs, component):
     """Get a component by ID."""
     return utils.find_resource(cs.components, component)
@@ -68,9 +85,9 @@ def _find_architecture(cs, architecture):
     return utils.find_resource(cs.architectures, architecture)
 
 
-def _find_device(cs, device):
-    """Get a device by ID."""
-    return utils.find_resource(cs.devices, device)
+def _find_profile(cs, architecture, profile):
+    """Get a profile by architecture."""
+    return cs.profiles.get(architecture, profile)
 
 
 @utils.service_type('automation')
@@ -156,7 +173,7 @@ def do_device_delete(cs, args):
 
 
 @utils.arg('mac', metavar='<mac>',
-           help='ID of the device to activate.')
+           help='Mac of the device to activate.')
 @utils.arg('zone_id', metavar='<zone-id>',
            type=int,
            help='ID of the zone to activate the device')
@@ -235,7 +252,7 @@ def do_component_list(cs, args):
     utils.print_list(components, ['name', 'properties'], pretty='pretty')
 
 
-@utils.arg('component', metavar='<component-id>', help='ID of the component.')
+@utils.arg('component', metavar='<component>', help='Name of the component.')
 @utils.service_type('automation')
 def do_component_show(cs, args):
     """Show details about a component."""
@@ -246,7 +263,7 @@ def do_component_show(cs, args):
     utils.print_dict(final_dict)
 
 
-@utils.arg('component', metavar='<component-id>', help='ID of the component.')
+@utils.arg('component', metavar='<component>', help='Name of the component.')
 @utils.service_type('automation')
 def do_component_services(cs, args):
     """List all the services by a component."""
@@ -263,6 +280,7 @@ def do_architecture_list(cs, args):
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
            help='ID of the architecture.')
 @utils.service_type('automation')
 def do_architecture_show(cs, args):
@@ -283,6 +301,7 @@ def do_architecture_create(cs, args):
     :param cs:
     :param args:
     """
+    _validate_extension_file(args.architecture, 'arc')
     contents = open(args.architecture)
     lines = contents.readlines()
     architecture_file = ''.join([line.strip() for line in lines])
@@ -294,7 +313,8 @@ def do_architecture_create(cs, args):
     utils.print_dict(final_dict)
 
 
-@utils.arg('architecture', metavar='<architecture>',
+@utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
            help='ID of the architecture to delete.')
 @utils.service_type('automation')
 def do_architecture_delete(cs, args):
@@ -303,7 +323,8 @@ def do_architecture_delete(cs, args):
     cs.architectures.delete(architecture)
 
 
-@utils.arg('architecture', metavar='<architecture>',
+@utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
            help='ID of the architecture to get its template.')
 @utils.service_type('automation')
 def do_architecture_template(cs, args):
@@ -312,6 +333,90 @@ def do_architecture_template(cs, args):
     profile = cs.profiles.template(architecture)
     final_dict = utils.check_json_pretty_value_for_dict(profile._info)
     utils.print_dict(final_dict)
+
+@utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
+           help='ID of the architecture.')
+@utils.service_type('automation')
+def do_profile_list(cs, args):
+    """List all the profiles by architecture."""
+    architecture = _find_architecture(cs, args.architecture)
+    profiles = cs.architectures.list(architecture)
+    utils.print_list(profiles, ['id', 'name', 'profiles'])
+
+
+@utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
+           help='ID of the architecture.')
+@utils.arg('profile', metavar='<profile-id>',
+           type=int,
+           help='ID of the profile.')
+@utils.service_type('automation')
+def do_profile_show(cs, args):
+    """Show details about a profile by architecture."""
+    architecture = _find_architecture(cs, args.architecture)
+    profile = _find_profile(cs, args.architecture)
+
+
+@utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
+           help='ID of the architecture to create a new profile on it')
+@utils.arg('profile', metavar='<profile-file>',
+           help='File with extension *.json describing the '
+                'new profile to create.')
+@utils.service_type('automation')
+def do_profile_create(cs, args):
+    """Add a new profile by architecture.
+    :param cs:
+    :param args:
+    """
+    _validate_extension_file(args.architecture, 'json')
+    contents = open(args.architecture)
+    lines = contents.readlines()
+    profile_file = ''.join([line.strip() for line in lines])
+    profile_file = ast.literal_eval(profile_file)
+    architecture = _find_architecture(cs, args.architecture)
+    profile = cs.profiles.create(architecture, profile_file)
+
+@utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
+           help='ID of the architecture.')
+@utils.arg('profile', metavar='<profile-id>',
+           type=int,
+           help='ID of the profile to update.')
+@utils.arg('name',
+           metavar='<name>',
+           default=None,
+           help='New name of the profile')
+@utils.arg('components',
+           metavar='<components>',
+           default=None,
+           help='New array of components for profile')
+@utils.service_type('automation')
+def do_profile_update(cs, args):
+    """Update a profile by architecture."""
+
+    options = {
+        'name': args.lom_ip,
+        'components': args.components
+    }
+    architecture = _find_architecture(cs, args.architecture)
+    profile = _find_profile(cs, args.architecture, args.profile)
+    cs.devices.update(architecture, profile, **options)
+    do_profile_show(cs, args)
+
+@utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
+           help='ID of the architecture to get an specific profile to delete.')
+@utils.arg('profile', metavar='<profile-id>',
+           type=int,
+           help='ID of the profile to delete.')
+@utils.service_type('automation')
+def do_profile_delete(cs, args):
+    """Remove a specific profile by architecture."""
+    architecture = _find_architecture(cs, args.architecture)
+    profile = _find_profile(cs, args.architecture, args.profile)
+    cs.profiles.delete(architecture, profile)
 
 
 def do_endpoints(cs, args):

@@ -21,6 +21,7 @@ from automationclient import base
 
 class Profile(base.Resource):
     """A Profile is an extension of an Architecture class."""
+
     def __repr__(self):
         return "<Profile: %s>" % self.name
 
@@ -30,7 +31,7 @@ class ProfileManager(base.ManagerWithFind):
     resource_class = Profile
 
     def list(self, architecture):
-        """Get a list of profile by a specific architeture.
+        """Get a list of profile by a specific architecture.
 
         :param architecture: The ID of the :class: `Architecture` to get
         its services.
@@ -48,8 +49,54 @@ class ProfileManager(base.ManagerWithFind):
         :param profile: The ID of the :class: `Profile` to get.
         :rtype: :class:`Profile`
         """
-        return self._get("/archs/%s/profiles/%s" % base.getid(profile),
+        return self._get("/archs/%s/profiles/%s" % (base.getid(architecture),
+                                                    base.getid(profile)),
                          "profile")
+
+    def create(self, architecture, profile):
+        """
+        Create a profile.
+
+        :param architecture: The ID of the :class: `Architecture` to get.
+        :rtype: :class:`Architecture`
+
+        :param profile: Profile JSON format define
+        """
+
+        body = profile
+
+        return self._create("/archs/%s/profiles" % (base.getid(architecture)),
+                            body, 'profile')
+
+    def update(self, architecture, profile, **kwargs):
+        """
+        Update the name, components
+
+        :param architecture: The ID of the :class: `Architecture` to get.
+        :rtype: :class:`Architecture`
+
+        :param profile: The ID of the :class: `Profile` to update.
+        :rtype: :class:`Profile`
+        """
+        if not kwargs:
+            return
+
+        self._update("/archs/%s/profiles/%s" % base.getid(architecture),
+                     base.getid(profile), kwargs)
+
+    def delete(self, architecture, profile):
+        """
+        Delete a profile.
+
+        :param architecture: The ID of the :class: `Architecture` to get.
+        :rtype: :class:`Architecture`
+
+        :param profile: The ID of the :class: `Profile` to delete.
+        :rtype: :class:`Profile`
+        """
+
+        self._delete("/archs/%s/profiles/%s" % base.getid(architecture),
+                     base.getid(profile))
 
     #TODO: Use /archs/<arch_id>/template
     def template(self, architecture):
