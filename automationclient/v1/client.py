@@ -21,6 +21,7 @@ from automationclient.v1 import components
 from automationclient.v1 import services
 from automationclient.v1 import architectures
 from automationclient.v1 import profiles
+from automationclient.v1 import properties
 
 
 class Client(object):
@@ -56,6 +57,7 @@ class Client(object):
         self.services = services.ServiceManager(self)
         self.architectures = architectures.ArchitectureManager(self)
         self.profiles = profiles.ProfileManager(self)
+        self.properties = properties.PropertyManager(self)
 
         # Add in any extensions...
         if extensions:
