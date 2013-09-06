@@ -50,7 +50,7 @@ class ProfileManager(base.ManagerWithFind):
         :rtype: :class:`Profile`
         """
         return self._get("/archs/%s/profiles/%s" % (base.getid(architecture),
-                                                    base.getid(profile)),
+                                                    profile),
                          "profile")
 
     def create(self, architecture, profile):
@@ -68,7 +68,7 @@ class ProfileManager(base.ManagerWithFind):
         return self._create("/archs/%s/profiles" % (base.getid(architecture)),
                             body, 'profile')
 
-    def update(self, architecture, profile, **kwargs):
+    def update(self, architecture, profile, profile_file):
         """
         Update the name, components
 
@@ -77,12 +77,15 @@ class ProfileManager(base.ManagerWithFind):
 
         :param profile: The ID of the :class: `Profile` to update.
         :rtype: :class:`Profile`
+
+        :param profile: Profile JSON format define with updates
         """
-        if not kwargs:
+        if not profile_file:
             return
 
-        self._update("/archs/%s/profiles/%s" % base.getid(architecture),
-                     base.getid(profile), kwargs)
+        self._update("/archs/%s/profiles/%s" % (base.getid(architecture),
+                                                base.getid(profile)),
+                     profile_file)
 
     def delete(self, architecture, profile):
         """
@@ -95,8 +98,8 @@ class ProfileManager(base.ManagerWithFind):
         :rtype: :class:`Profile`
         """
 
-        self._delete("/archs/%s/profiles/%s" % base.getid(architecture),
-                     base.getid(profile))
+        self._delete("/archs/%s/profiles/%s" % (base.getid(architecture),
+                                                base.getid(profile)))
 
     #TODO: Use /archs/<arch_id>/template
     def template(self, architecture):

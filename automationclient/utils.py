@@ -181,6 +181,12 @@ def print_list(objs, fields, formatters={}, order_by=None, pretty=None):
                                               separators=(',', ': ')))
                     else:
                         row.append(json.dumps(data))
+                if isinstance(data, list):
+                    if pretty:
+                        row.append(json.dumps(data, sort_keys=True, indent=4,
+                                              separators=(',', ': ')))
+                    else:
+                        row.append(json.dumps(data))
                 else:
                     row.append(data)
         pt.add_row(row)
@@ -266,6 +272,9 @@ def check_json_value_for_dict(data):
     for key, value in data.items():
         if isinstance(value, dict):
             final_dict.update({key: json.dumps(value)})
+        elif isinstance(value, list):
+            for val in value:
+                final_dict.update({key: json.dumps(val)})
         else:
             final_dict.update({key: value})
     return final_dict

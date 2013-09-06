@@ -87,6 +87,7 @@ def _find_architecture(cs, architecture):
 
 def _find_profile(cs, architecture, profile):
     """Get a profile by architecture."""
+    architecture = _find_architecture(cs, architecture)
     return cs.profiles.get(architecture, profile)
 
 
@@ -334,6 +335,7 @@ def do_architecture_template(cs, args):
     final_dict = utils.check_json_pretty_value_for_dict(profile._info)
     utils.print_dict(final_dict)
 
+
 @utils.arg('architecture', metavar='<architecture-id>',
            type=int,
            help='ID of the architecture.')
@@ -341,8 +343,8 @@ def do_architecture_template(cs, args):
 def do_profile_list(cs, args):
     """List all the profiles by architecture."""
     architecture = _find_architecture(cs, args.architecture)
-    profiles = cs.architectures.list(architecture)
-    utils.print_list(profiles, ['id', 'name', 'profiles'])
+    profiles = cs.profiles.list(architecture)
+    utils.print_list(profiles, ['id', 'name', 'components'], pretty='pretty')
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -354,8 +356,11 @@ def do_profile_list(cs, args):
 @utils.service_type('automation')
 def do_profile_show(cs, args):
     """Show details about a profile by architecture."""
-    architecture = _find_architecture(cs, args.architecture)
-    profile = _find_profile(cs, args.architecture)
+    profile = _find_profile(cs, args.architecture, args.profile)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(profile, keys)
+    final_dict = utils.check_json_pretty_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -366,17 +371,19 @@ def do_profile_show(cs, args):
                 'new profile to create.')
 @utils.service_type('automation')
 def do_profile_create(cs, args):
-    """Add a new profile by architecture.
-    :param cs:
-    :param args:
-    """
-    _validate_extension_file(args.architecture, 'json')
-    contents = open(args.architecture)
+    """Add a new profile by architecture."""
+    _validate_extension_file(args.profile, 'json')
+    contents = open(args.profile)
     lines = contents.readlines()
     profile_file = ''.join([line.strip() for line in lines])
     profile_file = ast.literal_eval(profile_file)
     architecture = _find_architecture(cs, args.architecture)
     profile = cs.profiles.create(architecture, profile_file)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(profile, keys)
+    final_dict = utils.check_json_pretty_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
+
 
 @utils.arg('architecture', metavar='<architecture-id>',
            type=int,
@@ -384,26 +391,22 @@ def do_profile_create(cs, args):
 @utils.arg('profile', metavar='<profile-id>',
            type=int,
            help='ID of the profile to update.')
-@utils.arg('name',
-           metavar='<name>',
-           default=None,
-           help='New name of the profile')
-@utils.arg('components',
-           metavar='<components>',
-           default=None,
-           help='New array of components for profile')
+@utils.arg('profile_file', metavar='<profile-file>',
+           help='File with extension *.json describing the '
+                'profile to modify.')
 @utils.service_type('automation')
 def do_profile_update(cs, args):
     """Update a profile by architecture."""
-
-    options = {
-        'name': args.lom_ip,
-        'components': args.components
-    }
+    _validate_extension_file(args.profile_file, 'json')
+    contents = open(args.profile_file)
+    lines = contents.readlines()
+    profile_file_update = ''.join([line.strip() for line in lines])
+    profile_file_update = ast.literal_eval(profile_file_update)
     architecture = _find_architecture(cs, args.architecture)
     profile = _find_profile(cs, args.architecture, args.profile)
-    cs.devices.update(architecture, profile, **options)
+    cs.profiles.update(architecture, profile, profile_file_update)
     do_profile_show(cs, args)
+
 
 @utils.arg('architecture', metavar='<architecture-id>',
            type=int,
