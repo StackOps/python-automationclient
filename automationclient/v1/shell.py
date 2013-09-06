@@ -427,3 +427,53 @@ def do_endpoints(cs, args):
     catalog = cs.client.service_catalog.catalog
     for e in catalog['access']['serviceCatalog']:
         utils.print_dict(e['endpoints'][0], e['name'])
+
+
+@utils.service_type('automation')
+def do_property_list(cs, args):
+    """List all the properties that are available on automation."""
+    properties = cs.properties.list()
+    utils.print_dict(properties)
+
+
+@utils.arg('property_key', metavar='<property-key>',
+           help='The key property.')
+@utils.arg('property_value', metavar='<property-value>',
+           help='The value property')
+@utils.service_type('automation')
+def do_property_create(cs, args):
+    """Add a new property.
+    :param cs:
+    :param args:
+    """
+    property_key = args.property_key
+    property_value = args.property_value
+    cs.properties.create(property_key, property_value)
+
+
+@utils.arg('property_key', metavar='<property-key>',
+           help='The key property.')
+@utils.arg('property_value', metavar='<property-value>',
+           help='The value property')
+@utils.service_type('automation')
+def do_property_update(cs, args):
+    """Updates a property.
+    :param cs:
+    :param args:
+    """
+    property_key = args.property_key
+    property_value = args.property_value
+    cs.properties.update(property_key, property_value)
+    do_property_list(cs, args)
+
+
+@utils.arg('property_key', metavar='<property-key>',
+           help='The key property.')
+@utils.service_type('automation')
+def do_property_delete(cs, args):
+    """Delete a property.
+    :param cs:
+    :param args:
+    """
+    property_key = args.property_key
+    cs.properties.delete(property_key)
