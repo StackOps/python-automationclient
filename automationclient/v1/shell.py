@@ -493,6 +493,7 @@ def do_profile_property_delete(cs, args):
     cs.profiles.property_delete(architecture, profile, property_key,
                                 property_value)
 
+
 @utils.service_type('automation')
 def do_global_property_list(cs, args):
     """List all the properties that are available on automation."""
