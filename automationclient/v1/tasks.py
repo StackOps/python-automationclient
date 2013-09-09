@@ -23,7 +23,8 @@ from automationclient import base
 
 class Task(base.Resource):
     """A Task is set of steps to deploy an Openstack or Stackops
-    component on a zone."""
+    component on a zone.
+    """
 
     def __repr__(self):
         return "<Task: %s>" % self.name

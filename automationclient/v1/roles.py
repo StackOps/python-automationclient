@@ -23,7 +23,8 @@ from automationclient import base
 
 class Role(base.Resource):
     """A Role is 'label' of a instance with some Openstack and/or Stackops
-    components deployed"""
+    components deployed
+    """
 
     def __repr__(self):
         return "<Role: %s>" % self.name

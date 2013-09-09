@@ -441,7 +441,7 @@ def do_profile_delete(cs, args):
            help='The value property')
 @utils.service_type('automation')
 def do_profile_property_create(cs, args):
-    """ Create a profile property by architecture"""
+    """Create a profile property by architecture."""
     architecture = _find_architecture(cs, args.architecture)
     profile = _find_profile(cs, args.architecture, args.profile)
     property_key = args.property_key
@@ -463,7 +463,7 @@ def do_profile_property_create(cs, args):
            help='The value property')
 @utils.service_type('automation')
 def do_profile_property_update(cs, args):
-    """ Update a profile property by architecture"""
+    """Update a profile property by architecture."""
     architecture = _find_architecture(cs, args.architecture)
     profile = _find_profile(cs, args.architecture, args.profile)
     property_key = args.property_key
@@ -485,7 +485,7 @@ def do_profile_property_update(cs, args):
            help='The value property')
 @utils.service_type('automation')
 def do_profile_property_delete(cs, args):
-    """ Delete a profile property by architecture"""
+    """Delete a profile property by architecture."""
     architecture = _find_architecture(cs, args.architecture)
     profile = _find_profile(cs, args.architecture, args.profile)
     property_key = args.property_key
