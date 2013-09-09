@@ -17,6 +17,7 @@
 """Profiles interface."""
 
 from automationclient import base
+from automationclient import exceptions
 
 
 class Profile(base.Resource):
@@ -111,3 +112,70 @@ class ProfileManager(base.ManagerWithFind):
         """
         return self._get("/archs/%s/get_template" % base.getid(architecture),
                          "profile")
+
+    def property_create(self, architecture, profile, property_key,
+                        property_value):
+
+        profile_dict = profile._info
+        props_dict = profile_dict['properties']
+
+        if property_key not in props_dict:
+            props_dict[property_key] = property_value
+        else:
+            msg = "A profile property with a key: '%s' exists." % \
+                  (property_key)
+            raise exceptions.CommandError(msg)
+
+        profile_dict['properties'] = props_dict
+        del profile_dict['_links']
+        profile_body = {"profile": profile_dict}
+
+        self._update_without_hooks("/archs/%s/profiles/%s" %
+                                   (base.getid(architecture),
+                                    base.getid(profile)), profile_body)
+
+    def property_update(self, architecture, profile, property_key,
+                        property_value):
+
+        profile_dict = profile._info
+        props_dict = profile_dict['properties']
+
+        if property_key in props_dict:
+            props_dict[property_key] = property_value
+        else:
+            msg = "No profile property with a key: '%s' exists." % \
+                  (property_key)
+            raise exceptions.CommandError(msg)
+
+        profile_dict['properties'] = props_dict
+        del profile_dict['_links']
+        profile_body = {"profile": profile_dict}
+
+        self._update_without_hooks("/archs/%s/profiles/%s" %
+                                   (base.getid(architecture),
+                                    base.getid(profile)), profile_body)
+
+    def property_delete(self, architecture, profile, property_key,
+                        property_value):
+
+        profile_dict = profile._info
+        props_dict = profile_dict['properties']
+
+        if property_key in props_dict:
+            del props_dict[property_key]
+        else:
+            msg = "No profile property with a key: '%s' exists." % \
+                  (property_key)
+            raise exceptions.CommandError(msg)
+
+        profile_dict['properties'] = props_dict
+        del profile_dict['_links']
+        profile_body = {"profile": profile_dict}
+
+        self._update_without_hooks("/archs/%s/profiles/%s" %
+                                   (base.getid(architecture),
+                                    base.getid(profile)), profile_body)
+
+    def _update_without_hooks(self, url, body):
+        resp, body = self.api.client.put(url, body=body)
+        return body

@@ -417,6 +417,72 @@ def do_profile_delete(cs, args):
     cs.profiles.delete(architecture, profile)
 
 
+@utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
+           help='ID of the architecture to create a new '
+                'property profile on it')
+@utils.arg('profile', metavar='<profile-id>',
+           type=int,
+           help='ID of the profile to create a property.')
+@utils.arg('property_key', metavar='<property-key>',
+           help='The key property.')
+@utils.arg('property_value', metavar='<property-value>',
+           help='The value property')
+@utils.service_type('automation')
+def do_profile_property_create(cs, args):
+    """ Create a profile property by architecture"""
+    architecture = _find_architecture(cs, args.architecture)
+    profile = _find_profile(cs, args.architecture, args.profile)
+    property_key = args.property_key
+    property_value = args.property_value
+    cs.profiles.property_create(architecture, profile, property_key,
+                                property_value)
+
+
+@utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
+           help='ID of the architecture to update a new property '
+                'profile on it')
+@utils.arg('profile', metavar='<profile-id>',
+           type=int,
+           help='ID of the profile to update a property.')
+@utils.arg('property_key', metavar='<property-key>',
+           help='The key property.')
+@utils.arg('property_value', metavar='<property-value>',
+           help='The value property')
+@utils.service_type('automation')
+def do_profile_property_update(cs, args):
+    """ Update a profile property by architecture"""
+    architecture = _find_architecture(cs, args.architecture)
+    profile = _find_profile(cs, args.architecture, args.profile)
+    property_key = args.property_key
+    property_value = args.property_value
+    cs.profiles.property_udpate(architecture, profile, property_key,
+                                property_value)
+
+
+@utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
+           help='ID of the architecture to delete a new property '
+                'profile on it')
+@utils.arg('profile', metavar='<profile-id>',
+           type=int,
+           help='ID of the profile to delete a property.')
+@utils.arg('property_key', metavar='<property-key>',
+           help='The key property.')
+@utils.arg('property_value', metavar='<property-value>',
+           help='The value property')
+@utils.service_type('automation')
+def do_profile_property_delete(cs, args):
+    """ Delete a profile property by architecture"""
+    architecture = _find_architecture(cs, args.architecture)
+    profile = _find_profile(cs, args.architecture, args.profile)
+    property_key = args.property_key
+    property_value = args.property_value
+    cs.profiles.property_delete(architecture, profile, property_key,
+                                property_value)
+
+
 def do_endpoints(cs, args):
     """Discover endpoints that get returned from the authenticate services."""
     catalog = cs.client.service_catalog.catalog
@@ -425,7 +491,7 @@ def do_endpoints(cs, args):
 
 
 @utils.service_type('automation')
-def do_property_list(cs, args):
+def do_global_property_list(cs, args):
     """List all the properties that are available on automation."""
     properties = cs.properties.list()
     utils.print_dict(properties)
@@ -436,7 +502,7 @@ def do_property_list(cs, args):
 @utils.arg('property_value', metavar='<property-value>',
            help='The value property')
 @utils.service_type('automation')
-def do_property_create(cs, args):
+def do_global_property_create(cs, args):
     """Add a new property.
     :param cs:
     :param args:
@@ -451,7 +517,7 @@ def do_property_create(cs, args):
 @utils.arg('property_value', metavar='<property-value>',
            help='The value property')
 @utils.service_type('automation')
-def do_property_update(cs, args):
+def do_global_property_update(cs, args):
     """Updates a property.
     :param cs:
     :param args:
@@ -459,13 +525,13 @@ def do_property_update(cs, args):
     property_key = args.property_key
     property_value = args.property_value
     cs.properties.update(property_key, property_value)
-    do_property_list(cs, args)
+    do_global_property_list(cs, args)
 
 
 @utils.arg('property_key', metavar='<property-key>',
            help='The key property.')
 @utils.service_type('automation')
-def do_property_delete(cs, args):
+def do_global_property_delete(cs, args):
     """Delete a property.
     :param cs:
     :param args:
