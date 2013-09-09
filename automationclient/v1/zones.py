@@ -63,25 +63,6 @@ class ZoneManager(base.ManagerWithFind):
         return self._create("/archs/%s/apply" % (base.getid(architecture)),
                             body, 'zone')
 
-    def update(self, architecture, profile, profile_file):
-        """
-        Update the name, components
-
-        :param architecture: The ID of the :class: `Architecture` to get.
-        :rtype: :class:`Architecture`
-
-        :param profile: The ID of the :class: `Profile` to update.
-        :rtype: :class:`Zone`
-
-        :param profile: Profile JSON format define with updates
-        """
-        if not profile_file:
-            return
-
-        self._update("/archs/%s/profiles/%s" % (base.getid(architecture),
-                                                base.getid(profile)),
-                     profile_file)
-
     def delete(self, zone):
         """
         Delete a zone.

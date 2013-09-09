@@ -43,9 +43,21 @@ class TaskManager(base.ManagerWithFind):
         """
         return self._list("/zones/%s/tasks" % zone.id, "tasks")
 
-    def deploy(self, zone, role, body):
+    def get(self, zone, task):
+        """Get a specific task.
+
+        :param zone: The ID of the :class: `Zone` to get.
+        :rtype: :class:`Zone`
+
+        :param task: The ID of the :class: `Task` to get.
+        :rtype: :class:`Task`
         """
-        Deploy a role.
+        return self._get("/zones/%s/tasks/%s" % (base.getid(zone),
+                                                 base.getid(task)),
+                         "task")
+
+    def deploy(self, zone, role, body):
+        """Deploy a role.
 
         :param zone: The ID of the :class: `Zone` to get.
         :rtype: :class:`Zone`
@@ -58,3 +70,34 @@ class TaskManager(base.ManagerWithFind):
         return self._create("/zones/%s/roles/%s/deploy" % (base.getid(zone),
                                                            base.getid(role)),
                             body, 'tasks')
+
+    def cancel(self, zone, role, task):
+        """Cancel a task.
+
+        :param zone: The ID of the :class: `Zone` to get.
+        :rtype: :class:`Zone`
+
+        :param role: The ID of the :class: `Role` to get.
+        :rtype: :class:`Role`
+
+        :param role: The ID of the :class: `Task` to get.
+        :rtype: :class:`Task`
+        """
+
+        return self.api.client.post("/zones/%s/roles/%s/tasks/%s"
+                                    % (base.getid(zone),
+                                       base.getid(role),
+                                       base.getid(task)))
+
+    def list_node(self, zone, node):
+        """Get all tasks by zone and node.
+
+        :param zone: The ID of the :class: `Zone` to get.
+        :rtype: :class:`Zone`
+
+        :param profile: The ID of the :class: `Node` to get.
+        :rtype: :class:`Node`
+        """
+        return self._get("/zones/%s/nodes/%s/node/tasks" % (base.getid(zone),
+                                                            base.getid(node)),
+                         "tasks")

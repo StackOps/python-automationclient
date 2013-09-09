@@ -25,6 +25,7 @@ from automationclient.v1 import properties
 from automationclient.v1 import zones
 from automationclient.v1 import tasks
 from automationclient.v1 import roles
+from automationclient.v1 import nodes
 
 
 class Client(object):
@@ -62,6 +63,7 @@ class Client(object):
         self.profiles = profiles.ProfileManager(self)
         self.properties = properties.PropertyManager(self)
         self.zones = zones.ZoneManager(self)
+        self.nodes = nodes.NodeManager(self)
         self.tasks = tasks.TaskManager(self)
         self.roles = roles.RoleManager(self)
 

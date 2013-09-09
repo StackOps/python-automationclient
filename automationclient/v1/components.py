@@ -47,7 +47,7 @@ class ComponentManager(base.ManagerWithFind):
         """
         return self._get("/components/%s" % base.getid(component), "component")
 
-    def components_zone_role(self, zone, role):
+    def list_zone_role(self, zone, role):
         """Get all components by zone and role.
 
         :param zone: The ID of the :class: `Zone` to get.
@@ -60,7 +60,7 @@ class ComponentManager(base.ManagerWithFind):
                                                             base.getid(role)),
                          "components")
 
-    def component_zone_role(self, zone, role, component):
+    def get_zone_role(self, zone, role, component):
         """Get a component by zone and role.
 
         :param zone: The ID of the :class: `Zone` to get.
@@ -77,4 +77,27 @@ class ComponentManager(base.ManagerWithFind):
                          % (base.getid(zone),
                             base.getid(role),
                             base.getid(component)),
-                         "components")
+                         "component")
+
+    def update_zone_role(self, zone, role, component, component_file):
+        """Update a component by zone and role.
+
+        :param zone: The ID of the :class: `Zone` to get.
+        :rtype: :class:`Zone`
+
+        :param role: The ID of the :class: `Role` to get.
+        :rtype: :class:`Zone`
+
+         :param component: The ID (Name of the component) of the :class:
+        `Component` to get.
+        :rtype: :class:`Component`
+        """
+
+        if not component_file:
+            return
+
+        return self._update("/zones/%s/roles/%s/components/%s"
+                            % (base.getid(zone),
+                               base.getid(role),
+                               base.getid(component)),
+                            component_file)

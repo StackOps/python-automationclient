@@ -99,12 +99,18 @@ def _find_role(cs, zone, role):
     return cs.roles.get(zone, role)
 
 
+def _find_node(cs, zone, node):
+    """Get a node by zone."""
+    zone = _find_zone(cs, zone)
+    return cs.nodes.get(zone, node)
+
+
 @utils.service_type('automation')
 def do_device_list(cs, args):
     """List all the devices in the pool."""
     devices = cs.devices.list()
     utils.print_list(devices, ['id', 'name', 'mac', 'status',
-                               'connection_data'])
+                               'connection_data'], pretty='pretty')
 
 
 @utils.arg('mac', metavar='<mac>', help='Mac of the device.')
@@ -611,6 +617,47 @@ def do_zone_tasks(cs, args):
            type=int,
            help='ID of the zone.')
 @utils.service_type('automation')
+def do_node_list(cs, args):
+    """List all activate nodes in a zone."""
+    zone = _find_zone(cs, args.zone)
+    nodes = cs.nodes.list(zone)
+    utils.print_list(nodes, ['id', 'name'])
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.arg('node', metavar='<node-id>',
+           type=int,
+           help='ID of the node.')
+@utils.service_type('automation')
+def do_node_show(cs, args):
+    """Show details about a node in a zone."""
+    node = _find_node(cs, args.zone, args.node)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(node, keys)
+    final_dict = utils.check_json_pretty_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.arg('node', metavar='<node-id>',
+           type=int,
+           help='ID of the node.')
+@utils.service_type('automation')
+def do_node_task(cs, args):
+    """Show tasks from a node in a zone."""
+    zone = _find_zone(cs, args.zone)
+    node = _find_node(cs, args.zone, args.node)
+    tasks = cs.tasks.list_node(zone, node)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.service_type('automation')
 def do_role_list(cs, args):
     """List all the roles by zone."""
     zone = _find_zone(cs, args.zone)
@@ -653,6 +700,77 @@ def do_role_deploy(cs, args):
     final_dict = utils.remove_values_from_manager_dict(tasks, keys)
     final_dict = utils.check_json_pretty_value_for_dict(final_dict)
     utils.print_dict(final_dict)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.arg('role', metavar='<role-id>',
+           type=int,
+           help='ID of the role.')
+@utils.arg('node', metavar='<node-id>',
+           type=int,
+           help='ID of the node.')
+@utils.service_type('automation')
+def do_component_zone_role_list(cs, args):
+    """List all components by zone and role."""
+    zone = _find_zone(cs, args.zone)
+    role = _find_role(cs, args.zone, args.role)
+    components = cs.components.list_zone_role(zone, role)
+    utils.print_list(components, ['name', 'properties'], pretty='pretty')
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.arg('role', metavar='<role-id>',
+           type=int,
+           help='ID of the role.')
+@utils.arg('node', metavar='<node-id>',
+           type=int,
+           help='ID of the node.')
+@utils.arg('component', metavar='<component>',
+           help='Name of the component.')
+@utils.service_type('automation')
+def do_component_zone_role_show(cs, args):
+    """Show details about a component by zone and role."""
+    zone = _find_zone(cs, args.zone)
+    role = _find_role(cs, args.zone, args.role)
+    component = _find_component(cs, args.component)
+    component_zone_role = cs.components.get_zone_role(zone, role, component)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(component_zone_role,
+                                                       keys)
+    final_dict = utils.check_json_pretty_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.arg('role', metavar='<role-id>',
+           type=int,
+           help='ID of the role.')
+@utils.arg('node', metavar='<node-id>',
+           type=int,
+           help='ID of the node.')
+@utils.arg('component', metavar='<component>',
+           help='Name of the component.')
+@utils.arg('component_file', metavar='<component-file>',
+           help='File with extension *.json describing the'
+                'component to update')
+@utils.service_type('automation')
+def do_component_zone_role_update(cs, args):
+    """Update a component by zone and role ."""
+    _validate_extension_file(args.zone, 'json')
+    zone = _find_zone(cs, args.zone)
+    role = _find_role(cs, args.zone, args.role)
+    component = _find_component(cs, args.component)
+
+    with open(args.component_file) as f:
+        cs.components.update_zone_role(zone, role, component, json.load(f))
+
+    do_component_zone_role_show(cs, args)
 
 
 def do_endpoints(cs, args):
