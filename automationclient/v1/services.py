@@ -18,6 +18,8 @@
 
 from automationclient import base
 
+__author__ = 'jvalderrama'
+
 
 class Service(base.Resource):
     """A Service is an extension of a Component class."""

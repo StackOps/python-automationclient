@@ -22,6 +22,9 @@ from automationclient.v1 import services
 from automationclient.v1 import architectures
 from automationclient.v1 import profiles
 from automationclient.v1 import properties
+from automationclient.v1 import zones
+from automationclient.v1 import tasks
+from automationclient.v1 import roles
 
 
 class Client(object):
@@ -58,6 +61,9 @@ class Client(object):
         self.architectures = architectures.ArchitectureManager(self)
         self.profiles = profiles.ProfileManager(self)
         self.properties = properties.PropertyManager(self)
+        self.zones = zones.ZoneManager(self)
+        self.tasks = tasks.TaskManager(self)
+        self.roles = roles.RoleManager(self)
 
         # Add in any extensions...
         if extensions:

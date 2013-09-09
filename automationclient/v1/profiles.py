@@ -19,6 +19,8 @@
 from automationclient import base
 from automationclient import exceptions
 
+__author__ = 'jvalderrama'
+
 
 class Profile(base.Resource):
     """A Profile is an extension of an Architecture class."""

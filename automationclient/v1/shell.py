@@ -88,6 +88,17 @@ def _find_profile(cs, architecture, profile):
     return cs.profiles.get(architecture, profile)
 
 
+def _find_zone(cs, zone):
+    """Get a zone by ID."""
+    return utils.find_resource(cs.zones, zone)
+
+
+def _find_role(cs, zone, role):
+    """Get a role by zone."""
+    zone = _find_zone(cs, zone)
+    return cs.roles.get(zone, role)
+
+
 @utils.service_type('automation')
 def do_device_list(cs, args):
     """List all the devices in the pool."""
@@ -274,7 +285,7 @@ def do_component_services(cs, args):
 def do_architecture_list(cs, args):
     """List all the architectures that are available on automation."""
     architectures = cs.architectures.list()
-    utils.print_list(architectures, ['id', 'name', 'profiles'])
+    utils.print_list(architectures, ['id', 'name'])
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -482,14 +493,6 @@ def do_profile_property_delete(cs, args):
     cs.profiles.property_delete(architecture, profile, property_key,
                                 property_value)
 
-
-def do_endpoints(cs, args):
-    """Discover endpoints that get returned from the authenticate services."""
-    catalog = cs.client.service_catalog.catalog
-    for e in catalog['access']['serviceCatalog']:
-        utils.print_dict(e['endpoints'][0], e['name'])
-
-
 @utils.service_type('automation')
 def do_global_property_list(cs, args):
     """List all the properties that are available on automation."""
@@ -538,3 +541,121 @@ def do_global_property_delete(cs, args):
     """
     property_key = args.property_key
     cs.properties.delete(property_key)
+
+
+@utils.service_type('automation')
+def do_zone_list(cs, args):
+    """List all the zones."""
+    zones = cs.zones.list()
+    utils.print_list(zones, ['id', 'name'])
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.service_type('automation')
+def do_zone_show(cs, args):
+    """Show details about a zone."""
+    zone = _find_zone(cs, args.zone)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(zone, keys)
+    final_dict = utils.check_json_pretty_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
+
+
+@utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
+           help='ID of the architecture to create a new zone based on it')
+@utils.arg('zone', metavar='<zone-file>',
+           help='File with extension *.json describing the '
+                'new zone to create.')
+@utils.service_type('automation')
+def do_zone_create(cs, args):
+    """Add a new zone by architecture."""
+    _validate_extension_file(args.zone, 'json')
+
+    architecture = _find_architecture(cs, args.architecture)
+
+    with open(args.zone) as f:
+        zone = cs.zones.create(architecture, json.load(f))
+
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(zone, keys)
+    final_dict = utils.check_json_pretty_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone to delete.')
+@utils.service_type('automation')
+def do_zone_delete(cs, args):
+    """Remove a specific zone."""
+    zone = _find_zone(cs, args.zone)
+    cs.zones.delete(zone)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.service_type('automation')
+def do_zone_tasks(cs, args):
+    """List all tasks by zone."""
+    zone = _find_zone(cs, args.zone)
+    tasks = cs.tasks.list(zone)
+    utils.print_list(tasks, ['Name', 'description', '_links'])
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.service_type('automation')
+def do_role_list(cs, args):
+    """List all the roles by zone."""
+    zone = _find_zone(cs, args.zone)
+    roles = cs.roles.list(zone)
+    utils.print_list(roles, ['id', 'name'])
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.arg('role', metavar='<role-id>',
+           type=int,
+           help='ID of the role.')
+@utils.service_type('automation')
+def do_role_show(cs, args):
+    """Show details about a role."""
+    role = _find_role(cs, args.zone, args.role)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(role, keys)
+    final_dict = utils.check_json_pretty_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.arg('role', metavar='<role-id>',
+           type=int,
+           help='ID of the role.')
+@utils.arg('node', metavar='<node-id>',
+           type=int,
+           help='ID of the node.')
+@utils.service_type('automation')
+def do_role_deploy(cs, args):
+    """Associate a role to a node."""
+    zone = _find_zone(cs, args.zone)
+    role = _find_role(cs, args.zone, args.role)
+    tasks = cs.tasks.deploy(zone, role, args.node)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(tasks, keys)
+    final_dict = utils.check_json_pretty_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
+
+
+def do_endpoints(cs, args):
+    """Discover endpoints that get returned from the authenticate services."""
+    catalog = cs.client.service_catalog.catalog
+    for e in catalog['access']['serviceCatalog']:
+        utils.print_dict(e['endpoints'][0], e['name'])

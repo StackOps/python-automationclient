@@ -18,6 +18,8 @@
 
 from automationclient import base
 
+__author__ = 'jvalderrama'
+
 
 class Architecture(base.Resource):
     """An Architecture is reference structure of components defined by

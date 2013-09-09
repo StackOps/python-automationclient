@@ -18,6 +18,8 @@
 
 from automationclient import base
 
+__author__ = 'jvalderrama'
+
 
 class Component(base.Resource):
     """A Component is a Stackops or Openstack service to be deployed."""
@@ -44,3 +46,35 @@ class ComponentManager(base.ManagerWithFind):
         :rtype: :class:`Component`
         """
         return self._get("/components/%s" % base.getid(component), "component")
+
+    def components_zone_role(self, zone, role):
+        """Get all components by zone and role.
+
+        :param zone: The ID of the :class: `Zone` to get.
+        :rtype: :class:`Zone`
+
+        :param role: The ID of the :class: `Role` to get.
+        :rtype: :class:`Zone`
+        """
+        return self._get("/zones/%s/roles/%s/components" % (base.getid(zone),
+                                                            base.getid(role)),
+                         "components")
+
+    def component_zone_role(self, zone, role, component):
+        """Get a component by zone and role.
+
+        :param zone: The ID of the :class: `Zone` to get.
+        :rtype: :class:`Zone`
+
+        :param role: The ID of the :class: `Role` to get.
+        :rtype: :class:`Zone`
+
+         :param component: The ID (Name of the component) of the :class:
+        `Component` to get.
+        :rtype: :class:`Component`
+        """
+        return self._get("/zones/%s/roles/%s/components/%s"
+                         % (base.getid(zone),
+                            base.getid(role),
+                            base.getid(component)),
+                         "components")
