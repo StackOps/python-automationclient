@@ -212,7 +212,9 @@ def print_indent_list(rows, hasHeader=False, headerChar='-', delim=' | ',
        - prefix: A string prepended to each printed row.
        - postfix: A string appended to each printed row.
        - wrapfunc: A function f(text) for wrapping text; each element in
-         the table is first wrapped by this function."""
+         the table is first wrapped by this function.
+    """
+
     # closure for breaking logical rows to physical, using wrapfunc
     def rowWrapper(row):
         newRows = [wrapfunc(item).split('\n') for item in row]

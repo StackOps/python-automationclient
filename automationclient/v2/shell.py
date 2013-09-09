@@ -17,16 +17,8 @@
 
 from __future__ import print_function
 
-import argparse
-import copy
-import os
 import sys
 import time
-
-import six
-
-from automationclient import exceptions
-from automationclient import utils
 
 
 def _poll_for_status(poll_fn, obj_id, action, final_ok_states,

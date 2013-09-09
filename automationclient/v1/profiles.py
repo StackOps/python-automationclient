@@ -101,7 +101,7 @@ class ProfileManager(base.ManagerWithFind):
         self._delete("/archs/%s/profiles/%s" % (base.getid(architecture),
                                                 base.getid(profile)))
 
-    #TODO: Use /archs/<arch_id>/template
+    # TODO(jvalderrama): Use /archs/<arch_id>/template
     def template(self, architecture):
         """Get a specific template (Profile) by architecture.
 
