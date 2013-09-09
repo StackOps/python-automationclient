@@ -17,12 +17,8 @@
 #    under the License.
 
 from __future__ import print_function
-
-
 import sys
 import time
-import ast
-import fnmatch
 import os
 import json
 
@@ -304,11 +300,10 @@ def do_architecture_create(cs, args):
     :param args:
     """
     _validate_extension_file(args.architecture, 'arc')
-    contents = open(args.architecture)
-    lines = contents.readlines()
-    architecture_file = ''.join([line.strip() for line in lines])
-    architecture_file = ast.literal_eval(architecture_file)
-    architecture = cs.architectures.create(architecture_file)
+
+    with open(args.architecture) as f:
+        architecture = cs.architectures.create(json.load(f))
+
     keys = ['_links']
     final_dict = utils.remove_values_from_manager_dict(architecture, keys)
     final_dict = utils.check_json_pretty_value_for_dict(final_dict)
@@ -373,12 +368,12 @@ def do_profile_show(cs, args):
 def do_profile_create(cs, args):
     """Add a new profile by architecture."""
     _validate_extension_file(args.profile, 'json')
-    contents = open(args.profile)
-    lines = contents.readlines()
-    profile_file = ''.join([line.strip() for line in lines])
-    profile_file = ast.literal_eval(profile_file)
+
     architecture = _find_architecture(cs, args.architecture)
-    profile = cs.profiles.create(architecture, profile_file)
+
+    with open(args.profile) as f:
+        profile = cs.profiles.create(architecture, json.load(f))
+
     keys = ['_links']
     final_dict = utils.remove_values_from_manager_dict(profile, keys)
     final_dict = utils.check_json_pretty_value_for_dict(final_dict)
@@ -391,20 +386,20 @@ def do_profile_create(cs, args):
 @utils.arg('profile', metavar='<profile-id>',
            type=int,
            help='ID of the profile to update.')
-@utils.arg('profile_file', metavar='<profile-file>',
+@utils.arg('profile', metavar='<profile-file>',
            help='File with extension *.json describing the '
                 'profile to modify.')
 @utils.service_type('automation')
 def do_profile_update(cs, args):
     """Update a profile by architecture."""
-    _validate_extension_file(args.profile_file, 'json')
-    contents = open(args.profile_file)
-    lines = contents.readlines()
-    profile_file_update = ''.join([line.strip() for line in lines])
-    profile_file_update = ast.literal_eval(profile_file_update)
+    _validate_extension_file(args.profile, 'json')
+
     architecture = _find_architecture(cs, args.architecture)
     profile = _find_profile(cs, args.architecture, args.profile)
-    cs.profiles.update(architecture, profile, profile_file_update)
+
+    with open(args.profile) as f:
+        cs.profiles.update(architecture, profile, json.load(f))
+
     do_profile_show(cs, args)
 
 
