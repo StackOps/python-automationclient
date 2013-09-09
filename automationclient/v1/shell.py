@@ -386,18 +386,18 @@ def do_profile_create(cs, args):
 @utils.arg('profile', metavar='<profile-id>',
            type=int,
            help='ID of the profile to update.')
-@utils.arg('profile', metavar='<profile-file>',
+@utils.arg('profile_file', metavar='<profile-file>',
            help='File with extension *.json describing the '
                 'profile to modify.')
 @utils.service_type('automation')
 def do_profile_update(cs, args):
     """Update a profile by architecture."""
-    _validate_extension_file(args.profile, 'json')
+    _validate_extension_file(args.profile_file, 'json')
 
     architecture = _find_architecture(cs, args.architecture)
     profile = _find_profile(cs, args.architecture, args.profile)
 
-    with open(args.profile) as f:
+    with open(args.profile_file) as f:
         cs.profiles.update(architecture, profile, json.load(f))
 
     do_profile_show(cs, args)
