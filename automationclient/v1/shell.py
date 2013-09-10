@@ -474,7 +474,7 @@ def do_profile_property_update(cs, args):
     profile = _find_profile(cs, args.architecture, args.profile)
     property_key = args.property_key
     property_value = args.property_value
-    cs.profiles.property_udpate(architecture, profile, property_key,
+    cs.profiles.property_update(architecture, profile, property_key,
                                 property_value)
 
 
