@@ -56,9 +56,9 @@ class ComponentManager(base.ManagerWithFind):
         :param role: The ID of the :class: `Role` to get.
         :rtype: :class:`Zone`
         """
-        return self._get("/zones/%s/roles/%s/components" % (base.getid(zone),
-                                                            base.getid(role)),
-                         "components")
+        return self._list("/zones/%s/roles/%s/components" % (base.getid(zone),
+                                                             base.getid(role)),
+                          "components")
 
     def get_zone_role(self, zone, role, component):
         """Get a component by zone and role.

@@ -40,3 +40,45 @@ class ServiceManager(base.ManagerWithFind):
         """
         return self._list("/components/%s/services" % component.name,
                           "services")
+
+    def list_zone_role_component(self, zone, role, component):
+        """Get all components by zone and role.
+
+        :param zone: The ID of the :class: `Zone` to get.
+        :rtype: :class:`Zone`
+
+        :param role: The ID of the :class: `Role` to get.
+        :rtype: :class:`Zone`
+
+        :param component: The ID (Name of the component) of the :class:
+        `Component` to get.
+        :rtype: :class:`Component`
+        """
+        return self._list("/zones/%s/roles/%s/components/%s"
+                          % (base.getid(zone),
+                             base.getid(role),
+                             component.name),
+                          "services")
+
+    def get_zone_role_component(self, zone, role, component, service):
+        """Get a component by zone and role.
+
+        :param zone: The ID of the :class: `Zone` to get.
+        :rtype: :class:`Zone`
+
+        :param role: The ID of the :class: `Role` to get.
+        :rtype: :class:`Zone`
+
+         :param component: The ID (Name of the component) of the :class:
+        `Component` to get.
+        :rtype: :class:`Component`
+
+        :param role: The ID of the :class: `Service` to get.
+        :rtype: :class:`Service`
+        """
+        return self._get("/zones/%s/roles/%s/components/%s/services/%s"
+                         % (base.getid(zone),
+                            base.getid(role),
+                            base.getid(component),
+                            service),
+                         "service")

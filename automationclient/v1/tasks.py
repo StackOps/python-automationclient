@@ -35,7 +35,7 @@ class TaskManager(base.ManagerWithFind):
     resource_class = Task
 
     def list(self, zone):
-        """Get a list of tasks by a specific zone.
+        """Get a list of tasks by zone.
 
         :param zone: The ID of the :class: `Zone` to get
         its tasks.
@@ -44,7 +44,7 @@ class TaskManager(base.ManagerWithFind):
         return self._list("/zones/%s/tasks" % zone.id, "tasks")
 
     def get(self, zone, task):
-        """Get a specific task.
+        """Get a specific task by zone.
 
         :param zone: The ID of the :class: `Zone` to get.
         :rtype: :class:`Zone`
@@ -56,37 +56,40 @@ class TaskManager(base.ManagerWithFind):
                                                  base.getid(task)),
                          "task")
 
-    def deploy(self, zone, role, body):
-        """Deploy a role.
+    def deploy(self, zone, role, node):
+        """Deploy a role ().
 
         :param zone: The ID of the :class: `Zone` to get.
         :rtype: :class:`Zone`
 
-        :param role: Profile JSON format define
+        :param zone: The ID of the :class: `Role` to get.
+        :rtype: :class:`Role`
+
+        :param node: Node JSON format define
         """
 
-        body = body
+        body = node
 
         return self._create("/zones/%s/roles/%s/deploy" % (base.getid(zone),
                                                            base.getid(role)),
                             body, 'tasks')
 
-    def cancel(self, zone, role, task):
-        """Cancel a task.
+    def cancel(self, zone, node, task):
+        """Cancel a task by zone and node.
 
         :param zone: The ID of the :class: `Zone` to get.
         :rtype: :class:`Zone`
 
-        :param role: The ID of the :class: `Role` to get.
-        :rtype: :class:`Role`
+        :param role: The ID of the :class: `Node` to get.
+        :rtype: :class:`Node`
 
         :param role: The ID of the :class: `Task` to get.
         :rtype: :class:`Task`
         """
 
-        return self.api.client.post("/zones/%s/roles/%s/tasks/%s"
+        return self.api.client.post("/zones/%s/roles/%s/tasks/%s/cancel"
                                     % (base.getid(zone),
-                                       base.getid(role),
+                                       base.getid(node),
                                        base.getid(task)))
 
     def list_node(self, zone, node):
@@ -98,6 +101,23 @@ class TaskManager(base.ManagerWithFind):
         :param profile: The ID of the :class: `Node` to get.
         :rtype: :class:`Node`
         """
-        return self._get("/zones/%s/nodes/%s/node/tasks" % (base.getid(zone),
-                                                            base.getid(node)),
-                         "tasks")
+        return self._list("/zones/%s/nodes/%s/tasks" % (base.getid(zone),
+                                                        base.getid(node)),
+                          "tasks")
+
+    def get_node(self, zone, node, task):
+        """Get a specific task by zone and node.
+
+        :param zone: The ID of the :class: `Zone` to get.
+        :rtype: :class:`Zone`
+
+        :param profile: The ID of the :class: `Node` to get.
+        :rtype: :class:`Node`
+
+        :param profile: The ID of the :class: `Task` to get.
+        :rtype: :class:`Task`
+        """
+        return self._get("/zones/%s/nodes/%s/tasks/%s" % (base.getid(zone),
+                                                          base.getid(node),
+                                                          task),
+                         "task")
