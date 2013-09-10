@@ -615,6 +615,54 @@ def do_zone_tasks(cs, args):
 
 @utils.arg('zone', metavar='<zone-id>',
            type=int,
+           help='ID of the zone to create a property.')
+@utils.arg('property_key', metavar='<property-key>',
+           help='The key property.')
+@utils.arg('property_value', metavar='<property-value>',
+           help='The value property')
+@utils.service_type('automation')
+def do_zone_property_create(cs, args):
+    """Create a zone property."""
+    zone = _find_zone(cs, args.zone)
+    property_key = args.property_key
+    property_value = args.property_value
+    cs.zones.property_create(zone, property_key, property_value)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone to update a property.')
+@utils.arg('property_key', metavar='<property-key>',
+           help='The key property.')
+@utils.arg('property_value', metavar='<property-value>',
+           help='The value property')
+@utils.service_type('automation')
+def do_zone_property_update(cs, args):
+    """Update a zone property."""
+    zone = _find_zone(cs, args.zone)
+    property_key = args.property_key
+    property_value = args.property_value
+    cs.zones.property_update(zone, property_key, property_value)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone to delete a property.')
+@utils.arg('property_key', metavar='<property-key>',
+           help='The key property.')
+@utils.arg('property_value', metavar='<property-value>',
+           help='The value property')
+@utils.service_type('automation')
+def do_zone_property_delete(cs, args):
+    """Delete a zone property."""
+    zone = _find_zone(cs, args.zone)
+    property_key = args.property_key
+    property_value = args.property_value
+    cs.zones.property_delete(zone, property_key, property_value)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
            help='ID of the zone.')
 @utils.service_type('automation')
 def do_node_list(cs, args):
@@ -651,7 +699,7 @@ def do_node_task(cs, args):
     """Show tasks from a node in a zone."""
     zone = _find_zone(cs, args.zone)
     node = _find_node(cs, args.zone, args.node)
-    tasks = cs.tasks.list_node(zone, node)
+    cs.tasks.list_node(zone, node)
 
 
 @utils.arg('zone', metavar='<zone-id>',

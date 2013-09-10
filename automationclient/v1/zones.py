@@ -17,6 +17,7 @@
 """Zones interface."""
 
 from automationclient import base
+from automationclient import exceptions
 
 __author__ = 'jvalderrama'
 
@@ -72,3 +73,61 @@ class ZoneManager(base.ManagerWithFind):
         """
 
         self._delete("/zones/%s" % base.getid(zone))
+
+    def property_create(self, zone, property_key,
+                        property_value):
+
+        zone_dict = zone._info
+        props_dict = zone_dict['properties']
+
+        if property_key not in props_dict:
+            props_dict[property_key] = property_value
+        else:
+            msg = "A zone property with a key: '%s' exists." % property_key
+            raise exceptions.CommandError(msg)
+
+        zone_dict['properties'] = props_dict
+        del zone_dict['_links']
+        zone_body = {"zone": zone_dict}
+
+        self._update_without_hooks("/zones/%s" % base.getid(zone), zone_body)
+
+    def property_update(self, zone, property_key,
+                        property_value):
+
+        zone_dict = zone._info
+        props_dict = zone_dict['properties']
+
+        if property_key in props_dict:
+            props_dict[property_key] = property_value
+        else:
+            msg = "No zone property with a key: '%s' exists." % property_key
+            raise exceptions.CommandError(msg)
+
+        zone_dict['properties'] = props_dict
+        del zone_dict['_links']
+        zone_body = {"zone": zone_dict}
+
+        self._update_without_hooks("/zones/%s" % base.getid(zone), zone_body)
+
+    def property_delete(self, zone, property_key,
+                        property_value):
+
+        zone_dict = zone._info
+        props_dict = zone_dict['properties']
+
+        if property_key in props_dict:
+            del props_dict[property_key]
+        else:
+            msg = "No zone property with a key: '%s' exists." % property_key
+            raise exceptions.CommandError(msg)
+
+        zone_dict['properties'] = props_dict
+        del zone_dict['_links']
+        zone_body = {"zone": zone_dict}
+
+        self._update_without_hooks("/zones/%s" % base.getid(zone), zone_body)
+
+    def _update_without_hooks(self, url, body):
+        resp, body = self.api.client.put(url, body=body)
+        return body
