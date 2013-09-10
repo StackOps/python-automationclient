@@ -301,11 +301,8 @@ def check_json_pretty_value_for_dict(data):
 def find_resource(manager, name_or_id):
     """Helper for the _find_* methods."""
     # first try to get entity as integer id
-    try:
-        if isinstance(name_or_id, int) or name_or_id.isdigit():
-            return manager.get(int(name_or_id))
-    except exceptions.NotFound:
-        pass
+    if isinstance(name_or_id, int) or name_or_id.isdigit():
+        return manager.get(int(name_or_id))
 
     if sys.version_info <= (3, 0):
         name_or_id = strutils.safe_decode(name_or_id)

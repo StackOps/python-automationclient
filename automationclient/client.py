@@ -156,11 +156,7 @@ class HTTPClient(object):
             body = None
 
         if resp.status_code >= 400:
-            # TODO(jvalderrama) - 1. The REST Stackops API must to be
-            #                        review to handle
-
-            # TODO(jvalderrama) - errors like Openstack
-            raise exceptions.customize_stackops_from_response(resp, body)
+            raise exceptions.from_response(resp, body)
 
         return resp, body
 
