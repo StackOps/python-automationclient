@@ -54,7 +54,7 @@ class ServiceManager(base.ManagerWithFind):
         `Component` to get.
         :rtype: :class:`Component`
         """
-        return self._list("/zones/%s/roles/%s/components/%s"
+        return self._list("/zones/%s/roles/%s/components/%s/services"
                           % (base.getid(zone),
                              base.getid(role),
                              component.name),
@@ -79,6 +79,6 @@ class ServiceManager(base.ManagerWithFind):
         return self._get("/zones/%s/roles/%s/components/%s/services/%s"
                          % (base.getid(zone),
                             base.getid(role),
-                            base.getid(component),
+                            component.name,
                             service),
                          "service")

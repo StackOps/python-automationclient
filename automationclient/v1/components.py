@@ -73,10 +73,11 @@ class ComponentManager(base.ManagerWithFind):
         `Component` to get.
         :rtype: :class:`Component`
         """
+
         return self._get("/zones/%s/roles/%s/components/%s"
                          % (base.getid(zone),
                             base.getid(role),
-                            base.getid(component)),
+                            component.name),
                          "component")
 
     def update_zone_role(self, zone, role, component, component_file):
@@ -99,5 +100,5 @@ class ComponentManager(base.ManagerWithFind):
         return self._update("/zones/%s/roles/%s/components/%s"
                             % (base.getid(zone),
                                base.getid(role),
-                               base.getid(component)),
+                               component.name),
                             component_file)

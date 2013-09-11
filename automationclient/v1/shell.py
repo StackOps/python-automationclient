@@ -106,10 +106,11 @@ def _find_node(cs, zone, node):
 
 
 def _find_service(cs, zone, role, component, service):
-    zone = _find_zone(cs, zone)
-    role = _find_role(cs, zone, role)
-    component = _find_component(cs, component)
-    return cs.services.get_zone_role_component(zone, role, component, service)
+    obj_zone = _find_zone(cs, zone)
+    obj_role = _find_role(cs, zone, role)
+    obj_component = _find_component(cs, component)
+    return cs.services.get_zone_role_component(obj_zone, obj_role,
+                                               obj_component, service)
 
 
 def _find_task(cs, zone, node, task):
@@ -205,12 +206,13 @@ def do_device_delete(cs, args):
            type=int,
            help='ID of the zone to activate the device')
 @utils.service_type('automation')
-#TODO(jvalderrama) Print node on shell once activated
+#TODO(jvalderrama) Review node print on shell once activated
 def do_device_activate(cs, args):
     """Activate a specific device in the pool."""
     kwargs = {'zone_id': args.zone_id}
     device = _find_device(cs, args.mac)
     cs.devices.activate(device, **kwargs)
+    do_device_show(cs, args)
 
 
 @utils.arg('mac', metavar='<mac>',
@@ -277,7 +279,7 @@ def do_device_soft_reboot(cs, args):
 def do_component_list(cs, args):
     """List all the components that are available on automation."""
     components = cs.components.list()
-    utils.print_list(components, ['id', 'name', 'properties'])
+    utils.print_list(components, ['name'])
 
 
 @utils.arg('component', metavar='<component>', help='Name of the component.')
@@ -863,7 +865,6 @@ def do_component_zone_role_show(cs, args):
            help='File with extension *.json describing the'
                 'component to update')
 @utils.service_type('automation')
-#TODO(jvalderrama) Test again
 def do_component_zone_role_update(cs, args):
     """Update a component by zone and role ."""
     _validate_extension_file(args.component_file, 'json')
@@ -886,14 +887,13 @@ def do_component_zone_role_update(cs, args):
 @utils.arg('component', metavar='<component>',
            help='Name of the component.')
 @utils.service_type('automation')
-#TODO(jvalderrama) Test again
 def do_service_zone_role_component_list(cs, args):
     """List all services by zone, role and component."""
     zone = _find_zone(cs, args.zone)
     role = _find_role(cs, args.zone, args.role)
     component = _find_component(cs, args.component)
     services = cs.services.list_zone_role_component(zone, role, component)
-    utils.print_list(services, ['Name', 'description', '_links'])
+    utils.print_list(services, ['Name', 'description'])
 
 
 @utils.arg('zone', metavar='<zone-id>',
@@ -904,18 +904,14 @@ def do_service_zone_role_component_list(cs, args):
            help='ID of the role.')
 @utils.arg('component', metavar='<component>',
            help='Name of the component.')
-@utils.arg('service', metavar='<service-id>',
-           type=int,
-           help='ID of the service.')
+@utils.arg('service', metavar='<service-name>',
+           help='Name of the service.')
 @utils.service_type('automation')
-#TODO(jvalderrama) Test again
 def do_service_zone_role_component_show(cs, args):
     """Show details about a service by zone, role and component."""
-    service = _find_service(args.zone, args.role, args.component, args.service)
-    keys = ['_links']
-    final_dict = utils.\
-        remove_values_from_manager_dict(service, keys)
-    final_dict = utils.check_json_pretty_value_for_dict(final_dict)
+    service = _find_service(cs, args.zone, args.role, args.component,
+                            args.service)
+    final_dict = utils.check_json_value_for_dict(service._info)
     utils.print_dict(final_dict)
 
 
