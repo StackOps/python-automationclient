@@ -114,9 +114,9 @@ def _find_service(cs, zone, role, component, service):
 
 
 def _find_task(cs, zone, node, task):
-    zone = _find_zone(cs, zone)
-    node = _find_node(cs, zone, node)
-    return cs.tasks.get_node(zone, node, task)
+    obj_zone = _find_zone(cs, zone)
+    obj_node = _find_node(cs, zone, node)
+    return cs.tasks.get_node(obj_zone, obj_node, task)
 
 
 @utils.service_type('automation')
@@ -648,12 +648,11 @@ def do_zone_delete(cs, args):
            type=int,
            help='ID of the zone.')
 @utils.service_type('automation')
-#TODO(jvalderrama) Print list with parameters of interest on shell
 def do_zone_tasks_list(cs, args):
     """List all tasks by zone."""
     zone = _find_zone(cs, args.zone)
     tasks = cs.tasks.list(zone)
-    utils.print_list(tasks, ['name'])
+    utils.print_list(tasks, ['id', 'name', 'state', 'result'])
 
 
 @utils.arg('zone', metavar='<zone-id>',
@@ -738,13 +737,12 @@ def do_node_show(cs, args):
            type=int,
            help='ID of the node.')
 @utils.service_type('automation')
-#TODO(jvalderrama) Print list with parameters of interest on shell
 def do_node_tasks_list(cs, args):
     """List all tasks from a node in a zone."""
     zone = _find_zone(cs, args.zone)
     node = _find_node(cs, args.zone, args.node)
     tasks = cs.tasks.list_node(zone, node)
-    utils.print_list(tasks, ['name'])
+    utils.print_list(tasks, ['id', 'name', 'uuid', 'state', 'result'])
 
 
 @utils.arg('zone', metavar='<zone-id>',
@@ -757,8 +755,7 @@ def do_node_tasks_list(cs, args):
            type=int,
            help='ID of the task.')
 @utils.service_type('automation')
-#TODO(jvalderrama) Test
-def do_node_task_show(cs, args):
+def do_node_task_state(cs, args):
     """Show details about a task from a node in a zone."""
     task = _find_task(cs, args.zone, args.node, args.task)
     utils.print_dict(task._info)
@@ -774,14 +771,13 @@ def do_node_task_show(cs, args):
            type=int,
            help='ID of the task.')
 @utils.service_type('automation')
-#TODO(jvalderrama) Test
 def do_node_task_cancel(cs, args):
     """Cancel a task from a node in a zone."""
     zone = _find_zone(cs, args.zone)
-    node = _find_node(cs, args.node)
+    node = _find_node(cs, args.zone, args.node)
     task = _find_task(cs, args.zone, args.node, args.task)
-    cs.tasks.cancel(zone, node, task)
-    do_node_tasks_list
+    task = cs.tasks.cancel(zone, node, task)
+    utils.print_dict(task._info)
 
 
 @utils.arg('zone', metavar='<zone-id>',
@@ -821,7 +817,7 @@ def do_role_show(cs, args):
            help='File with extension *.json describing the '
                 'node to associate.')
 @utils.service_type('automation')
-#TODO(jvalderrama) Print dict with parameters of interest on shell
+#TODO(jvalderrama) Test again
 def do_role_deploy(cs, args):
     """Associate a role to a node."""
     _validate_extension_file(args.node, 'json')
@@ -829,9 +825,9 @@ def do_role_deploy(cs, args):
     role = _find_role(cs, args.zone, args.role)
 
     with open(args.node) as f:
-        task = cs.tasks.deploy(zone, role, json.load(f))
+        tasks = cs.tasks.deploy(zone, role, json.load(f))
 
-    utils.print_dict(task._info)
+    utils.print_list(tasks, ['id', 'name', 'uuid', 'state', 'result'])
 
 
 @utils.arg('zone', metavar='<zone-id>',
@@ -840,9 +836,6 @@ def do_role_deploy(cs, args):
 @utils.arg('role', metavar='<role-id>',
            type=int,
            help='ID of the role.')
-@utils.arg('node', metavar='<node-id>',
-           type=int,
-           help='ID of the node.')
 @utils.service_type('automation')
 def do_component_zone_role_list(cs, args):
     """List all components by zone and role."""

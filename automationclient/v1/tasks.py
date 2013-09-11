@@ -70,9 +70,10 @@ class TaskManager(base.ManagerWithFind):
 
         body = node
 
-        return self._create("/zones/%s/roles/%s/deploy" % (base.getid(zone),
-                                                           base.getid(role)),
-                            body, 'tasks')
+        return self.api.client.post("/zones/%s/roles/%s/deploy"
+                                    % ((base.getid(zone),
+                                        base.getid(role))),
+                                    body=body)
 
     def cancel(self, zone, node, task):
         """Cancel a task by zone and node.
@@ -83,11 +84,11 @@ class TaskManager(base.ManagerWithFind):
         :param role: The ID of the :class: `Node` to get.
         :rtype: :class:`Node`
 
-        :param role: The ID of the :class: `Task` to get.
+        :param role: The ID ofdeploy the :class: `Task` to get.
         :rtype: :class:`Task`
         """
 
-        return self.api.client.post("/zones/%s/roles/%s/tasks/%s/cancel"
+        return self.api.client.post("/zones/%s/nodes/%s/tasks/%s/cancel"
                                     % (base.getid(zone),
                                        base.getid(node),
                                        base.getid(task)))
