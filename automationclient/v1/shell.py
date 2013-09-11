@@ -381,7 +381,8 @@ def do_profile_list(cs, args):
            type=int,
            help='ID of the profile.')
 @utils.service_type('automation')
-def do_profile_get(cs, args):
+#def do_profile_get(cs, args):
+def do_profile_json(cs, args):
     """Gets the JSON of the profile."""
     profile = _find_profile(cs, args.architecture, args.profile)
     keys = ['_links']
@@ -652,7 +653,7 @@ def do_zone_tasks_list(cs, args):
     """List all tasks by zone."""
     zone = _find_zone(cs, args.zone)
     tasks = cs.tasks.list(zone)
-    utils.print_list(tasks, ['id', 'name', 'state', 'result'])
+    utils.print_list(tasks, ['id', 'name', 'uuid', 'state', 'result'])
 
 
 @utils.arg('zone', metavar='<zone-id>',
@@ -837,7 +838,8 @@ def do_role_deploy(cs, args):
            type=int,
            help='ID of the role.')
 @utils.service_type('automation')
-def do_component_zone_role_list(cs, args):
+#def do_component_zone_role_list(cs, args):
+def do_role_component_list(cs, args):
     """List all components by zone and role."""
     zone = _find_zone(cs, args.zone)
     role = _find_role(cs, args.zone, args.role)
@@ -857,7 +859,8 @@ def do_component_zone_role_list(cs, args):
 @utils.arg('component', metavar='<component>',
            help='Name of the component.')
 @utils.service_type('automation')
-def do_component_zone_role_show(cs, args):
+#def do_component_zone_role_show(cs, args)
+def do_role_component_show(cs, args):
     """Show details about a component by zone and role."""
     zone = _find_zone(cs, args.zone)
     role = _find_role(cs, args.zone, args.role)
@@ -882,8 +885,9 @@ def do_component_zone_role_show(cs, args):
 @utils.arg('component', metavar='<component>',
            help='Name of the component.')
 @utils.service_type('automation')
-def do_component_zone_role_get(cs, args):
-    """Gets the JSON of the component."""
+#def do_component_zone_role_get(cs, args):
+def do_role_component_json(cs, args):
+    """Gets the JSON of the component by zone and role."""
     zone = _find_zone(cs, args.zone)
     role = _find_role(cs, args.zone, args.role)
     component = args.component
@@ -909,7 +913,8 @@ def do_component_zone_role_get(cs, args):
            help='File with extension *.json describing the'
                 'component to update')
 @utils.service_type('automation')
-def do_component_zone_role_update(cs, args):
+#def do_component_zone_role_update(cs, args):
+def do_role_component_update(cs, args):
     """Update a component by zone and role ."""
     _validate_extension_file(args.component_file, 'json')
     zone = _find_zone(cs, args.zone)
@@ -918,7 +923,8 @@ def do_component_zone_role_update(cs, args):
     with open(args.component_file) as f:
         cs.components.update_zone_role(zone, role, component, json.load(f))
 
-    do_component_zone_role_show(cs, args)
+    #do_component_zone_role_show(cs, args)
+    do_role_component_show(cs, args)
 
 
 @utils.arg('zone', metavar='<zone-id>',
@@ -930,7 +936,8 @@ def do_component_zone_role_update(cs, args):
 @utils.arg('component', metavar='<component>',
            help='Name of the component.')
 @utils.service_type('automation')
-def do_service_zone_role_component_list(cs, args):
+#def do_service_zone_role_component_list(cs, args):
+def do_service_list(cs, args):
     """List all services by zone, role and component."""
     zone = _find_zone(cs, args.zone)
     role = _find_role(cs, args.zone, args.role)
@@ -950,12 +957,37 @@ def do_service_zone_role_component_list(cs, args):
 @utils.arg('service', metavar='<service-name>',
            help='Name of the service.')
 @utils.service_type('automation')
-def do_service_zone_role_component_show(cs, args):
+#def do_service_zone_role_component_show(cs, args):
+def do_service_show(cs, args):
     """Show details about a service by zone, role and component."""
     service = _find_service(cs, args.zone, args.role, args.component,
                             args.service)
     final_dict = utils.check_json_value_for_dict(service._info)
     utils.print_dict(final_dict)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.arg('role', metavar='<role-id>',
+           type=int,
+           help='ID of the role.')
+@utils.arg('component', metavar='<component>',
+           help='Name of the component.')
+@utils.arg('service', metavar='<service-name>',
+           help='Name of the service.')
+@utils.service_type('automation')
+#def do_service_zone_role_component_execute(cs, args):
+#TODO(jvalderrama) Test again
+def do_service_execute(cs, args):
+    """Execute a service by zone, role and component."""
+    zone = _find_zone(cs, args.zone)
+    role = _find_role(cs, args.zone, args.role)
+    component = _find_component(cs, args.component)
+    service = _find_service(cs, args.zone, args.role, args.component,
+                            args.service)
+    tasks = cs.tasks.execute_service(zone, role, component, service)
+    utils.print_list(tasks, ['id', 'name', 'uuid', 'state', 'result'])
 
 
 def do_endpoints(cs, args):

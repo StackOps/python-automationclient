@@ -84,7 +84,7 @@ class TaskManager(base.ManagerWithFind):
         :param role: The ID of the :class: `Node` to get.
         :rtype: :class:`Node`
 
-        :param role: The ID ofdeploy the :class: `Task` to get.
+        :param role: The ID of the :class: `Task` to get.
         :rtype: :class:`Task`
         """
 
@@ -122,3 +122,27 @@ class TaskManager(base.ManagerWithFind):
                                                           base.getid(node),
                                                           task),
                          "task")
+
+    def execute_service(self, zone, role, component, service):
+        """Execute a specific service by zone, role, component
+
+        :param zone: The ID of the :class: `Zone` to get.
+        :rtype: :class:`Zone`
+
+        :param role: The ID of the :class: `Role` to get.
+        :rtype: :class:`Zone`
+
+        :param component: The ID (Name of the component) of the :class:
+        `Component` to get.
+        :rtype: :class:`Component`
+
+        :param component: The ID of the :class: `Service` to get.
+        :rtype: :class:`Service`
+        """
+
+        return self.api.client.\
+            post("/zones/%s/roles/%s/components/%s/services/%s"
+                 % (base.getid(zone),
+                    base.getid(role),
+                    component.name,
+                    service.name))

@@ -42,7 +42,7 @@ class ServiceManager(base.ManagerWithFind):
                           "services")
 
     def list_zone_role_component(self, zone, role, component):
-        """Get all components by zone and role.
+        """Get all services by zone, role and component.
 
         :param zone: The ID of the :class: `Zone` to get.
         :rtype: :class:`Zone`
@@ -61,7 +61,7 @@ class ServiceManager(base.ManagerWithFind):
                           "services")
 
     def get_zone_role_component(self, zone, role, component, service):
-        """Get a component by zone and role.
+        """Get a service by zone, role and component.
 
         :param zone: The ID of the :class: `Zone` to get.
         :rtype: :class:`Zone`
