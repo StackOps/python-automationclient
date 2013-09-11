@@ -379,6 +379,20 @@ def do_profile_list(cs, args):
            type=int,
            help='ID of the profile.')
 @utils.service_type('automation')
+def do_profile_get(cs, args):
+    """Gets the JSON of the profile."""
+    profile = _find_profile(cs, args.architecture, args.profile)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(profile, keys)
+    print (final_dict)
+
+@utils.arg('architecture', metavar='<architecture-id>',
+           type=int,
+           help='ID of the architecture.')
+@utils.arg('profile', metavar='<profile-id>',
+           type=int,
+           help='ID of the profile.')
+@utils.service_type('automation')
 def do_profile_show(cs, args):
     """Show details about a profile by architecture."""
     profile = _find_profile(cs, args.architecture, args.profile)
@@ -581,6 +595,17 @@ def do_zone_show(cs, args):
     final_dict = utils.remove_values_from_manager_dict(zone, keys)
     final_dict = utils.check_json_pretty_value_for_dict(final_dict)
     utils.print_dict(final_dict)
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.service_type('automation')
+def do_zone_get(cs, args):
+    """Gets the JSON of the zone."""
+    zone = _find_zone(cs, args.zone)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(zone, keys)
+    print (final_dict)
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -839,13 +864,37 @@ def do_component_zone_role_show(cs, args):
     """Show details about a component by zone and role."""
     zone = _find_zone(cs, args.zone)
     role = _find_role(cs, args.zone, args.role)
-    component = _find_component(cs, args.component)
+    component = args.component
     component_zone_role = cs.components.get_zone_role(zone, role, component)
     keys = ['_links']
     final_dict = utils.remove_values_from_manager_dict(component_zone_role,
                                                        keys)
     final_dict = utils.check_json_pretty_value_for_dict(final_dict)
     utils.print_dict(final_dict)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.arg('role', metavar='<role-id>',
+           type=int,
+           help='ID of the role.')
+@utils.arg('node', metavar='<node-id>',
+           type=int,
+           help='ID of the node.')
+@utils.arg('component', metavar='<component>',
+           help='Name of the component.')
+@utils.service_type('automation')
+def do_component_zone_role_get(cs, args):
+    """Gets the JSON of the component"""
+    zone = _find_zone(cs, args.zone)
+    role = _find_role(cs, args.zone, args.role)
+    component = args.component
+    component_zone_role = cs.components.get_zone_role(zone, role, component)
+    keys = ['_links']
+    final_dict = utils.remove_values_from_manager_dict(component_zone_role,
+                                                       keys)
+    print (json.dumps({'component': final_dict}))
 
 
 @utils.arg('zone', metavar='<zone-id>',
@@ -869,8 +918,7 @@ def do_component_zone_role_update(cs, args):
     _validate_extension_file(args.component_file, 'json')
     zone = _find_zone(cs, args.zone)
     role = _find_role(cs, args.zone, args.role)
-    component = _find_component(cs, args.component)
-
+    component = args.component
     with open(args.component_file) as f:
         cs.components.update_zone_role(zone, role, component, json.load(f))
 
