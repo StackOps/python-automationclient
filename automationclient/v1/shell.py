@@ -828,7 +828,6 @@ def do_role_show(cs, args):
            type=int,
            help='ID of the node.')
 @utils.service_type('automation')
-#TODO(jvalderrama) Review print list once deployed the node
 def do_role_deploy(cs, args):
     """Associate a role to a node."""
     zone = _find_zone(cs, args.zone)

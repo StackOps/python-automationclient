@@ -74,11 +74,10 @@ class TaskManager(base.ManagerWithFind):
                         % (base.getid(zone), base.getid(node))
             }
         }
-        print(body)
-        return self.api.client.post("/zones/%s/roles/%s/deploy"
-                                    % ((base.getid(zone),
-                                        base.getid(role))),
-                                    body=body)
+        return self._list("/zones/%s/roles/%s/deploy"
+                          % ((base.getid(zone),
+                              base.getid(role))),
+                          'tasks', body=body)
 
     def cancel(self, zone, node, task):
         """Cancel a task by zone and node.
@@ -145,9 +144,8 @@ class TaskManager(base.ManagerWithFind):
         :rtype: :class:`Service`
         """
 
-        return self.api.client. \
-            post("/zones/%s/roles/%s/components/%s/services/%s"
-                 % (base.getid(zone),
-                    base.getid(role),
-                    component.name,
-                    service.name))
+        return self._list("/zones/%s/roles/%s/components/%s/services/%s"
+                          % (base.getid(zone),
+                             base.getid(role),
+                             component.name,
+                             service.name), "tasks", customize=True)
