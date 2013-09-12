@@ -205,11 +205,20 @@ def do_device_delete(cs, args):
 @utils.arg('zone_id', metavar='<zone-id>',
            type=int,
            help='ID of the zone to activate the device')
+@utils.arg('--lom-user', metavar='<lom-user>',
+           help='Out-of-band user')
+@utils.arg('--lom-password', metavar='<lom-password>',
+           help='Out-of-Band user password')
 @utils.service_type('automation')
 #TODO(jvalderrama) Review node print on shell once activated
 def do_device_activate(cs, args):
     """Activate a specific device in the pool."""
     kwargs = {'zone_id': args.zone_id}
+    if args.lom_user is not None:
+        kwargs['lom_user'] = args.lom_user
+
+    if args.lom_password is not None:
+        kwargs['lom_password'] = args.lom_password
     device = _find_device(cs, args.mac)
     cs.devices.activate(device, **kwargs)
     do_device_show(cs, args)
@@ -605,7 +614,7 @@ def do_zone_show(cs, args):
            type=int,
            help='ID of the zone.')
 @utils.service_type('automation')
-def do_zone_get(cs, args):
+def do_zone_json(cs, args):
     """Gets the JSON of the zone."""
     zone = _find_zone(cs, args.zone)
     keys = ['_links']
