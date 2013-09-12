@@ -210,7 +210,6 @@ def do_device_delete(cs, args):
 @utils.arg('--lom-password', metavar='<lom-password>',
            help='Out-of-Band user password')
 @utils.service_type('automation')
-#TODO(jvalderrama) Review node print on shell once activated
 def do_device_activate(cs, args):
     """Activate a specific device in the pool."""
     kwargs = {'zone_id': args.zone_id}
@@ -220,8 +219,11 @@ def do_device_activate(cs, args):
     if args.lom_password is not None:
         kwargs['lom_password'] = args.lom_password
     device = _find_device(cs, args.mac)
-    cs.devices.activate(device, **kwargs)
-    do_device_show(cs, args)
+    node = cs.devices.activate(device, **kwargs)
+    dict = node[1]['node']
+    del dict['_links']
+    del dict['connection_data']
+    utils.print_dict(dict)
 
 
 @utils.arg('mac', metavar='<mac>',
@@ -390,7 +392,6 @@ def do_profile_list(cs, args):
            type=int,
            help='ID of the profile.')
 @utils.service_type('automation')
-#def do_profile_get(cs, args):
 def do_profile_json(cs, args):
     """Gets the JSON of the profile."""
     profile = _find_profile(cs, args.architecture, args.profile)
@@ -823,20 +824,17 @@ def do_role_show(cs, args):
 @utils.arg('role', metavar='<role-id>',
            type=int,
            help='ID of the role.')
-@utils.arg('node', metavar='<node-file>',
-           help='File with extension *.json describing the '
-                'node to associate.')
+@utils.arg('node', metavar='<node-id>',
+           type=int,
+           help='ID of the node.')
 @utils.service_type('automation')
-#TODO(jvalderrama) Test again
+#TODO(jvalderrama) Review print list once deployed the node
 def do_role_deploy(cs, args):
     """Associate a role to a node."""
-    _validate_extension_file(args.node, 'json')
     zone = _find_zone(cs, args.zone)
     role = _find_role(cs, args.zone, args.role)
-
-    with open(args.node) as f:
-        tasks = cs.tasks.deploy(zone, role, json.load(f))
-
+    node = _find_node(cs, args.zone, args.node)
+    tasks = cs.tasks.deploy(zone, role, node)
     utils.print_list(tasks, ['id', 'name', 'uuid', 'state', 'result'])
 
 
@@ -847,7 +845,6 @@ def do_role_deploy(cs, args):
            type=int,
            help='ID of the role.')
 @utils.service_type('automation')
-#def do_component_zone_role_list(cs, args):
 def do_role_component_list(cs, args):
     """List all components by zone and role."""
     zone = _find_zone(cs, args.zone)
@@ -868,7 +865,6 @@ def do_role_component_list(cs, args):
 @utils.arg('component', metavar='<component>',
            help='Name of the component.')
 @utils.service_type('automation')
-#def do_component_zone_role_show(cs, args)
 def do_role_component_show(cs, args):
     """Show details about a component by zone and role."""
     zone = _find_zone(cs, args.zone)
@@ -894,7 +890,6 @@ def do_role_component_show(cs, args):
 @utils.arg('component', metavar='<component>',
            help='Name of the component.')
 @utils.service_type('automation')
-#def do_component_zone_role_get(cs, args):
 def do_role_component_json(cs, args):
     """Gets the JSON of the component by zone and role."""
     zone = _find_zone(cs, args.zone)
@@ -922,7 +917,6 @@ def do_role_component_json(cs, args):
            help='File with extension *.json describing the'
                 'component to update')
 @utils.service_type('automation')
-#def do_component_zone_role_update(cs, args):
 def do_role_component_update(cs, args):
     """Update a component by zone and role ."""
     _validate_extension_file(args.component_file, 'json')
@@ -932,7 +926,6 @@ def do_role_component_update(cs, args):
     with open(args.component_file) as f:
         cs.components.update_zone_role(zone, role, component, json.load(f))
 
-    #do_component_zone_role_show(cs, args)
     do_role_component_show(cs, args)
 
 
@@ -945,7 +938,6 @@ def do_role_component_update(cs, args):
 @utils.arg('component', metavar='<component>',
            help='Name of the component.')
 @utils.service_type('automation')
-#def do_service_zone_role_component_list(cs, args):
 def do_service_list(cs, args):
     """List all services by zone, role and component."""
     zone = _find_zone(cs, args.zone)
@@ -966,7 +958,6 @@ def do_service_list(cs, args):
 @utils.arg('service', metavar='<service-name>',
            help='Name of the service.')
 @utils.service_type('automation')
-#def do_service_zone_role_component_show(cs, args):
 def do_service_show(cs, args):
     """Show details about a service by zone, role and component."""
     service = _find_service(cs, args.zone, args.role, args.component,
@@ -986,7 +977,6 @@ def do_service_show(cs, args):
 @utils.arg('service', metavar='<service-name>',
            help='Name of the service.')
 @utils.service_type('automation')
-#def do_service_zone_role_component_execute(cs, args):
 #TODO(jvalderrama) Test again
 def do_service_execute(cs, args):
     """Execute a service by zone, role and component."""

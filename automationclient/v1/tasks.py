@@ -68,8 +68,13 @@ class TaskManager(base.ManagerWithFind):
         :param node: Node JSON format define
         """
 
-        body = node
-
+        body = {
+            'node': {
+                'href': "http://localhost:8089/v1.1/zones/%s/nodes/%s"
+                        % (base.getid(zone), base.getid(node))
+            }
+        }
+        print(body)
         return self.api.client.post("/zones/%s/roles/%s/deploy"
                                     % ((base.getid(zone),
                                         base.getid(role))),
@@ -140,7 +145,7 @@ class TaskManager(base.ManagerWithFind):
         :rtype: :class:`Service`
         """
 
-        return self.api.client.\
+        return self.api.client. \
             post("/zones/%s/roles/%s/components/%s/services/%s"
                  % (base.getid(zone),
                     base.getid(role),
