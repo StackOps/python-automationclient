@@ -449,7 +449,8 @@ class StackopsAutomationShell(object):
         except exc.AuthorizationFailure:
             raise exc.CommandError("Unable to authorize user")
 
-        endpoint_api_version = self.cs.get_automation_api_version_from_endpoint()
+        endpoint_api_version = \
+            self.cs.get_automation_api_version_from_endpoint()
         if endpoint_api_version != options.os_automation_api_version:
             msg = (("Automation API version is set to %s "
                     "but you are accessing a %s endpoint. "
