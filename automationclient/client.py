@@ -237,8 +237,7 @@ class HTTPClient(object):
                     filter_value=self.region_name,
                     endpoint_type=self.endpoint_type,
                     service_type=self.service_type,
-                    service_name=self.service_name,
-                    volume_service_name=self.volume_service_name)
+                    service_name=self.service_name)
                 self.management_url = management_url.rstrip('/')
                 return None
             except exceptions.AmbiguousEndpoints:

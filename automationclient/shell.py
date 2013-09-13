@@ -157,15 +157,6 @@ class StackopsAutomationShell(object):
         parser.add_argument('--service_name',
                             help=argparse.SUPPRESS)
 
-        '''parser.add_argument('--volume-service-name',
-                            metavar='<volume-service-name>',
-                            default=
-                            utils.env('AUTOMATION_VOLUME_SERVICE_NAME'),
-                            help='Defaults to env
-                            [AUTOMATION_VOLUME_SERVICE_NAME]')'''
-        parser.add_argument('--volume_service_name',
-                            help=argparse.SUPPRESS)
-
         parser.add_argument('--endpoint-type',
                             metavar='<endpoint-type>',
                             default=utils.env('AUTOMATION_ENDPOINT_TYPE',
@@ -372,15 +363,14 @@ class StackopsAutomationShell(object):
 
         (os_username, os_password, os_tenant_name, os_auth_url,
          os_region_name, os_tenant_id, endpoint_type, insecure,
-         service_type, service_name, volume_service_name,
-         username, apikey, projectid, url, region_name, cacert) = \
+         service_type, service_name, username, apikey, projectid,
+         url, region_name, cacert) = \
             (args.os_username, args.os_password,
              args.os_tenant_name, args.os_auth_url,
              args.os_region_name, args.os_tenant_id,
              args.endpoint_type, args.insecure,
              args.service_type, args.service_name,
-             args.volume_service_name, args.username,
-             args.apikey, args.projectid,
+             args.username, args.apikey, args.projectid,
              args.url, args.region_name, args.os_cacert)
 
         if not endpoint_type:
@@ -447,7 +437,6 @@ class StackopsAutomationShell(object):
                                 extensions=self.extensions,
                                 service_type=service_type,
                                 service_name=service_name,
-                                volume_service_name=volume_service_name,
                                 retries=options.retries,
                                 http_log_debug=args.debug,
                                 cacert=cacert)

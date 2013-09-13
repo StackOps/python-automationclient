@@ -51,7 +51,7 @@ class ArchitectureManager(base.ManagerWithFind):
 
     def create(self, architecture):
         """
-        Create a volume.
+        Create an architecture.
 
         :param architecture: Architecture JSON format define
         """

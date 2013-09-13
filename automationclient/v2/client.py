@@ -19,7 +19,7 @@ from automationclient import client
 
 
 class Client(object):
-    """Top-level object to access the OpenStack Volume API.
+    """Top-level object to access the Stackops Automation API.
 
     Create an instance with your creds::
 
@@ -35,9 +35,8 @@ class Client(object):
                  insecure=False, timeout=None, tenant_id=None,
                  proxy_tenant_id=None, proxy_token=None, region_name=None,
                  endpoint_type='publicURL', extensions=None,
-                 service_type='volumev2', service_name=None,
-                 volume_service_name=None, retries=None,
-                 http_log_debug=False,
+                 service_type='automationv2', service_name=None,
+                 retries=None, http_log_debug=False,
                  cacert=None):
         # FIXME(comstud): Rename the api_key argument above when we
         # know it's not being used as keyword argument
@@ -66,7 +65,6 @@ class Client(object):
             endpoint_type=endpoint_type,
             service_type=service_type,
             service_name=service_name,
-            volume_service_name=volume_service_name,
             retries=retries,
             http_log_debug=http_log_debug,
             cacert=cacert)
