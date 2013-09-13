@@ -67,11 +67,6 @@ class ServiceCatalog(object):
                     and service.get("type") != service_type):
                 continue
 
-            '''if (volume_service_name
-                  and service_type in ('volume', 'volumev2')
-                  and service.get('name') != volume_service_name):
-                continue'''
-
             endpoints = service['endpoints']
             for endpoint in endpoints:
                 if not filter_value or endpoint.get(attr) == filter_value:

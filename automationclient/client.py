@@ -68,7 +68,7 @@ class HTTPClient(object):
         self.projectid = projectid
         self.tenant_id = tenant_id
         self.auth_url = auth_url.rstrip('/')
-        self.version = 'v1'
+        self.version = 'v1.1'
         self.region_name = region_name
         self.endpoint_type = endpoint_type
         self.service_type = service_type
@@ -386,7 +386,7 @@ class HTTPClient(object):
         magic_tuple = urlparse.urlsplit(self.management_url)
         scheme, netloc, path, query, frag = magic_tuple
         v = path.split("/")[1]
-        valid_versions = ['v1', 'v2']
+        valid_versions = ['v1.1', 'v2']
         if v not in valid_versions:
             msg = "Invalid client version '%s'. must be one of: %s" % (
                   (v, ', '.join(valid_versions)))
@@ -396,7 +396,7 @@ class HTTPClient(object):
 
 def get_client_class(version):
     version_map = {
-        '1': 'automationclient.v1.client.Client',
+        '1.1': 'automationclient.v1.client.Client',
         '2': 'automationclient.v2.client.Client',
     }
     try:

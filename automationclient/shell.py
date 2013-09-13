@@ -40,7 +40,7 @@ from automationclient import utils
 from automationclient.v1 import shell as shell_v1
 from automationclient.v2 import shell as shell_v2
 
-DEFAULT_OS_AUTOMATION_API_VERSION = "1"
+DEFAULT_OS_AUTOMATION_API_VERSION = "1.1"
 DEFAULT_AUTOMATION_ENDPOINT_TYPE = 'publicURL'
 DEFAULT_AUTOMATION_SERVICE_TYPE = 'automation'
 
@@ -449,16 +449,14 @@ class StackopsAutomationShell(object):
         except exc.AuthorizationFailure:
             raise exc.CommandError("Unable to authorize user")
 
-        ''''endpoint_api_version = self.cs.
-        get_automation_api_version_from_endpoint
-        ()
+        endpoint_api_version = self.cs.get_automation_api_version_from_endpoint()
         if endpoint_api_version != options.os_automation_api_version:
-            msg = (("Volume API version is set to %s "
+            msg = (("Automation API version is set to %s "
                     "but you are accessing a %s endpoint. "
                     "Change its value via either --os-automation-api-version "
                     "or env[OS_AUTOMATION_API_VERSION]")
                    % (options.os_automation_api_version, endpoint_api_version))
-            raise exc.InvalidAPIVersion(msg)'''
+            raise exc.InvalidAPIVersion(msg)
 
         args.func(self.cs, args)
 
