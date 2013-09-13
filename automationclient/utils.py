@@ -272,7 +272,6 @@ def find_resource(manager, name_or_id):
                 return manager.find(display_name=name_or_id)
             except (UnicodeDecodeError, exceptions.NotFound):
                 try:
-                    # Volumes does not have name, but display_name
                     return manager.find(display_name=name_or_id)
                 except exceptions.NotFound:
                     msg = "No %s with a name or ID of '%s' exists." % \

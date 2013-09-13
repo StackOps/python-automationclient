@@ -4,7 +4,7 @@ set -eu
 
 function usage {
   echo "Usage: $0 [OPTION]..."
-  echo "Run cinderclient's test suite(s)"
+  echo "Run automationclient's test suite(s)"
   echo ""
   echo "  -V, --virtual-env           Always use virtualenv.  Install automatically if not present"
   echo "  -N, --no-virtual-env        Don't use virtualenv.  Run tests in local environment"
@@ -116,7 +116,7 @@ function run_tests {
     if [ "$testropts" = "" ] && [ "$testrargs" = "" ]; then
       # Default to running all tests if specific test is not
       # provided.
-      testrargs="discover ./cinderclient/tests"
+      testrargs="discover ./automationclient/tests"
     fi
     ${wrapper} python -m testtools.run $testropts $testrargs
 
@@ -136,7 +136,7 @@ function run_tests {
   set +e
   testrargs=`echo "$testrargs" | sed -e's/^\s*\(.*\)\s*$/\1/'`
   TESTRTESTS="$TESTRTESTS --testr-args='--subunit $testropts $testrargs'"
-  if [ setup.cfg -nt cinderclient.egg-info/entry_points.txt ]
+  if [ setup.cfg -nt automationclient.egg-info/entry_points.txt ]
   then
     ${wrapper} python setup.py egg_info
   fi
@@ -158,7 +158,7 @@ function run_tests {
     echo "Generating coverage report in covhtml/"
     # Don't compute coverage for common code, which is tested elsewhere
     ${wrapper} coverage combine
-    ${wrapper} coverage html --include='cinderclient/*' --omit='cinderclient/openstack/common/*' -d covhtml -i
+    ${wrapper} coverage html --include='automationclient/*' --omit='automationclient/openstack/common/*' -d covhtml -i
   fi
 
   return $RESULT

@@ -1,6 +1,7 @@
 # Copyright 2011 OpenStack LLC.
 # Copyright 2011, Piston Cloud Computing, Inc.
 #
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L
 # All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -54,7 +55,7 @@ class ServiceCatalog(object):
         for service in catalog:
 
             # NOTE(thingee): For backwards compatibility, if they have v2
-            # enabled and the service_type is set to 'volume', go ahead and
+            # enabled and the service_type is set to 'automation', go ahead and
             # accept that.
             skip_service_type_check = False
             if service_type == 'automationv2' \

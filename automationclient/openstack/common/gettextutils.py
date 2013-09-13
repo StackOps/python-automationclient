@@ -80,7 +80,7 @@ def install(domain, lazy=False):
 
             Lazy gettext function for a given domain, it is a factory method
             for a project/module to get a lazy gettext function for its own
-            translation domain (i.e. nova, glance, cinder, etc.)
+            translation domain (i.e. nova, glance, etc.)
 
             Message encapsulates a string so that we can translate
             it later when needed.
