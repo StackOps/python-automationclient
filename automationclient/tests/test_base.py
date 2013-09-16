@@ -1,3 +1,6 @@
+# Copyright 2011 OpenStack LLC.
+
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,9 +16,9 @@
 
 from automationclient import base
 from automationclient import exceptions
-from automationclient.v1 import volumes
+from automationclient.v1_1 import devices
 from automationclient.tests import utils
-from automationclient.tests.v1 import fakes
+from automationclient.tests.v1_1 import fakes
 
 
 cs = fakes.FakeClient()
@@ -40,9 +43,9 @@ class BaseTest(utils.TestCase):
         r2 = base.Resource(None, {'id': 1, 'name': 'hello'})
         self.assertEqual(r1, r2)
 
-        # Two resoruces of different types: never equal
+        # Two resources of different types: never equal
         r1 = base.Resource(None, {'id': 1})
-        r2 = volumes.Volume(None, {'id': 1})
+        r2 = devices.Device(None, {'id': 1})
         self.assertNotEqual(r1, r2)
 
         # Two resources with no ID: equal if their info is equal
@@ -53,9 +56,9 @@ class BaseTest(utils.TestCase):
     def test_findall_invalid_attribute(self):
         # Make sure findall with an invalid attribute doesn't cause errors.
         # The following should not raise an exception.
-        cs.volumes.findall(vegetable='carrot')
+        cs.devices.findall(vegetable='carrot')
 
         # However, find() should raise an error
         self.assertRaises(exceptions.NotFound,
-                          cs.volumes.find,
+                          cs.devices.find,
                           vegetable='carrot')

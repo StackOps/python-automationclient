@@ -37,7 +37,7 @@ from automationclient import exceptions as exc
 import automationclient.extension
 from automationclient.openstack.common import strutils
 from automationclient import utils
-from automationclient.v1 import shell as shell_v1
+from automationclient.v1_1 import shell as shell_v1
 from automationclient.v2 import shell as shell_v2
 
 DEFAULT_OS_AUTOMATION_API_VERSION = "1.1"

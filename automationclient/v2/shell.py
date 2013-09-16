@@ -24,3 +24,4 @@ from automationclient import utils
 def do_fake(cs, args):
     """List fake."""
     print('V2 API Working')
+    return 'V2 API Working'

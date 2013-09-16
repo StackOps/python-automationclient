@@ -626,7 +626,7 @@ def do_zone_delete(cs, args):
            help='ID of the zone.')
 @utils.service_type('automation')
 def do_zone_tasks_list(cs, args):
-    """List all tasks by zone."""
+    """List all the tasks by zone."""
     zone = _find_zone(cs, args.zone)
     tasks = cs.tasks.list(zone)
     utils.print_list(tasks, ['id', 'name', 'uuid', 'state', 'result'])
@@ -904,7 +904,7 @@ def do_role_component_update(cs, args):
            help='Name of the component.')
 @utils.service_type('automation')
 def do_service_list(cs, args):
-    """List all services by zone, role and component."""
+    """List all the services by zone, role and component."""
     zone = _find_zone(cs, args.zone)
     role = _find_role(cs, args.zone, args.role)
     component = _find_component(cs, args.component)

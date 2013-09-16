@@ -314,7 +314,7 @@ class HTTPClient(object):
             try:
                 while auth_url:
                     auth_url = self._v1_auth(auth_url)
-            # In some configurations cinder makes redirection to
+            # In some configurations automation makes redirection to
             # v2.0 keystone endpoint. Also, new location does not contain
             # real endpoint, only hostname and port.
             except exceptions.AuthorizationFailure:
@@ -395,7 +395,7 @@ class HTTPClient(object):
 
 def get_client_class(version):
     version_map = {
-        '1.1': 'automationclient.v1.client.Client',
+        '1.1': 'automationclient.v1_1.client.Client',
         '2': 'automationclient.v2.client.Client',
     }
     try:

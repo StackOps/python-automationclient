@@ -1,5 +1,7 @@
-# Copyright 2013 OpenStack, LLC
-#
+# Copyright (c) 2011 X.commerce, a business unit of eBay Inc.
+# Copyright 2011 OpenStack, LLC
+
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -22,11 +24,10 @@ except ImportError:
 from automationclient import client as base_client
 from automationclient.tests import fakes
 import automationclient.tests.utils as utils
-from automationclient.v2 import client
+from automationclient.v1_1 import client
 
 
 class FakeClient(fakes.FakeClient, client.Client):
-
     def __init__(self, *args, **kwargs):
         client.Client.__init__(self, 'username', 'password',
                                'project_id', 'auth_url',
@@ -37,14 +38,49 @@ class FakeClient(fakes.FakeClient, client.Client):
         return self.client.get_automation_api_version_from_endpoint()
 
 
-class FakeHTTPClient(base_client.HTTPClient):
+def _stub_device(**kwargs):
+    device = {
+        "ip": "180.10.10.123",
+        "updated": "None",
+        "megaherzs": 0,
+        "id": 1,
+        "management_network_gateway": None,
+        "certified": False,
+        "memory": 515497984,
+        "management_network_ip": "180.10.10.123",
+        "status": "INSTALLING",
+        "product": "VirtualBox ()",
+        "vendor": "innotek GmbH",
+        "mac": "08:00:27:68:1c:62",
+        "threads": 1,
+        "connection_data": {
+            "username": "stackops",
+            "host": "180.10.10.123",
+            "ssh_key_file": "/var/lib/stackops-head/etc/nonsecureid_rsa",
+            "port": 22
+        },
+        "lom_mac": None,
+        "lom_ip": None,
+        "zone_id": None,
+        "management_network_dns": None,
+        "disk_size": 8589934592,
+        "name": "08:00:27:68:1c:62",
+        "created": "2013-09-16 13:56:32",
+        "management_network_netmask": None,
+        "cores": 1,
+        "ports": 1
+    }
+    device.update(kwargs)
+    return device
 
+
+class FakeHTTPClient(base_client.HTTPClient):
     def __init__(self, **kwargs):
         self.username = 'username'
         self.password = 'password'
         self.auth_url = 'auth_url'
         self.callstack = []
-        self.management_url = 'http://10.0.2.15:8089/v2/fake'
+        self.management_url = 'http://10.0.2.15:8089/v1.1/fake'
 
     def _cs_request(self, url, method, **kwargs):
         # Check that certain things are called correctly
@@ -86,3 +122,15 @@ class FakeHTTPClient(base_client.HTTPClient):
         magic_tuple = urlparse.urlsplit(self.management_url)
         scheme, netloc, path, query, frag = magic_tuple
         return path.lstrip('/').split('/')[0][1:]
+
+    #
+    # Pool (Devices)
+    #
+    def get_pool_devices(self, **kw):
+        return (200, {}, {"nodes": [
+            {'id': 1234, 'name': 'sample-device1'},
+            {'id': 5678, 'name': 'sample-device2'}
+        ]})
+
+    def get_pool_devices_1234(self, **kw):
+        return (200, {}, {'node': _stub_device(id='1234')})

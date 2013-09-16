@@ -18,7 +18,8 @@ The code is hosted on `Github`_.
 
 This code a fork of `Openstack python-cinderclient`__ If you need API support
 for the Openstack Cinder API solely or the Apache license, you should use that repository.
-python-automationclient is licensed under the Apache License like the rest of OpenStack.
+
+python-automationclient is licensed under the Apache License.
 
 __ https://github.com/openstack/cinder
 

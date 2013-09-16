@@ -1,3 +1,6 @@
+# Copyright 2011 OpenStack LLC.
+
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -61,8 +64,9 @@ class ShellTest(utils.TestCase):
     def test_help(self):
         required = [
             '.*?^usage: ',
-            '.*?(?m)^\s+create\s+Add a new volume.',
-            '.*?(?m)^See "cinder help COMMAND" for help on a specific command',
+            '.*?(?m)^\s+architecture-create\s+Add a new architecture.',
+            '.*?(?m)^See "automation help COMMAND" for help on a '
+            'specific command',
         ]
         help_text = self.shell('help')
         for r in required:
@@ -71,10 +75,10 @@ class ShellTest(utils.TestCase):
 
     def test_help_on_subcommand(self):
         required = [
-            '.*?^usage: cinder list',
-            '.*?(?m)^List all the volumes.',
+            '.*?^usage: automation device-list',
+            '.*?(?m)^List all the devices.',
         ]
-        help_text = self.shell('help list')
+        help_text = self.shell('help device-list')
         for r in required:
             self.assertThat(help_text,
                             matchers.MatchesRegex(r, re.DOTALL | re.MULTILINE))

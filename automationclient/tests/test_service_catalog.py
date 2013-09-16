@@ -1,3 +1,6 @@
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
+
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -72,13 +75,13 @@ SERVICE_CATALOG = {
                 "endpoints_links": [],
             },
             {
-                "name": "Cinder Volume Service",
-                "type": "volume",
+                "name": "Automation Service",
+                "type": "automation",
                 "endpoints": [
                     {
                         "tenantId": "1",
-                        "publicURL": "https://volume1.host/v1/1234",
-                        "internalURL": "https://volume1.host/v1/1234",
+                        "publicURL": "https://automation1.host/v1.1/1234",
+                        "internalURL": "https://automation1.host/v1.1/1234",
                         "region": "South",
                         "versionId": "1.0",
                         "versionInfo": "uri",
@@ -86,12 +89,12 @@ SERVICE_CATALOG = {
                     },
                     {
                         "tenantId": "2",
-                        "publicURL": "https://volume1.host/v1/3456",
-                        "internalURL": "https://volume1.host/v1/3456",
+                        "publicURL": "https://automation1.host/v1.1/3456",
+                        "internalURL": "https://automation1.host/v1.1/3456",
                         "region": "South",
                         "versionId": "1.1",
-                        "versionInfo": "https://volume1.host/v1/",
-                        "versionList": "https://volume1.host/"
+                        "versionInfo": "https://automation1.host/v1.1/",
+                        "versionList": "https://automation1.host/"
                     },
                 ],
                 "endpoints_links": [
@@ -102,13 +105,13 @@ SERVICE_CATALOG = {
                 ],
             },
             {
-                "name": "Cinder Volume Service V2",
-                "type": "volumev2",
+                "name": "Automation Service V2",
+                "type": "automationv2",
                 "endpoints": [
                     {
                         "tenantId": "1",
-                        "publicURL": "https://volume1.host/v2/1234",
-                        "internalURL": "https://volume1.host/v2/1234",
+                        "publicURL": "https://automation1.host/v2/1234",
+                        "internalURL": "https://automation1.host/v2/1234",
                         "region": "South",
                         "versionId": "2.0",
                         "versionInfo": "uri",
@@ -116,12 +119,12 @@ SERVICE_CATALOG = {
                     },
                     {
                         "tenantId": "2",
-                        "publicURL": "https://volume1.host/v2/3456",
-                        "internalURL": "https://volume1.host/v2/3456",
+                        "publicURL": "https://automation1.host/v2/3456",
+                        "internalURL": "https://automation1.host/v2/3456",
                         "region": "South",
                         "versionId": "1.1",
-                        "versionInfo": "https://volume1.host/v2/",
-                        "versionList": "https://volume1.host/"
+                        "versionInfo": "https://automation1.host/v2/",
+                        "versionList": "https://automation1.host/"
                     },
                 ],
                 "endpoints_links": [
@@ -194,13 +197,13 @@ SERVICE_COMPATIBILITY_CATALOG = {
                 "endpoints_links": [],
             },
             {
-                "name": "Cinder Volume Service V2",
-                "type": "volume",
+                "name": "Automation V2",
+                "type": "automation",
                 "endpoints": [
                     {
                         "tenantId": "1",
-                        "publicURL": "https://volume1.host/v2/1234",
-                        "internalURL": "https://volume1.host/v2/1234",
+                        "publicURL": "https://automation1.host/v2/1234",
+                        "internalURL": "https://automation1.host/v2/1234",
                         "region": "South",
                         "versionId": "2.0",
                         "versionInfo": "uri",
@@ -208,12 +211,12 @@ SERVICE_COMPATIBILITY_CATALOG = {
                     },
                     {
                         "tenantId": "2",
-                        "publicURL": "https://volume1.host/v2/3456",
-                        "internalURL": "https://volume1.host/v2/3456",
+                        "publicURL": "https://automation1.host/v2/3456",
+                        "internalURL": "https://automation1.host/v2/3456",
                         "region": "South",
                         "versionId": "1.1",
-                        "versionInfo": "https://volume1.host/v2/",
-                        "versionList": "https://volume1.host/"
+                        "versionInfo": "https://automation1.host/v2/",
+                        "versionList": "https://automation1.host/"
                     },
                 ],
                 "endpoints_links": [
@@ -252,24 +255,30 @@ class ServiceCatalogTest(utils.TestCase):
         sc = service_catalog.ServiceCatalog(SERVICE_CATALOG)
 
         self.assertRaises(exceptions.AmbiguousEndpoints, sc.url_for,
-                          service_type='volume')
-        self.assertEquals(sc.url_for('tenantId', '1', service_type='volume'),
-                          "https://volume1.host/v1/1234")
-        self.assertEquals(sc.url_for('tenantId', '2', service_type='volume'),
-                          "https://volume1.host/v1/3456")
+                          service_type='automation')
+        self.assertEquals(sc.url_for('tenantId', '1',
+                                     service_type='automation'),
+                          "https://automation1.host/v1.1/1234")
+        self.assertEquals(sc.url_for('tenantId', '2',
+                                     service_type='automation'),
+                          "https://automation1.host/v1.1/3456")
 
-        self.assertEquals(sc.url_for('tenantId', '2', service_type='volumev2'),
-                          "https://volume1.host/v2/3456")
-        self.assertEquals(sc.url_for('tenantId', '2', service_type='volumev2'),
-                          "https://volume1.host/v2/3456")
+        self.assertEquals(sc.url_for('tenantId', '2',
+                                     service_type='automationv2'),
+                          "https://automation1.host/v2/3456")
+        self.assertEquals(sc.url_for('tenantId', '2',
+                                     service_type='automationv2'),
+                          "https://automation1.host/v2/3456")
 
         self.assertRaises(exceptions.EndpointNotFound, sc.url_for,
-                          "region", "North", service_type='volume')
+                          "region", "North", service_type='automation')
 
     def test_compatibility_service_type(self):
         sc = service_catalog.ServiceCatalog(SERVICE_COMPATIBILITY_CATALOG)
 
-        self.assertEquals(sc.url_for('tenantId', '1', service_type='volume'),
-                          "https://volume1.host/v2/1234")
-        self.assertEquals(sc.url_for('tenantId', '2', service_type='volume'),
-                          "https://volume1.host/v2/3456")
+        self.assertEquals(sc.url_for('tenantId', '1',
+                                     service_type='automation'),
+                          "https://automation1.host/v2/1234")
+        self.assertEquals(sc.url_for('tenantId', '2',
+                                     service_type='automation'),
+                          "https://automation1.host/v2/3456")

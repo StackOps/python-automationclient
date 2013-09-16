@@ -27,7 +27,8 @@ from automationclient.tests import utils
 class AuthenticateAgainstKeystoneTests(utils.TestCase):
     def test_authenticate_success(self):
         cs = client.Client("username", "password", "project_id",
-                           "http://localhost:8776/v2", service_type='volumev2')
+                           "http://localhost:8089/v2",
+                           service_type='automationv2')
         resp = {
             "access": {
                 "token": {
@@ -36,13 +37,13 @@ class AuthenticateAgainstKeystoneTests(utils.TestCase):
                 },
                 "serviceCatalog": [
                     {
-                        "type": "volumev2",
+                        "type": "automationv2",
                         "endpoints": [
                             {
                                 "region": "RegionOne",
-                                "adminURL": "http://localhost:8776/v2",
-                                "internalURL": "http://localhost:8776/v2",
-                                "publicURL": "http://localhost:8776/v2",
+                                "adminURL": "http://localhost:8089/v2",
+                                "internalURL": "http://localhost:8089/v2",
+                                "publicURL": "http://localhost:8089/v2",
                             },
                         ],
                     },
@@ -93,8 +94,8 @@ class AuthenticateAgainstKeystoneTests(utils.TestCase):
 
     def test_authenticate_tenant_id(self):
         cs = client.Client("username", "password",
-                           auth_url="http://localhost:8776/v2",
-                           tenant_id='tenant_id', service_type='volumev2')
+                           auth_url="http://localhost:8089/v2",
+                           tenant_id='tenant_id', service_type='automationv2')
         resp = {
             "access": {
                 "token": {
@@ -109,13 +110,13 @@ class AuthenticateAgainstKeystoneTests(utils.TestCase):
                 },
                 "serviceCatalog": [
                     {
-                        "type": 'volumev2',
+                        "type": 'automationv2',
                         "endpoints": [
                             {
                                 "region": "RegionOne",
-                                "adminURL": "http://localhost:8776/v2",
-                                "internalURL": "http://localhost:8776/v2",
-                                "publicURL": "http://localhost:8776/v2",
+                                "adminURL": "http://localhost:8089/v2",
+                                "internalURL": "http://localhost:8089/v2",
+                                "publicURL": "http://localhost:8089/v2",
                             },
                         ],
                     },
@@ -168,7 +169,7 @@ class AuthenticateAgainstKeystoneTests(utils.TestCase):
 
     def test_authenticate_failure(self):
         cs = client.Client("username", "password", "project_id",
-                           "http://localhost:8776/v2")
+                           "http://localhost:8089/v2")
         resp = {"unauthorized": {"message": "Unauthorized", "code": "401"}}
         auth_response = utils.TestResponse({
             "status_code": 401,
@@ -185,7 +186,8 @@ class AuthenticateAgainstKeystoneTests(utils.TestCase):
 
     def test_auth_redirect(self):
         cs = client.Client("username", "password", "project_id",
-                           "http://localhost:8776/v2", service_type='volumev2')
+                           "http://localhost:8089/v2",
+                           service_type='automationv2')
         dict_correct_response = {
             "access": {
                 "token": {
@@ -194,13 +196,13 @@ class AuthenticateAgainstKeystoneTests(utils.TestCase):
                 },
                 "serviceCatalog": [
                     {
-                        "type": "volumev2",
+                        "type": "automationv2",
                         "endpoints": [
                             {
-                                "adminURL": "http://localhost:8776/v2",
+                                "adminURL": "http://localhost:8089/v2",
                                 "region": "RegionOne",
-                                "internalURL": "http://localhost:8776/v2",
-                                "publicURL": "http://localhost:8776/v2/",
+                                "internalURL": "http://localhost:8089/v2",
+                                "publicURL": "http://localhost:8089/v2",
                             },
                         ],
                     },
@@ -212,7 +214,7 @@ class AuthenticateAgainstKeystoneTests(utils.TestCase):
             {"headers": {'location': 'http://127.0.0.1:5001'},
              "status_code": 305,
              "text": "Use proxy"},
-            # Configured on admin port, cinder redirects to v2.0 port.
+            # Configured on admin port, automation redirects to v2.0 port.
             # When trying to connect on it, keystone auth succeed by v1.0
             # protocol (through headers) but tokens are being returned in
             # body (looks like keystone bug). Leaved for compatibility.
@@ -269,7 +271,8 @@ class AuthenticateAgainstKeystoneTests(utils.TestCase):
 
     def test_ambiguous_endpoints(self):
         cs = client.Client("username", "password", "project_id",
-                           "http://localhost:8776/v2", service_type='volumev2')
+                           "http://localhost:8089/v2",
+                           service_type='automationv2')
         resp = {
             "access": {
                 "token": {
@@ -278,25 +281,25 @@ class AuthenticateAgainstKeystoneTests(utils.TestCase):
                 },
                 "serviceCatalog": [
                     {
-                        "adminURL": "http://localhost:8776/v1",
-                        "type": "volumev2",
-                        "name": "Cinder Volume Service",
+                        "adminURL": "http://localhost:8089/v2",
+                        "type": "automationv2",
+                        "name": "Automation Service",
                         "endpoints": [
                             {
                                 "region": "RegionOne",
-                                "internalURL": "http://localhost:8776/v1",
-                                "publicURL": "http://localhost:8776/v1",
+                                "internalURL": "http://localhost:8089/v2",
+                                "publicURL": "http://localhost:8089/v2",
                             },
                         ],
                     },
                     {
-                        "adminURL": "http://localhost:8776/v2",
-                        "type": "volumev2",
-                        "name": "Cinder Volume V2",
+                        "adminURL": "http://localhost:8089/v2",
+                        "type": "automationv2",
+                        "name": "Automation V2",
                         "endpoints": [
                             {
-                                "internalURL": "http://localhost:8776/v2",
-                                "publicURL": "http://localhost:8776/v2",
+                                "internalURL": "http://localhost:8089/v2",
+                                "publicURL": "http://localhost:8089/v2",
                             },
                         ],
                     },

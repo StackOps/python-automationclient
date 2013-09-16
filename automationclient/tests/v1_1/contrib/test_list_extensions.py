@@ -12,10 +12,10 @@
 # limitations under the License.
 
 from automationclient import extension
-from automationclient.v1.contrib import list_extensions
+from automationclient.v1_1.contrib import list_extensions
 
 from automationclient.tests import utils
-from automationclient.tests.v1 import fakes
+from automationclient.tests.v1_1 import fakes
 
 
 extensions = [

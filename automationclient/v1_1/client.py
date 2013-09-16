@@ -16,16 +16,16 @@
 #    under the License.
 
 from automationclient import client
-from automationclient.v1 import devices
-from automationclient.v1 import components
-from automationclient.v1 import services
-from automationclient.v1 import architectures
-from automationclient.v1 import profiles
-from automationclient.v1 import properties
-from automationclient.v1 import zones
-from automationclient.v1 import tasks
-from automationclient.v1 import roles
-from automationclient.v1 import nodes
+from automationclient.v1_1 import devices
+from automationclient.v1_1 import components
+from automationclient.v1_1 import services
+from automationclient.v1_1 import architectures
+from automationclient.v1_1 import profiles
+from automationclient.v1_1 import properties
+from automationclient.v1_1 import zones
+from automationclient.v1_1 import tasks
+from automationclient.v1_1 import roles
+from automationclient.v1_1 import nodes
 
 
 class Client(object):

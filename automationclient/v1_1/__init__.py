@@ -1,4 +1,6 @@
 # Copyright (c) 2012 OpenStack, LLC.
+
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
 #
 # All Rights Reserved.
 #
@@ -14,4 +16,4 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from automationclient.v1.client import Client     # noqa
+from automationclient.v1_1.client import Client

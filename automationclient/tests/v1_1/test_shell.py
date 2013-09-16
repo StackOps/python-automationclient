@@ -1,4 +1,7 @@
-# Copyright 2013 OpenStack LLC.
+# Copyright 2010 Jacob Kaplan-Moss
+# Copyright 2011 OpenStack LLC.
+
+# Copyright 2012-2013 STACKOPS TECHNOLOGIES S.L.
 # All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -17,8 +20,9 @@ import fixtures
 
 from automationclient import client
 from automationclient import shell
+from automationclient.v1_1 import shell as shell_v1
+from automationclient.tests.v1_1 import fakes
 from automationclient.tests import utils
-from automationclient.tests.v2 import fakes
 
 
 class ShellTest(utils.TestCase):
@@ -27,7 +31,7 @@ class ShellTest(utils.TestCase):
         'AUTOMATION_USERNAME': 'username',
         'AUTOMATION_PASSWORD': 'password',
         'AUTOMATION_PROJECT_ID': 'project_id',
-        'OS_AUTOMATION_API_VERSION': '2',
+        'OS_AUTOMATION_API_VERSION': '1.1',
         'AUTOMATION_URL': 'http://no.where',
     }
 
@@ -66,5 +70,14 @@ class ShellTest(utils.TestCase):
     def assert_called_anytime(self, method, url, body=None):
         return self.shell.cs.assert_called_anytime(method, url, body)
 
-    def test_fake(self):
-        self.run_command('fake')
+    def test_devices_list(self):
+        self.run_command('device-list')
+        self.assert_called('GET', '/pool/devices')
+
+    def test_device_show(self):
+        self.run_command('device-show 1234')
+        self.assert_called('GET', '/pool/devices/1234')
+
+    '''def test_device_delete(self):
+        self.run_command('device-delete 1234')
+        self.assert_called('POST', '/device/1234')'''
