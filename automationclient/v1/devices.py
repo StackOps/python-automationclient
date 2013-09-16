@@ -37,7 +37,8 @@ class DeviceManager(base.ManagerWithFind):
 
         :rtype: list of :class:`Device`.
         """
-        return self._list("/pool/devices", "nodes")
+
+        return self._list('/pool/devices', 'devices')
 
     def get(self, device):
         """Get a specific device from pool.
@@ -45,7 +46,8 @@ class DeviceManager(base.ManagerWithFind):
         :param device: The ID of the :class: `Device` to get.
         :rtype: :class:`Device`
         """
-        return self._get("/pool/devices/%s" % base.getid(device), "node")
+
+        return self._get('/pool/devices/%s' % base.getid(device), 'device')
 
     def activate(self, device, **kwargs):
         """
@@ -53,6 +55,7 @@ class DeviceManager(base.ManagerWithFind):
 
         :param device: Device to activate
         """
+
         return self._action('activate', device, **kwargs)
 
     def power_on(self, device, **kwargs):
@@ -108,6 +111,7 @@ class DeviceManager(base.ManagerWithFind):
 
         :param device: The :class:`Device` to update.
         """
+
         if not kwargs:
             return
 
@@ -123,9 +127,7 @@ class DeviceManager(base.ManagerWithFind):
         self._action('delete', device, **kwargs)
 
     def _action(self, url, device, **kwargs):
-        """
-        Perform a device action.
-        """
+        """Perform a device action."""
 
         url = '/pool/devices/%s/%s' % (device.mac, url)
         return self.api.client.post(url, body=kwargs)
