@@ -279,7 +279,7 @@ def do_component_services(cs, args):
     """List all the services by a component."""
     component = _find_component(cs, args.component)
     services = cs.services.list(component)
-    utils.print_list(services, ['Name', 'description', '_links'])
+    utils.print_list(services, ['Name', 'description'])
 
 
 @utils.service_type('automation')

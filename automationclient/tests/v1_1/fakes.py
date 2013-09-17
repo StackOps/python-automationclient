@@ -38,39 +38,190 @@ class FakeClient(fakes.FakeClient, client.Client):
         return self.client.get_automation_api_version_from_endpoint()
 
 
+def _stub_component(**kwargs):
+    component = \
+        {
+            "_links": None,
+            "name": "1234",
+            "properties": {
+                "set_quantum": {
+                    "root_pass": "stackops",
+                    "quantum_password": "stackops",
+                    "quantum_user": "quantum"
+                },
+                "set_keystone": {
+                    "root_pass": "stackops",
+                    "keystone_password": "stackops",
+                    "keystone_user": "keystone"
+                },
+                "teardown": {},
+                "set_cinder": {
+                    "cinder_user": "cinder",
+                    "root_pass": "stackops",
+                    "cinder_password": "stackops"
+                },
+                "set_automation": {
+                    "automation_password": "stackops",
+                    "root_pass": "stackops",
+                    "automation_user": "automation"
+                },
+                "set_accounting": {
+                    "accounting_user": "activity",
+                    "root_pass": "stackops",
+                    "accounting_password": "stackops"
+                },
+                "set_nova": {
+                    "root_pass": "stackops",
+                    "nova_password": "stackops",
+                    "nova_user": "nova"
+                },
+                "install": {
+                    "root_pass": "stackops",
+                    "glance_password": "stackops",
+                    "glance_user": "glance",
+                    "cinder_user": "cinder",
+                    "quantum_password": "stackops",
+                    "keystone_user": "keystone",
+                    "automation_user": "automation",
+                    "quantum_user": "quantum",
+                    "automation_password": "stackops",
+                    "keystone_password": "stackops",
+                    "cinder_password": "stackops",
+                    "nova_user": "nova",
+                    "nova_password": "stackops"
+                },
+                "set_glance": {
+                    "root_pass": "stackops",
+                    "glance_password": "stackops",
+                    "glance_user": "glance"
+                },
+                "validate": {
+                    "username": "",
+                    "drop_schema": None,
+                    "install_database": None,
+                    "database_type": "",
+                    "host": "",
+                    "password": "",
+                    "port": "",
+                    "schema": ""
+                },
+                "set_portal": {
+                    "root_pass": "stackops",
+                    "portal_user": "portal",
+                    "portal_password": "stackops"
+                }
+            }
+        }
+    component.update(kwargs)
+    return component
+
+
+def _stub_services_by_component(**kwargs):
+    services = \
+        [
+            {
+                "_links": None,
+                "name": "set_quantum",
+                "description": "Creates a new database for quantum and grants "
+                               "privileges on it"
+            },
+            {
+                "_links": None,
+                "name": "set_keystone",
+                "description": "Creates a new database for keystone and "
+                               "grants privileges on it"
+            },
+            {
+                "_links": None,
+                "name": "teardown",
+                "description": "Stop the mysql service"
+            },
+            {
+                "_links": None,
+                "name": "set_cinder",
+                "description": "Creates a new database for cinder and grants "
+                               "privileges on it"
+            },
+            {
+                "_links": None,
+                "name": "set_automation",
+                "description": "Creates a new database for automation and "
+                               "grants privileges on it"
+            },
+            {
+                "_links": None,
+                "name": "set_accounting",
+                "description": "Creates a new database for accounting and "
+                               "grants privileges on it"
+            },
+            {
+                "_links": None,
+                "name": "set_nova",
+                "description": "Creates a new database for nova and grants "
+                               "privileges on it"
+            },
+            {
+                "_links": None,
+                "name": "install",
+                "description": "Prepares a database and a user password for "
+                               "each StackOps schemas"
+            },
+            {
+                "_links": None,
+                "name": "set_glance",
+                "description": "Creates a new database for glance and grants "
+                               "privileges on it"
+            },
+            {
+                "_links": None,
+                "name": "validate",
+                "description": "Validates main database to operate with it"
+            },
+            {
+                "_links": None,
+                "name": "set_portal",
+                "description": "Creates a new database for portal and grants "
+                               "privileges on it"
+            }
+        ]
+
+    return services
+
+
 def _stub_device(**kwargs):
-    device = {
-        "ip": "180.10.10.123",
-        "updated": "None",
-        "megaherzs": 0,
-        "id": 1,
-        "_links": None,
-        "management_network_gateway": None,
-        "certified": False,
-        "memory": 515497984,
-        "management_network_ip": "180.10.10.123",
-        "status": "INSTALLING",
-        "product": "VirtualBox ()",
-        "vendor": "innotek GmbH",
-        "mac": "1234",
-        "threads": 1,
-        "connection_data": {
-            "username": "stackops",
-            "host": "180.10.10.123",
-            "ssh_key_file": "/var/lib/stackops-head/etc/nonsecureid_rsa",
-            "port": 22
-        },
-        "lom_mac": None,
-        "lom_ip": None,
-        "zone_id": None,
-        "management_network_dns": None,
-        "disk_size": 8589934592,
-        "name": "08:00:27:68:1c:62",
-        "created": "2013-09-16 13:56:32",
-        "management_network_netmask": None,
-        "cores": 1,
-        "ports": 1
-    }
+    device = \
+        {
+            "ip": "180.10.10.123",
+            "updated": "None",
+            "megaherzs": 0,
+            "id": 1,
+            "_links": None,
+            "management_network_gateway": None,
+            "certified": False,
+            "memory": 515497984,
+            "management_network_ip": "180.10.10.123",
+            "status": "INSTALLING",
+            "product": "VirtualBox ()",
+            "vendor": "innotek GmbH",
+            "mac": "1234",
+            "threads": 1,
+            "connection_data": {
+                "username": "stackops",
+                "host": "180.10.10.123",
+                "ssh_key_file": "/var/lib/stackops-head/etc/nonsecureid_rsa",
+                "port": 22
+            },
+            "lom_mac": None,
+            "lom_ip": None,
+            "zone_id": None,
+            "management_network_dns": None,
+            "disk_size": 8589934592,
+            "name": "08:00:27:68:1c:62",
+            "created": "2013-09-16 13:56:32",
+            "management_network_netmask": None,
+            "cores": 1,
+            "ports": 1
+        }
     device.update(kwargs)
     return device
 
@@ -123,6 +274,26 @@ class FakeHTTPClient(base_client.HTTPClient):
         magic_tuple = urlparse.urlsplit(self.management_url)
         scheme, netloc, path, query, frag = magic_tuple
         return path.lstrip('/').split('/')[0][1:]
+
+    #
+    # Component
+    #
+    def get_components(self, **kw):
+        return (200, {}, {"components": [
+            {'name': '1234'},
+            {'name': 'rabbitmq'}
+        ]})
+
+    def get_components_1234(self, **kw):
+        return (200, {},
+                {'component': _stub_component(name='1234')})
+
+    def get_components_1234_services(self, **kw):
+        component = _stub_component(name='1234')
+        properties = component['properties']
+        print(type(properties))
+        print(properties)
+        return (200, {}, {'services': _stub_services_by_component()})
 
     #
     # Pool (Devices)

@@ -70,6 +70,24 @@ class ShellTest(utils.TestCase):
     def assert_called_anytime(self, method, url, body=None):
         return self.shell.cs.assert_called_anytime(method, url, body)
 
+    #
+    # Components
+    #
+    def test_component_list(self):
+        self.run_command('component-list')
+        self.assert_called('GET', '/components')
+
+    def test_component_show(self):
+        self.run_command('component-show 1234')
+        self.assert_called('GET', '/components/1234')
+
+    def test_component_services(self):
+        self.run_command('component-services 1234')
+        self.assert_called('GET', '/components/1234/services')
+
+    #
+    # Pool (Devices)
+    #
     def test_devices_list(self):
         self.run_command('device-list')
         self.assert_called('GET', '/pool/devices')
