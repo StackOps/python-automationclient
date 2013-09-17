@@ -115,7 +115,7 @@ class DeviceManager(base.ManagerWithFind):
         if not kwargs:
             return
 
-        self._update("/pool/devices/%s" % device.mac, kwargs)
+        return self._update("/pool/devices/%s" % device.mac, kwargs)
 
     def delete(self, device, **kwargs):
         """

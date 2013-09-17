@@ -138,8 +138,11 @@ def do_device_update(cs, args):
     }
 
     device = _find_device(cs, args.mac)
-    cs.devices.update(device, **options)
-    do_device_show(cs, args)
+    device = cs.devices.update(device, **options)
+    device = device['device']
+    del device['_links'],
+    final_dict = utils.check_json_value_for_dict(device)
+    utils.print_dict(final_dict)
 
 
 @utils.arg('mac', metavar='<mac>',
@@ -186,7 +189,7 @@ def do_device_activate(cs, args):
         kwargs['lom_password'] = args.lom_password
     device = _find_device(cs, args.mac)
     node = cs.devices.activate(device, **kwargs)
-    dict = node[1]['node']
+    dict = node[1]['device']
     del dict['_links']
     del dict['connection_data']
     utils.print_dict(dict)

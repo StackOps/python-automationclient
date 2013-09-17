@@ -44,6 +44,7 @@ def _stub_device(**kwargs):
         "updated": "None",
         "megaherzs": 0,
         "id": 1,
+        "_links": None,
         "management_network_gateway": None,
         "certified": False,
         "memory": 515497984,
@@ -51,7 +52,7 @@ def _stub_device(**kwargs):
         "status": "INSTALLING",
         "product": "VirtualBox ()",
         "vendor": "innotek GmbH",
-        "mac": "08:00:27:68:1c:62",
+        "mac": "1234",
         "threads": 1,
         "connection_data": {
             "username": "stackops",
@@ -127,10 +128,37 @@ class FakeHTTPClient(base_client.HTTPClient):
     # Pool (Devices)
     #
     def get_pool_devices(self, **kw):
-        return (200, {}, {"nodes": [
-            {'id': 1234, 'name': 'sample-device1'},
-            {'id': 5678, 'name': 'sample-device2'}
+        return (200, {}, {"devices": [
+            {'id': 1234, 'name': 'sample-device1', 'mac': 1234},
+            {'id': 5678, 'name': 'sample-device2', 'mac': 5678}
         ]})
 
     def get_pool_devices_1234(self, **kw):
-        return (200, {}, {'node': _stub_device(id='1234')})
+        return (200, {}, {'device': _stub_device(id='1234')})
+
+    def post_pool_devices_1234_delete(self, **kw):
+        return (204, {}, {})
+
+    def put_pool_devices_1234(self, **kw):
+        device = _stub_device(id='1234')
+        device.update(kw)
+        return (200, {}, {'device': device})
+
+    def post_pool_devices_1234_poweron(self, **kw):
+        return (204, {}, {})
+
+    def post_pool_devices_1234_poweroff(self, **kw):
+        return (204, {}, {})
+
+    def post_pool_devices_1234_reboot(self, **kw):
+        return (204, {}, {})
+
+    def post_pool_devices_1234_shutdown(self, **kw):
+        return (204, {}, {})
+
+    def post_pool_devices_1234_soft_reboot(self, **kw):
+        return (204, {}, {})
+
+    def post_pool_devices_1234_activate(self, **kw):
+        device = _stub_device(id='1234')
+        return (204, {}, {'device': _stub_device(id='1234')})

@@ -78,6 +78,74 @@ class ShellTest(utils.TestCase):
         self.run_command('device-show 1234')
         self.assert_called('GET', '/pool/devices/1234')
 
-    '''def test_device_delete(self):
+    def test_device_delete(self):
         self.run_command('device-delete 1234')
-        self.assert_called('POST', '/device/1234')'''
+        self.assert_called('POST', '/pool/devices/1234/delete')
+
+    def test_device_delete_filter_action(self):
+        self.run_command('device-delete 1234 --action soft_reboot')
+        expected = {'action': 'soft_reboot'}
+        self.assert_called('POST', '/pool/devices/1234/delete', body=expected)
+
+    def test_device_delete_filter_user_and_password(self):
+        self.run_command('device-delete 1234 '
+                         '--lom-user stackops --lom-password stackops')
+        expected = {"action": "nothing", "lom_password": "stackops",
+                    "lom_user": "stackops"}
+        self.assert_called('POST', '/pool/devices/1234/delete', body=expected)
+
+    def test_device_update(self):
+        self.run_command('device-update 1234 '
+                         '0.0.0.0 '
+                         '00:00:00:00 '
+                         '180.10.10.119 '
+                         '255.255.255.0 '
+                         '180.10.10.1 '
+                         '8.8.8.8')
+        expected = {"management_network_dns": "8.8.8.8",
+                    "management_network_netmask": "255.255.255.0",
+                    "management_network_ip": "180.10.10.119",
+                    "lom_mac": "00:00:00:00",
+                    "lom_ip": "0.0.0.0",
+                    "management_network_gateway": "180.10.10.1"}
+        self.assert_called('PUT', '/pool/devices/1234', body=expected)
+
+    def test_device_power_on(self):
+        self.run_command('device-power-on 1234 '
+                         'stackops stackops')
+        expected = {"lom_password": "stackops", "lom_user": "stackops"}
+        self.assert_called('POST', '/pool/devices/1234/poweron', body=expected)
+
+    def test_device_power_off(self):
+        self.run_command('device-power-off 1234 '
+                         'stackops stackops')
+        expected = {"lom_password": "stackops", "lom_user": "stackops"}
+        self.assert_called('POST', '/pool/devices/1234/poweroff',
+                           body=expected)
+
+    def test_device_reboot(self):
+        self.run_command('device-reboot 1234 '
+                         'stackops stackops')
+        expected = {"lom_password": "stackops", "lom_user": "stackops"}
+        self.assert_called('POST', '/pool/devices/1234/reboot', body=expected)
+
+    def test_device_shutdown(self):
+        self.run_command('device-shutdown 1234')
+        self.assert_called('POST', '/pool/devices/1234/shutdown')
+
+    def test_device_soft_reboot(self):
+        self.run_command('device-soft-reboot 1234')
+        self.assert_called('POST', '/pool/devices/1234/soft_reboot')
+
+    def test_device_activate(self):
+        self.run_command('device-activate 1234 1')
+        self.assert_called('POST', '/pool/devices/1234/activate')
+
+    def test_device_activate_filter_user_and_password(self):
+        self.run_command('device-activate 1234 1 '
+                         '--lom-user stackops --lom-password stackops')
+        expected = {"lom_password": "stackops",
+                    "lom_user": "stackops",
+                    "zone_id": 1}
+        self.assert_called('POST', '/pool/devices/1234/activate',
+                           body=expected)
