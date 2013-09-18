@@ -19,8 +19,6 @@
 from automationclient import base
 from automationclient import exceptions
 
-__author__ = 'jvalderrama'
-
 
 class Zone(base.Resource):
     """A Zone is a deployment of Openstack and Stackops components."""

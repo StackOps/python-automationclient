@@ -17,16 +17,15 @@
 #    under the License.
 
 import fixtures
+import os
 
 from automationclient import client
 from automationclient import shell
-from automationclient.v1_1 import shell as shell_v1
 from automationclient.tests.v1_1 import fakes
 from automationclient.tests import utils
 
 
 class ShellTest(utils.TestCase):
-
     FAKE_ENV = {
         'AUTOMATION_USERNAME': 'username',
         'AUTOMATION_PASSWORD': 'password',
@@ -167,3 +166,46 @@ class ShellTest(utils.TestCase):
                     "zone_id": 1}
         self.assert_called('POST', '/pool/devices/1234/activate',
                            body=expected)
+
+    #
+    # Architecture
+    #
+    def test_architecture_list(self):
+        self.run_command('architecture-list')
+        self.assert_called('GET', '/archs')
+
+    def test_architecture_show(self):
+        self.run_command('architecture-show 1234')
+        self.assert_called('GET', '/archs/1234')
+
+    def test_architecture_create(self):
+        file = os.path.join(os.getcwd(),
+                            "automationclient/tests/v1_1/"
+                            "fake_files/fake_arch_new.arc")
+        self.run_command('architecture-create %s' % file)
+        expected = {
+            "architecture": {
+                "name": "singlenode_test",
+                "roles": [
+                    {
+                        "name": "controller",
+                        "steps": [
+                            {
+                                "1": [
+                                    "storage"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+        self.assert_called('POST', '/archs', body=expected)
+
+    def test_architecture_delete(self):
+        self.run_command('architecture-delete 1234')
+        self.assert_called('DELETE', '/archs/1234')
+
+    def test_architecture_template(self):
+        self.run_command('architecture-template 1234')
+        self.assert_called('GET', '/archs/1234/get_template')

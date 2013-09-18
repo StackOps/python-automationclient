@@ -19,9 +19,6 @@
 from automationclient import base
 
 
-__author__ = 'jvalderrama'
-
-
 class Node(base.Resource):
     """A Node is activate device from pool in a zone."""
 

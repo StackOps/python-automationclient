@@ -116,7 +116,7 @@ def _stub_component(**kwargs):
     return component
 
 
-def _stub_services_by_component(**kwargs):
+def _stub_services_by_component():
     services = \
         [
             {
@@ -226,6 +226,46 @@ def _stub_device(**kwargs):
     return device
 
 
+def _stub_architecture(**kwargs):
+    architecture = \
+        {
+            "_links": None,
+            "id": 1234,
+            "roles": [
+                {
+                    "steps": [
+                        {
+                            "1": [
+                                "mysql"
+                            ]
+                        },
+                        {
+                            "2": [
+                                "rabbitmq"
+                            ]
+                        }
+                    ],
+                    "name": "controller"
+                }
+            ],
+            "name": "sample-architecture1"
+        }
+    return architecture
+
+
+def _stub_template():
+    template = \
+        {
+            "profile": {
+                "name": "",
+                "components": [],
+                "properties": {}
+            }
+        }
+
+    return template
+
+
 class FakeHTTPClient(base_client.HTTPClient):
     def __init__(self, **kwargs):
         self.username = 'username'
@@ -289,10 +329,6 @@ class FakeHTTPClient(base_client.HTTPClient):
                 {'component': _stub_component(name='1234')})
 
     def get_components_1234_services(self, **kw):
-        component = _stub_component(name='1234')
-        properties = component['properties']
-        print(type(properties))
-        print(properties)
         return (200, {}, {'services': _stub_services_by_component()})
 
     #
@@ -333,3 +369,28 @@ class FakeHTTPClient(base_client.HTTPClient):
     def post_pool_devices_1234_activate(self, **kw):
         device = _stub_device(id='1234')
         return (204, {}, {'device': _stub_device(id='1234')})
+
+    #
+    # Architecture
+    #
+    def get_archs(self, **kw):
+        return (200, {}, {"architectures": [
+            {'id': 1234, 'name': 'sample-architecture1'},
+            {'id': 5678, 'name': 'sample-architecture2'}
+        ]})
+
+    def get_archs_1234(self, **kw):
+        return (200, {},
+                {'architecture': _stub_architecture(id='1234')})
+
+    def post_archs(self, **kw):
+        return (201, {},
+                {'architecture': _stub_architecture(id='1234')})
+
+    def delete_archs_1234(self, **kw):
+        return (204, {}, {})
+
+    def get_archs_1234_get_template(self, **kw):
+        _stub_architecture(id='1234')
+        return (201, {},
+                {'profile': _stub_template()})

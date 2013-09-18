@@ -18,8 +18,6 @@
 
 from automationclient import base
 
-__author__ = 'jvalderrama'
-
 
 class Device(base.Resource):
     """Device is a device in the pool

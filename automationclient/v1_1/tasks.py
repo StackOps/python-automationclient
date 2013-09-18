@@ -16,8 +16,6 @@
 
 """Tasks interface."""
 
-__author__ = 'jvalderrama'
-
 from automationclient import base
 
 

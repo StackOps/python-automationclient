@@ -18,8 +18,6 @@
 
 from automationclient import base
 
-__author__ = 'jvalderrama'
-
 
 class Component(base.Resource):
     """A Component is a Stackops or Openstack service to be deployed."""
