@@ -340,7 +340,7 @@ def do_architecture_template(cs, args):
     """Get template from a specific architecture."""
     architecture = _find_architecture(cs, args.architecture)
     profile = cs.profiles.template(architecture)
-    print (json.dumps({'profile': profile._info}))
+    print(json.dumps({'profile': profile._info}))
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -351,7 +351,7 @@ def do_profile_list(cs, args):
     """List all the profiles by architecture."""
     architecture = _find_architecture(cs, args.architecture)
     profiles = cs.profiles.list(architecture)
-    utils.print_list(profiles, ['id', 'name', 'components'], pretty='pretty')
+    utils.print_list(profiles, ['id', 'name'])
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -366,7 +366,7 @@ def do_profile_json(cs, args):
     profile = _find_profile(cs, args.architecture, args.profile)
     keys = ['_links']
     final_dict = utils.remove_values_from_manager_dict(profile, keys)
-    print (final_dict)
+    print(final_dict)
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -425,9 +425,10 @@ def do_profile_update(cs, args):
     profile = _find_profile(cs, args.architecture, args.profile)
 
     with open(args.profile_file) as f:
-        cs.profiles.update(architecture, profile, json.load(f))
+        profile = cs.profiles.update(architecture, profile, json.load(f))
 
-    do_profile_show(cs, args)
+    profile = profile['profile']
+    utils.print_dict(profile)
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -462,8 +463,12 @@ def do_profile_property_create(cs, args):
     profile = _find_profile(cs, args.architecture, args.profile)
     property_key = args.property_key
     property_value = args.property_value
-    cs.profiles.property_create(architecture, profile, property_key,
-                                property_value)
+    profile = cs.profiles.property_create(architecture, profile, property_key,
+                                          property_value)
+    profile = profile['profile']
+    del profile['_links'],
+    final_dict = utils.check_json_pretty_value_for_dict(profile)
+    utils.print_dict(final_dict)
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -484,8 +489,12 @@ def do_profile_property_update(cs, args):
     profile = _find_profile(cs, args.architecture, args.profile)
     property_key = args.property_key
     property_value = args.property_value
-    cs.profiles.property_update(architecture, profile, property_key,
-                                property_value)
+    profile = cs.profiles.property_update(architecture, profile, property_key,
+                                          property_value)
+    profile = profile['profile']
+    del profile['_links'],
+    final_dict = utils.check_json_pretty_value_for_dict(profile)
+    utils.print_dict(final_dict)
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -497,17 +506,17 @@ def do_profile_property_update(cs, args):
            help='ID of the profile to delete a property.')
 @utils.arg('property_key', metavar='<property-key>',
            help='The key property.')
-@utils.arg('property_value', metavar='<property-value>',
-           help='The value property')
 @utils.service_type('automation')
 def do_profile_property_delete(cs, args):
     """Delete a profile property by architecture."""
     architecture = _find_architecture(cs, args.architecture)
     profile = _find_profile(cs, args.architecture, args.profile)
     property_key = args.property_key
-    property_value = args.property_value
-    cs.profiles.property_delete(architecture, profile, property_key,
-                                property_value)
+    profile = cs.profiles.property_delete(architecture, profile, property_key)
+    profile = profile['profile']
+    del profile['_links'],
+    final_dict = utils.check_json_pretty_value_for_dict(profile)
+    utils.print_dict(final_dict)
 
 
 @utils.service_type('automation')
@@ -589,7 +598,7 @@ def do_zone_json(cs, args):
     zone = _find_zone(cs, args.zone)
     keys = ['_links']
     final_dict = utils.remove_values_from_manager_dict(zone, keys)
-    print (final_dict)
+    print(final_dict)
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -867,7 +876,7 @@ def do_role_component_json(cs, args):
     keys = ['_links']
     final_dict = utils.remove_values_from_manager_dict(component_zone_role,
                                                        keys)
-    print (json.dumps({'component': final_dict}))
+    print(json.dumps({'component': final_dict}))
 
 
 @utils.arg('zone', metavar='<zone-id>',

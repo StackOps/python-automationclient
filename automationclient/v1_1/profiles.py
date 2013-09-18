@@ -84,9 +84,10 @@ class ProfileManager(base.ManagerWithFind):
         if not profile_file:
             return
 
-        self._update("/archs/%s/profiles/%s" % (base.getid(architecture),
-                                                base.getid(profile)),
-                     profile_file)
+        return self._update("/archs/%s/profiles/%s"
+                            % (base.getid(architecture),
+                               base.getid(profile)),
+                            profile_file)
 
     def delete(self, architecture, profile):
         """
@@ -130,9 +131,9 @@ class ProfileManager(base.ManagerWithFind):
         del profile_dict['_links']
         profile_body = {"profile": profile_dict}
 
-        self._update_without_hooks("/archs/%s/profiles/%s" %
-                                   (base.getid(architecture),
-                                    base.getid(profile)), profile_body)
+        return self._update("/archs/%s/profiles/%s" %
+                           (base.getid(architecture),
+                            base.getid(profile)), profile_body)
 
     def property_update(self, architecture, profile, property_key,
                         property_value):
@@ -151,12 +152,11 @@ class ProfileManager(base.ManagerWithFind):
         del profile_dict['_links']
         profile_body = {"profile": profile_dict}
 
-        self._update_without_hooks("/archs/%s/profiles/%s" %
-                                   (base.getid(architecture),
-                                    base.getid(profile)), profile_body)
+        return self._update("/archs/%s/profiles/%s" %
+                           (base.getid(architecture),
+                            base.getid(profile)), profile_body)
 
-    def property_delete(self, architecture, profile, property_key,
-                        property_value):
+    def property_delete(self, architecture, profile, property_key):
 
         profile_dict = profile._info
         props_dict = profile_dict['properties']
@@ -172,10 +172,6 @@ class ProfileManager(base.ManagerWithFind):
         del profile_dict['_links']
         profile_body = {"profile": profile_dict}
 
-        self._update_without_hooks("/archs/%s/profiles/%s" %
-                                   (base.getid(architecture),
-                                    base.getid(profile)), profile_body)
-
-    def _update_without_hooks(self, url, body):
-        resp, body = self.api.client.put(url, body=body)
-        return body
+        return self._update("/archs/%s/profiles/%s" %
+                           (base.getid(architecture),
+                            base.getid(profile)), profile_body)

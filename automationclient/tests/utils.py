@@ -57,3 +57,10 @@ class TestResponse(requests.Response):
     @property
     def text(self):
         return self._text
+
+
+def from_manager_to_dict(manager):
+    final_dict = {}
+    for key, value in manager._info.items():
+            final_dict.update({key: value})
+    return final_dict

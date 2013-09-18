@@ -253,17 +253,114 @@ def _stub_architecture(**kwargs):
     return architecture
 
 
-def _stub_template():
-    template = \
+def _stub_template(**kwargs):
+    profile = \
         {
-            "profile": {
-                "name": "",
-                "components": [],
-                "properties": {}
-            }
+            "name": None,
+            "properties": {
+                "property_key": "property_value"
+            },
+            "_links": None,
+            "components": [
+                {
+                    "name": "mysql",
+                    "properties": [
+                        {
+                            "set_quantum": {
+                                "root_pass": "$globals.root.pass",
+                                "quantum_password": "stackops",
+                                "quantum_user": "quantum"
+                            },
+                            "set_keystone": {
+                                "root_pass": "$globals.root.pass",
+                                "keystone_password": "stackops",
+                                "keystone_user": "keystone"
+                            },
+                            "teardown": {},
+                            "set_cinder": {
+                                "cinder_user": "cinder",
+                                "root_pass": "$globals.root.pass",
+                                "cinder_password": "stackops"
+                            },
+                            "set_automation": {
+                                "automation_password": "stackops",
+                                "root_pass": "$globals.root.pass",
+                                "automation_user": "automation"
+                            },
+                            "set_accounting": {
+                                "accounting_user": "activity",
+                                "root_pass": "$globals.root.pass",
+                                "accounting_password": "stackops"
+                            },
+                            "set_nova": {
+                                "root_pass": "$globals.root.pass",
+                                "nova_password": "stackops",
+                                "nova_user": "nova"
+                            },
+                            "install": {
+                                "root_pass": "$globals.root.pass",
+                                "keystone_user": "keystone",
+                                "cinder_user": "cinder",
+                                "quantum_password": "stackops",
+                                "glance_password": "stackops",
+                                "automation_user": "automation",
+                                "quantum_user": "quantum",
+                                "automation_password": "stackops",
+                                "keystone_password": "stackops",
+                                "cinder_password": "stackops",
+                                "glance_user": "glance",
+                                "nova_user": "nova",
+                                "nova_password": "stackops"
+                            },
+                            "set_glance": {
+                                "root_pass": "$globals.root.pass",
+                                "glance_password": "stackops",
+                                "glance_user": "glance"
+                            },
+                            "validate": {
+                                "username": "",
+                                "drop_schema": None,
+                                "install_database": None,
+                                "database_type": "",
+                                "host": "",
+                                "password": "",
+                                "port": "",
+                                "schema": ""
+                            },
+                            "set_portal": {
+                                "root_pass": "$globals.root.pass",
+                                "portal_user": "portal",
+                                "portal_password": "stackops"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "rabbitmq",
+                    "properties": [
+                        {
+                            "start": {},
+                            "validate": {
+                                "rpassword": None,
+                                "virtual_host": None,
+                                "host": "",
+                                "ruser": None,
+                                "service_type": "",
+                                "rport": None
+                            },
+                            "stop": {},
+                            "install": {
+                                "cluster": False,
+                                "password": "guest"
+                            }
+                        }
+                    ]
+                }
+            ]
         }
 
-    return template
+    profile.update(kwargs)
+    return profile
 
 
 class FakeHTTPClient(base_client.HTTPClient):
@@ -394,3 +491,33 @@ class FakeHTTPClient(base_client.HTTPClient):
         _stub_architecture(id='1234')
         return (201, {},
                 {'profile': _stub_template()})
+
+    #
+    # Profile
+    #
+    def get_archs_1234_profiles(self, **kw):
+        return (200, {}, {"profiles": [
+            {'id': 1234, 'name': 'sample-profile1'},
+            {'id': 5678, 'name': 'sample-profile2'}
+        ]})
+
+    def get_archs_1234_profiles_1234(self, **kw):
+        return (200, {},
+                {'profile': _stub_template(id='1234')})
+
+    def post_archs_1234_profiles(self, **kw):
+        return (201, {},
+                {'profile': _stub_template(id='1234')})
+
+    def delete_archs_1234_profiles_1234(self, **kw):
+        return (204, {}, {})
+
+    def put_archs_1234_profiles_1234(self, **kw):
+        profile = _stub_template(id='1234')
+        profile.update(kw)
+        print({'profile': profile})
+        return (200, {}, {'profile': profile})
+
+    def get_archs_1234_profiles_1234_json(self, **kw):
+        return (200, {},
+                {_stub_template(id='1234')})

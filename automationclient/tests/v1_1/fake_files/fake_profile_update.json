@@ -1,0 +1,105 @@
+{
+    "profile": {
+        "name": "profile_update",
+        "properties": {
+            "property_key_update" : "property_value_update"
+        },
+        "_links": null,
+        "components": [
+            {
+                "name": "mysql",
+                "properties": [
+                    {
+                        "set_quantum": {
+                            "root_pass": "$globals.root.pass",
+                            "quantum_password": "stackops",
+                            "quantum_user": "quantum"
+                        },
+                        "set_keystone": {
+                            "root_pass": "$globals.root.pass",
+                            "keystone_password": "stackops",
+                            "keystone_user": "keystone"
+                        },
+                        "teardown": {},
+                        "set_cinder": {
+                            "cinder_user": "cinder",
+                            "root_pass": "$globals.root.pass",
+                            "cinder_password": "stackops"
+                        },
+                        "set_automation": {
+                            "automation_password": "stackops",
+                            "root_pass": "$globals.root.pass",
+                            "automation_user": "automation"
+                        },
+                        "set_accounting": {
+                            "accounting_user": "activity",
+                            "root_pass": "$globals.root.pass",
+                            "accounting_password": "stackops"
+                        },
+                        "set_nova": {
+                            "root_pass": "$globals.root.pass",
+                            "nova_password": "stackops",
+                            "nova_user": "nova"
+                        },
+                        "install": {
+                            "root_pass": "$globals.root.pass",
+                            "keystone_user": "keystone",
+                            "cinder_user": "cinder",
+                            "quantum_password": "stackops",
+                            "glance_password": "stackops",
+                            "automation_user": "automation",
+                            "quantum_user": "quantum",
+                            "automation_password": "stackops",
+                            "keystone_password": "stackops",
+                            "cinder_password": "stackops",
+                            "glance_user": "glance",
+                            "nova_user": "nova",
+                            "nova_password": "stackops"
+                        },
+                        "set_glance": {
+                            "root_pass": "$globals.root.pass",
+                            "glance_password": "stackops",
+                            "glance_user": "glance"
+                        },
+                        "validate": {
+                            "username": "",
+                            "drop_schema": null,
+                            "install_database": null,
+                            "database_type": "",
+                            "host": "",
+                            "password": "",
+                            "port": "",
+                            "schema": ""
+                        },
+                        "set_portal": {
+                            "root_pass": "$globals.root.pass",
+                            "portal_user": "portal",
+                            "portal_password": "stackops"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "rabbitmq",
+                "properties": [
+                    {
+                        "start": {},
+                        "validate": {
+                            "rpassword": null,
+                            "virtual_host": null,
+                            "host": "",
+                            "ruser": null,
+                            "service_type": "",
+                            "rport": null
+                        },
+                        "stop": {},
+                        "install": {
+                            "cluster": false,
+                            "password": "guest"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

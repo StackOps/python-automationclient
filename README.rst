@@ -19,7 +19,7 @@ The code is hosted on `Github`_.
 This code a fork of `Openstack python-cinderclient`__ If you need API support
 for the Openstack Cinder API solely or the Apache license, you should use that repository.
 
-python-automationclient is licensed under the Apache License.
+``python-automationclient`` is licensed under the Apache License.
 
 __ https://github.com/openstack/cinder
 
@@ -37,7 +37,7 @@ next steps:
 1. Go to the directory ``python-automationclient``
 2. Once on the directory run the command ``python tools/install_venv.py`` to create a virtual environment
    to work on it
-3. Activate the virtual environment with the command source ``.venv/bin/activate``
+3. Activate the virtual environment with the command ``source .venv/bin/activate``
 4. Install the python-automationclient throught the command ``python setup.py install``
 5. This is all!! Start to contribute....
 
@@ -212,8 +212,8 @@ There's also a complete Python API, but it has not yet been documented.
 
 Quick-start::
 
-    # use v1.0 version)
-    >>> from automationclient.v1 import client
+    # use v1.1 version)
+    >>> from automationclient.v1_1 import client
     >>> at = client.Client(USERNAME, PASSWORD, TENANT_NAME)
     >>> at.components.list()
     [...]

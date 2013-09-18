@@ -25,6 +25,114 @@ from automationclient.tests.v1_1 import fakes
 from automationclient.tests import utils
 
 
+def _profile(name, key_property, value_property):
+    return {
+        "profile": {
+            "name": "%s" % name,
+            "properties": {
+                "%s" % key_property: "%s" % value_property
+            },
+            "_links": None,
+            "components": [
+                {
+                    "name": "mysql",
+                    "properties": [
+                        {
+                            "set_quantum": {
+                                "root_pass": "$globals.root.pass",
+                                "quantum_password": "stackops",
+                                "quantum_user": "quantum"
+                            },
+                            "set_keystone": {
+                                "root_pass": "$globals.root.pass",
+                                "keystone_password": "stackops",
+                                "keystone_user": "keystone"
+                            },
+                            "teardown": {},
+                            "set_cinder": {
+                                "cinder_user": "cinder",
+                                "root_pass": "$globals.root.pass",
+                                "cinder_password": "stackops"
+                            },
+                            "set_automation": {
+                                "automation_password": "stackops",
+                                "root_pass": "$globals.root.pass",
+                                "automation_user": "automation"
+                            },
+                            "set_accounting": {
+                                "accounting_user": "activity",
+                                "root_pass": "$globals.root.pass",
+                                "accounting_password": "stackops"
+                            },
+                            "set_nova": {
+                                "root_pass": "$globals.root.pass",
+                                "nova_password": "stackops",
+                                "nova_user": "nova"
+                            },
+                            "install": {
+                                "root_pass": "$globals.root.pass",
+                                "keystone_user": "keystone",
+                                "cinder_user": "cinder",
+                                "quantum_password": "stackops",
+                                "glance_password": "stackops",
+                                "automation_user": "automation",
+                                "quantum_user": "quantum",
+                                "automation_password": "stackops",
+                                "keystone_password": "stackops",
+                                "cinder_password": "stackops",
+                                "glance_user": "glance",
+                                "nova_user": "nova",
+                                "nova_password": "stackops"
+                            },
+                            "set_glance": {
+                                "root_pass": "$globals.root.pass",
+                                "glance_password": "stackops",
+                                "glance_user": "glance"
+                            },
+                            "validate": {
+                                "username": "",
+                                "drop_schema": None,
+                                "install_database": None,
+                                "database_type": "",
+                                "host": "",
+                                "password": "",
+                                "port": "",
+                                "schema": ""
+                            },
+                            "set_portal": {
+                                "root_pass": "$globals.root.pass",
+                                "portal_user": "portal",
+                                "portal_password": "stackops"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "rabbitmq",
+                    "properties": [
+                        {
+                            "start": {},
+                            "validate": {
+                                "rpassword": None,
+                                "virtual_host": None,
+                                "host": "",
+                                "ruser": None,
+                                "service_type": "",
+                                "rport": None
+                            },
+                            "stop": {},
+                            "install": {
+                                "cluster": False,
+                                "password": "guest"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+
+
 class ShellTest(utils.TestCase):
     FAKE_ENV = {
         'AUTOMATION_USERNAME': 'username',
@@ -181,23 +289,30 @@ class ShellTest(utils.TestCase):
     def test_architecture_create(self):
         file = os.path.join(os.getcwd(),
                             "automationclient/tests/v1_1/"
-                            "fake_files/fake_arch_new.arc")
+                            "fake_files/fake_architecture_create.arc")
         self.run_command('architecture-create %s' % file)
         expected = {
             "architecture": {
-                "name": "singlenode_test",
+                "_links": None,
+                "id": 1234,
                 "roles": [
                     {
-                        "name": "controller",
                         "steps": [
                             {
                                 "1": [
-                                    "storage"
+                                    "mysql"
+                                ]
+                            },
+                            {
+                                "2": [
+                                    "rabbitmq"
                                 ]
                             }
-                        ]
+                        ],
+                        "name": "controller"
                     }
-                ]
+                ],
+                "name": "sample-architecture1"
             }
         }
         self.assert_called('POST', '/archs', body=expected)
@@ -209,3 +324,61 @@ class ShellTest(utils.TestCase):
     def test_architecture_template(self):
         self.run_command('architecture-template 1234')
         self.assert_called('GET', '/archs/1234/get_template')
+
+    #
+    # Profiles
+    #
+    def test_profile_list(self):
+        self.run_command('profile-list 1234')
+        self.assert_called('GET', '/archs/1234/profiles')
+
+    def test_profile_show(self):
+        self.run_command('profile-show 1234 1234')
+        self.assert_called('GET', '/archs/1234/profiles/1234')
+
+    def test_profile_create(self):
+        file = os.path.join(os.getcwd(),
+                            "automationclient/tests/v1_1/"
+                            "fake_files/fake_profile_create.json")
+        self.run_command('profile-create 1234 %s' % file)
+        expected = _profile("profile_create", "property_key_create",
+                            "property_value_create")
+        self.assert_called('POST', '/archs/1234/profiles', body=expected)
+
+    def test_profile_update(self):
+        file = os.path.join(os.getcwd(),
+                            "automationclient/tests/v1_1/"
+                            "fake_files/fake_profile_update.json")
+        self.run_command('profile-update 1234 1234 %s' % file)
+        expected = _profile("profile_update", "property_key_update",
+                            "property_value_update")
+        self.assert_called('PUT', '/archs/1234/profiles/1234', body=expected)
+
+    def test_profile_delete(self):
+        self.run_command('profile-delete 1234 1234')
+        self.assert_called('DELETE', '/archs/1234/profiles/1234')
+
+    def test_profile_json(self):
+        self.run_command('profile-json 1234 1234')
+        self.assert_called('GET', '/archs/1234/profiles/1234')
+
+    def test_profile_property_create(self):
+        self.run_command('profile-property-create '
+                         '1234 1234 new_property_key new_property_value')
+        expected = _profile(None, "new_property_key", "new_property_value")
+        #TODO(jvalderrama) Check options as body expected
+        self.assert_called('PUT', '/archs/1234/profiles/1234')
+
+    def test_profile_property_update(self):
+        self.run_command('profile-property-update '
+                         '1234 1234 property_key property_value')
+        expected = _profile(None, "property_key", "property_value")
+        #TODO(jvalderrama) Check options as body expected
+        self.assert_called('PUT', '/archs/1234/profiles/1234')
+
+    def test_profile_property_delete(self):
+        self.run_command('profile-property-delete '
+                         '1234 1234 property_key')
+        expected = _profile(None, "property_key", "property_value")
+        #TODO(jvalderrama) Check options as body expected
+        self.assert_called('PUT', '/archs/1234/profiles/1234')
