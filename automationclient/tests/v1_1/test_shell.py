@@ -365,20 +365,17 @@ class ShellTest(utils.TestCase):
     def test_profile_property_create(self):
         self.run_command('profile-property-create '
                          '1234 1234 new_property_key new_property_value')
-        expected = _profile(None, "new_property_key", "new_property_value")
-        #TODO(jvalderrama) Check options as body expected
+        # TODO(jvalderrama) Check options as body expected
         self.assert_called('PUT', '/archs/1234/profiles/1234')
 
     def test_profile_property_update(self):
         self.run_command('profile-property-update '
                          '1234 1234 property_key property_value')
-        expected = _profile(None, "property_key", "property_value")
-        #TODO(jvalderrama) Check options as body expected
+        # TODO(jvalderrama) Check options as body expected
         self.assert_called('PUT', '/archs/1234/profiles/1234')
 
     def test_profile_property_delete(self):
         self.run_command('profile-property-delete '
                          '1234 1234 property_key')
-        expected = _profile(None, "property_key", "property_value")
-        #TODO(jvalderrama) Check options as body expected
+        # TODO(jvalderrama) Check options as body expected
         self.assert_called('PUT', '/archs/1234/profiles/1234')

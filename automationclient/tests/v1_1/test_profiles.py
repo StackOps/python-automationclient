@@ -197,7 +197,6 @@ class DevicesTest(utils.TestCase):
         cs.assert_called('GET', '/archs/1234/profiles/1234')
         self.assertIsInstance(profile, Profile)
         #TODO(jvalderrama) Check options as body expected
-        options = _profile("profile_property_create")
         profile = cs.profiles.property_create(architecture,
                                               profile,
                                               'property_key_new',
@@ -213,7 +212,6 @@ class DevicesTest(utils.TestCase):
         cs.assert_called('GET', '/archs/1234/profiles/1234')
         self.assertIsInstance(profile, Profile)
         #TODO(jvalderrama) Check options as body expected
-        options = _profile("profile_property_update")
         profile = cs.profiles.property_update(architecture,
                                               profile,
                                               'property_key',
@@ -229,7 +227,6 @@ class DevicesTest(utils.TestCase):
         cs.assert_called('GET', '/archs/1234/profiles/1234')
         self.assertIsInstance(profile, Profile)
         #TODO(jvalderrama) Check options as body expected
-        options = _profile("profile_property_update")
         profile = cs.profiles.property_delete(architecture,
                                               profile,
                                               'property_key')

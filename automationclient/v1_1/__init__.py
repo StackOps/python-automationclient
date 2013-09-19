@@ -15,5 +15,6 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-
 from automationclient.v1_1.client import Client
+
+__all__ = [Client]
