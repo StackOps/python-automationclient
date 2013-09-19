@@ -124,6 +124,14 @@ class DeviceManager(base.ManagerWithFind):
 
         self._action('delete', device, **kwargs)
 
+    def replace(self, device, **kwargs):
+        """
+        Replace a node of the zone by this device.
+
+        :param device: the device to be replaced with.
+        """
+        return self._action('replace', device, **kwargs)
+
     def _action(self, url, device, **kwargs):
         """Perform a device action."""
 

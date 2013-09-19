@@ -196,6 +196,52 @@ def do_device_activate(cs, args):
 
 
 @utils.arg('mac', metavar='<mac>',
+           help='Mac of the device to activate.')
+@utils.arg('zone_id', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone of the node to replace')
+@utils.arg('role_id', metavar='<role-id>',
+           type=int,
+           help='The ID of the role to deploy in the new node')
+@utils.arg('node_id', metavar='<node-id>',
+           type=int,
+           help='The ID of the node to be replaced')
+@utils.arg('--lom-user-node-to-remove', metavar='<lom-user-node-to-remove>',
+           help='Out-of-band user of the node to remove')
+@utils.arg('--lom_password-node-to-remove',
+           metavar='<lom-password-node-to-remove>',
+           help='Out-of-Band user password of the node to remove')
+@utils.arg('--lom-user-node-to-add', metavar='<lom-user-node-to-add>',
+           help='Out-of-band user of the device to add')
+@utils.arg('--lom-password-node-to-add', metavar='<lom-password-node-to-add>',
+           help='Out-of-Band user password of the device to add')
+@utils.service_type('automation')
+def do_device_replace(cs, args):
+    """Replaces a node in a zone by a specific device in the pool."""
+    kwargs = {'zone_id': args.zone_id}
+    if args.lom_user_node_to_remove is not None:
+        kwargs['lom_user_node_to_remove'] = args.lom_user_node_to_remove
+
+    if args.lom_password_node_to_remove is not None:
+        kwargs['lom_password_node_to_remove'] = args.\
+            lom_password_node_to_remove
+
+    if args.lom_user_node_to_add is not None:
+        kwargs['lom_user_node_to_add'] = args.lom_user_node_to_add
+
+    if args.lom_password_node_to_add is not None:
+        kwargs['lom_password_node_to_add'] = args.lom_password_node_to_add
+    kwargs['role_id'] = args.role_id
+    kwargs['node_id'] = args.node_id
+    device = _find_device(cs, args.mac)
+    node = cs.devices.replace(device, **kwargs)
+    dict = node[1]['device']
+    del dict['_links']
+    del dict['connection_data']
+    utils.print_dict(dict)
+
+
+@utils.arg('mac', metavar='<mac>',
            help='Mac of the device to power on.')
 @utils.arg('lom_user', metavar='<lom-user>',
            help='lom_user credential.')
