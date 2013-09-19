@@ -72,6 +72,7 @@ class TaskManager(base.ManagerWithFind):
                         % (base.getid(zone), base.getid(node))
             }
         }
+
         return self._list("/zones/%s/roles/%s/deploy"
                           % ((base.getid(zone),
                               base.getid(role))),
