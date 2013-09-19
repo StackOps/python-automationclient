@@ -128,6 +128,11 @@ class OverLimit(ClientException):
     message = "Over limit"
 
 
+class InternalServerError(ClientException):
+    http_status = 500
+    message = "Internal Server error"
+
+
 # NotImplemented is a python keyword.
 class HTTPNotImplemented(ClientException):
     """
@@ -145,7 +150,8 @@ class HTTPNotImplemented(ClientException):
 # Instead, we have to hardcode it:
 _code_map = dict((c.http_status, c) for c in [BadRequest, Unauthorized,
                                               Forbidden, NotFound,
-                                              OverLimit, HTTPNotImplemented])
+                                              OverLimit, InternalServerError,
+                                              HTTPNotImplemented])
 
 
 def from_response(response, body):
