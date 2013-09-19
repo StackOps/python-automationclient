@@ -241,6 +241,83 @@ def _zone():
     }
 
 
+def _component():
+    return {
+        "component": {
+            "properties": {
+                "set_quantum": {
+                    "root_pass": "stackops",
+                    "quantum_user": "quantum",
+                    "quantum_password": "stackops"
+                },
+                "set_keystone": {
+                    "root_pass": "stackops",
+                    "keystone_password": "stackops",
+                    "keystone_user": "keystone"
+                },
+                "teardown": {},
+                "set_cinder": {
+                    "cinder_user": "cinder",
+                    "root_pass": "stackops",
+                    "cinder_password": "stackops"
+                },
+                "set_automation": {
+                    "automation_password": "stackops",
+                    "root_pass": "stackops",
+                    "automation_user": "automation"
+                },
+                "set_accounting": {
+                    "accounting_user": "activity",
+                    "root_pass": "stackops",
+                    "accounting_password": "stackops"
+                },
+                "set_nova": {
+                    "root_pass": "stackops",
+                    "nova_password": "stackops",
+                    "nova_user": "nova"
+                },
+                "install": {
+                    "root_pass": "stackops",
+                    "keystone_user": "keystone",
+                    "cinder_user": "cinder",
+                    "quantum_password": "stackops",
+                    "glance_password": "stackops",
+                    "automation_user": "automation",
+                    "quantum_user": "quantum",
+                    "automation_password": "stackops",
+                    "keystone_password": "stackops",
+                    "cinder_password": "stackops",
+                    "nova_user": "nova",
+                    "glance_user": "glance",
+                    "nova_password": "stackops"
+                },
+                "set_glance": {
+                    "root_pass": "stackops",
+                    "glance_password": "stackops",
+                    "glance_user": "glance"
+                },
+                "validate": {
+                    "username": "",
+                    "drop_schema": None,
+                    "install_database": None,
+                    "database_type": "",
+                    "host": "",
+                    "password": "",
+                    "port": "",
+                    "schema": ""
+                },
+                "set_portal": {
+                    "root_pass": "stackops",
+                    "portal_user": "portal",
+                    "portal_password": "stackops"
+                }
+            },
+            "name": "mysql",
+            "id": 1234
+        }
+    }
+
+
 class ShellTest(utils.TestCase):
     FAKE_ENV = {
         'AUTOMATION_USERNAME': 'username',
@@ -447,19 +524,17 @@ class ShellTest(utils.TestCase):
     def test_profile_create(self):
         file = os.path.join(os.getcwd(),
                             "automationclient/tests/v1_1/"
-                            "fake_files/fake_profile_create.json")
+                            "fake_files/fake_profile_create_update.json")
         self.run_command('profile-create 1234 %s' % file)
-        expected = _profile("profile_create", "property_key_create",
-                            "property_value_create")
+        expected = _profile()
         self.assert_called('POST', '/archs/1234/profiles', body=expected)
 
     def test_profile_update(self):
         file = os.path.join(os.getcwd(),
                             "automationclient/tests/v1_1/"
-                            "fake_files/fake_profile_update.json")
+                            "fake_files/fake_profile_create_update.json")
         self.run_command('profile-update 1234 1234 %s' % file)
-        expected = _profile("profile_update", "property_key_update",
-                            "property_value_update")
+        expected = _profile()
         self.assert_called('PUT', '/archs/1234/profiles/1234', body=expected)
 
     def test_profile_delete(self):
@@ -545,3 +620,40 @@ class ShellTest(utils.TestCase):
         #expected = _zone()
         #TODO(jvalderrama) Check options as body expected
         self.assert_called('PUT', '/zones/1234')
+
+    #
+    # Roles
+    #
+    def test_role_list(self):
+        self.run_command('role-list 1234')
+        self.assert_called('GET', '/zones/1234/roles')
+
+    def test_role_show(self):
+        self.run_command('role-show 1234 1234')
+        self.assert_called('GET', '/zones/1234/roles/1234')
+
+    #TODO(jvalderrama) Test for deploy action pending
+    '''def test_role_deploy(self):
+        self.run_command('role-deploy 1234 1234 1234')
+        self.assert_called('GET', '/zones/1234/roles/1234/deploy')'''
+
+    def test_role_component_list(self):
+        self.run_command('role-component-list 1234 1234')
+        self.assert_called('GET', '/zones/1234/roles/1234/components')
+
+    def test_role_component_show(self):
+        self.run_command('role-component-show 1234 1234 1234 1234')
+        self.assert_called('GET', '/zones/1234/roles/1234/components/1234')
+
+    def test_role_component_update(self):
+        file = os.path.join(os.getcwd(),
+                            "automationclient/tests/v1_1/"
+                            "fake_files/fake_role_component_update.json")
+        self.run_command('role-component-update 1234 1234 1234 1234 %s' % file)
+        expected = _component()
+        self.assert_called('PUT', '/zones/1234/roles/1234/components/1234',
+                           body=expected)
+
+    def test_role_component_json(self):
+        self.run_command('role-component-json 1234 1234 1234 1234')
+        self.assert_called('GET', '/zones/1234/roles/1234/components/1234')

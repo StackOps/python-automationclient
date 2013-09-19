@@ -187,7 +187,7 @@ class ZonesTest(utils.TestCase):
         cs.assert_called('PUT', '/zones/1234')
         self.assertIsInstance(zone, dict)
 
-    def test_profile_propery_update(self):
+    def test_zone_propery_update(self):
         zone = cs.zones.get(1234)
         cs.assert_called('GET', '/zones/1234')
         self.assertIsInstance(zone, Zone)
@@ -199,7 +199,7 @@ class ZonesTest(utils.TestCase):
         cs.assert_called('PUT', '/zones/1234')
         self.assertIsInstance(zone, dict)
 
-    def test_profile_propery_delete(self):
+    def test_zone_propery_delete(self):
         zone = cs.zones.get(1234)
         cs.assert_called('GET', '/zones/1234')
         self.assertIsInstance(zone, Zone)

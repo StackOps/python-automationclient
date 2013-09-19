@@ -956,9 +956,13 @@ def do_role_component_update(cs, args):
     role = _find_role(cs, args.zone, args.role)
     component = args.component
     with open(args.component_file) as f:
-        cs.components.update_zone_role(zone, role, component, json.load(f))
+        component = cs.components.update_zone_role(zone, role, component,
+                                                   json.load(f))
 
-    do_role_component_show(cs, args)
+    component = component['component']
+    del component['_links'],
+    final_dict = utils.check_json_pretty_value_for_dict(component)
+    utils.print_dict(final_dict)
 
 
 @utils.arg('zone', metavar='<zone-id>',
