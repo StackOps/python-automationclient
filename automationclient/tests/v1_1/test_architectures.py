@@ -21,7 +21,7 @@ from automationclient.v1_1.profiles import Profile
 cs = fakes.FakeClient()
 
 
-class DevicesTest(utils.TestCase):
+class ArchitecturesTest(utils.TestCase):
 
     def test_architecture_list(self):
         architectures = cs.architectures.list()

@@ -1,8 +1,8 @@
 {
-    "profile": {
-        "name": "profile_create",
+    "zone": {
+        "name": "fake_zone",
         "properties": {
-                    "property_key_create": "property_value_create"
+            "fake_property_key": "fake_property_value"
         },
         "_links": null,
         "components": [
@@ -11,38 +11,38 @@
                 "properties": [
                     {
                         "set_quantum": {
-                            "root_pass": "$globals.root.pass",
+                            "root_pass": "stackops",
                             "quantum_password": "stackops",
                             "quantum_user": "quantum"
                         },
                         "set_keystone": {
-                            "root_pass": "$globals.root.pass",
+                            "root_pass": "stackops",
                             "keystone_password": "stackops",
                             "keystone_user": "keystone"
                         },
                         "teardown": {},
                         "set_cinder": {
                             "cinder_user": "cinder",
-                            "root_pass": "$globals.root.pass",
+                            "root_pass": "stackops",
                             "cinder_password": "stackops"
                         },
                         "set_automation": {
                             "automation_password": "stackops",
-                            "root_pass": "$globals.root.pass",
+                            "root_pass": "stackops",
                             "automation_user": "automation"
                         },
                         "set_accounting": {
                             "accounting_user": "activity",
-                            "root_pass": "$globals.root.pass",
+                            "root_pass": "stackops",
                             "accounting_password": "stackops"
                         },
                         "set_nova": {
-                            "root_pass": "$globals.root.pass",
+                            "root_pass": "stackops",
                             "nova_password": "stackops",
                             "nova_user": "nova"
                         },
                         "install": {
-                            "root_pass": "$globals.root.pass",
+                            "root_pass": "stackops",
                             "keystone_user": "keystone",
                             "cinder_user": "cinder",
                             "quantum_password": "stackops",
@@ -57,7 +57,7 @@
                             "nova_password": "stackops"
                         },
                         "set_glance": {
-                            "root_pass": "$globals.root.pass",
+                            "root_pass": "stackops",
                             "glance_password": "stackops",
                             "glance_user": "glance"
                         },
@@ -72,7 +72,7 @@
                             "schema": ""
                         },
                         "set_portal": {
-                            "root_pass": "$globals.root.pass",
+                            "root_pass": "stackops",
                             "portal_user": "portal",
                             "portal_password": "stackops"
                         }

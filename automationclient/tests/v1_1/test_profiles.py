@@ -21,12 +21,12 @@ from automationclient.v1_1.profiles import Profile
 cs = fakes.FakeClient()
 
 
-def _profile(name):
+def _profile():
     return {
         "profile": {
-            "name": "%s" % name,
+            "name": "fake_profile",
             "properties": {
-                    "property_key": "property_value"
+                "fake_property_key": "fake_property_value"
             },
             "components": [
                 {
@@ -128,7 +128,7 @@ def _profile(name):
     }
 
 
-class DevicesTest(utils.TestCase):
+class ProfilesTest(utils.TestCase):
 
     def test_profile_list(self):
         architecture = cs.architectures.get(1234)
@@ -152,7 +152,7 @@ class DevicesTest(utils.TestCase):
         architecture = cs.architectures.get(1234)
         cs.assert_called('GET', '/archs/1234')
         self.assertIsInstance(architecture, Architecture)
-        options = _profile("profile_new")
+        options = _profile()
         profile = cs.profiles.create(architecture, options)
         cs.assert_called('POST', '/archs/1234/profiles', body=options)
         self.assertIsInstance(profile, Profile)
@@ -164,7 +164,7 @@ class DevicesTest(utils.TestCase):
         profile = cs.profiles.get(architecture, 1234)
         cs.assert_called('GET', '/archs/1234/profiles/1234')
         self.assertIsInstance(profile, Profile)
-        options = _profile("profile_update")
+        options = _profile()
         profile = cs.profiles.update(architecture, profile, options)
         cs.assert_called('PUT', '/archs/1234/profiles/1234', body=options)
         self.assertIsInstance(profile, dict)
@@ -197,10 +197,11 @@ class DevicesTest(utils.TestCase):
         cs.assert_called('GET', '/archs/1234/profiles/1234')
         self.assertIsInstance(profile, Profile)
         #TODO(jvalderrama) Check options as body expected
+        #options = _profile()
         profile = cs.profiles.property_create(architecture,
                                               profile,
-                                              'property_key_new',
-                                              'property_value_new')
+                                              'new_fake_property_key',
+                                              'new_fake_property_key_value')
         cs.assert_called('PUT', '/archs/1234/profiles/1234')
         self.assertIsInstance(profile, dict)
 
@@ -212,10 +213,11 @@ class DevicesTest(utils.TestCase):
         cs.assert_called('GET', '/archs/1234/profiles/1234')
         self.assertIsInstance(profile, Profile)
         #TODO(jvalderrama) Check options as body expected
+        #options = _profile()
         profile = cs.profiles.property_update(architecture,
                                               profile,
-                                              'property_key',
-                                              'property_value')
+                                              'fake_property_key',
+                                              'fake_property_value')
         cs.assert_called('PUT', '/archs/1234/profiles/1234')
         self.assertIsInstance(profile, dict)
 
@@ -227,8 +229,9 @@ class DevicesTest(utils.TestCase):
         cs.assert_called('GET', '/archs/1234/profiles/1234')
         self.assertIsInstance(profile, Profile)
         #TODO(jvalderrama) Check options as body expected
+        #options = _profile()
         profile = cs.profiles.property_delete(architecture,
                                               profile,
-                                              'property_key')
+                                              'fake_property_key')
         cs.assert_called('PUT', '/archs/1234/profiles/1234')
         self.assertIsInstance(profile, dict)

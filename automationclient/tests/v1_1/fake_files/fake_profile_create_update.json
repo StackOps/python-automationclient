@@ -1,9 +1,9 @@
 {
     "profile": {
-        "name": "profile_update",
-        "properties": {
-            "property_key_update" : "property_value_update"
-        },
+        "name": "fake_profile",
+            "properties": {
+                "fake_property_key": "fake_property_value"
+            },
         "_links": null,
         "components": [
             {

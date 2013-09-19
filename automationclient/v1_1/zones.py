@@ -88,14 +88,13 @@ class ZoneManager(base.ManagerWithFind):
         del zone_dict['_links']
         zone_body = {"zone": zone_dict}
 
-        self._update_without_hooks("/zones/%s" % base.getid(zone), zone_body)
+        return self._update("/zones/%s" % base.getid(zone), zone_body)
 
     def property_update(self, zone, property_key,
                         property_value):
 
         zone_dict = zone._info
         props_dict = zone_dict['properties']
-
         if property_key in props_dict:
             props_dict[property_key] = property_value
         else:
@@ -106,10 +105,9 @@ class ZoneManager(base.ManagerWithFind):
         del zone_dict['_links']
         zone_body = {"zone": zone_dict}
 
-        self._update_without_hooks("/zones/%s" % base.getid(zone), zone_body)
+        return self._update("/zones/%s" % base.getid(zone), zone_body)
 
-    def property_delete(self, zone, property_key,
-                        property_value):
+    def property_delete(self, zone, property_key):
 
         zone_dict = zone._info
         props_dict = zone_dict['properties']
@@ -124,8 +122,4 @@ class ZoneManager(base.ManagerWithFind):
         del zone_dict['_links']
         zone_body = {"zone": zone_dict}
 
-        self._update_without_hooks("/zones/%s" % base.getid(zone), zone_body)
-
-    def _update_without_hooks(self, url, body):
-        resp, body = self.api.client.put(url, body=body)
-        return body
+        return self._update("/zones/%s" % base.getid(zone), zone_body)

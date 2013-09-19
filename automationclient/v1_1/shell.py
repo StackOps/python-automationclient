@@ -657,7 +657,11 @@ def do_zone_property_create(cs, args):
     zone = _find_zone(cs, args.zone)
     property_key = args.property_key
     property_value = args.property_value
-    cs.zones.property_create(zone, property_key, property_value)
+    zone = cs.zones.property_create(zone, property_key, property_value)
+    zone = zone['zone']
+    del zone['_links'],
+    final_dict = utils.check_json_pretty_value_for_dict(zone)
+    utils.print_dict(final_dict)
 
 
 @utils.arg('zone', metavar='<zone-id>',
@@ -673,7 +677,11 @@ def do_zone_property_update(cs, args):
     zone = _find_zone(cs, args.zone)
     property_key = args.property_key
     property_value = args.property_value
-    cs.zones.property_update(zone, property_key, property_value)
+    zone = cs.zones.property_update(zone, property_key, property_value)
+    zone = zone['zone']
+    del zone['_links'],
+    final_dict = utils.check_json_pretty_value_for_dict(zone)
+    utils.print_dict(final_dict)
 
 
 @utils.arg('zone', metavar='<zone-id>',
@@ -681,15 +689,16 @@ def do_zone_property_update(cs, args):
            help='ID of the zone to delete a property.')
 @utils.arg('property_key', metavar='<property-key>',
            help='The key property.')
-@utils.arg('property_value', metavar='<property-value>',
-           help='The value property')
 @utils.service_type('automation')
 def do_zone_property_delete(cs, args):
     """Delete a zone property."""
     zone = _find_zone(cs, args.zone)
     property_key = args.property_key
-    property_value = args.property_value
-    cs.zones.property_delete(zone, property_key, property_value)
+    zone = cs.zones.property_delete(zone, property_key)
+    zone = zone['zone']
+    del zone['_links'],
+    final_dict = utils.check_json_pretty_value_for_dict(zone)
+    utils.print_dict(final_dict)
 
 
 @utils.arg('zone', metavar='<zone-id>',

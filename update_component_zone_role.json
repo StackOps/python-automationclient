@@ -1,0 +1,82 @@
+{
+    "component": {
+        "properties": {
+            "set_quantum": {
+                "root_pass": "stackops",
+                "quantum_user": "quantum",
+                "quantum_password": "stackops"
+            },
+            "set_keystone": {
+                "root_pass": "stackops",
+                "keystone_password": "stackops",
+                "keystone_user": "keystone"
+            },
+            "teardown": {},
+            "set_cinder": {
+                "cinder_user": "cinder",
+                "root_pass": "stackops",
+                "cinder_password": "stackops"
+            },
+            "set_automation": {
+                "automation_password": "stackops",
+                "root_pass": "stackops",
+                "automation_user": "automation"
+            },
+            "set_accounting": {
+                "accounting_user": "activity",
+                "root_pass": "stackops",
+                "accounting_password": "stackops"
+            },
+            "set_nova": {
+                "root_pass": "stackops",
+                "nova_password": "stackops",
+                "nova_user": "nova"
+            },
+            "install": {
+                "root_pass": "stackops",
+                "keystone_user": "keystone",
+                "cinder_user": "cinder",
+                "quantum_password": "stackops",
+                "glance_password": "stackops",
+                "automation_user": "automation",
+                "quantum_user": "quantum",
+                "automation_password": "stackops",
+                "keystone_password": "stackops",
+                "cinder_password": "stackops",
+                "nova_user": "nova",
+                "glance_user": "glance",
+                "nova_password": "stackops"
+            },
+            "set_glance": {
+                "root_pass": "stackops",
+                "glance_password": "stackops",
+                "glance_user": "glance"
+            },
+            "validate": {
+                "username": "",
+                "drop_schema": null,
+                "install_database": null,
+                "database_type": "",
+                "host": "",
+                "password": "",
+                "port": "",
+                "schema": ""
+            },
+            "set_portal": {
+                "root_pass": "stackops",
+                "portal_user": "portal",
+                "portal_password": "stackops"
+            }
+        },
+        "_links": {
+            "services": {
+                "href": "http://0.0.0.0:8089/v1.1/zones/1/roles/1/components/mysql/services"
+            },
+            "self": {
+                "href": "http://0.0.0.0:8089/v1.1/zones/1/roles/1/components/mysql"
+            }
+        },
+        "id": 1,
+        "name": "mysql"
+    }
+}

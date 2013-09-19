@@ -25,12 +25,12 @@ from automationclient.tests.v1_1 import fakes
 from automationclient.tests import utils
 
 
-def _profile(name, key_property, value_property):
+def _profile():
     return {
         "profile": {
-            "name": "%s" % name,
+            "name": "fake_profile",
             "properties": {
-                "%s" % key_property: "%s" % value_property
+                "fake_property_key": "fake_property_value"
             },
             "_links": None,
             "components": [
@@ -101,6 +101,114 @@ def _profile(name, key_property, value_property):
                             },
                             "set_portal": {
                                 "root_pass": "$globals.root.pass",
+                                "portal_user": "portal",
+                                "portal_password": "stackops"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "rabbitmq",
+                    "properties": [
+                        {
+                            "start": {},
+                            "validate": {
+                                "rpassword": None,
+                                "virtual_host": None,
+                                "host": "",
+                                "ruser": None,
+                                "service_type": "",
+                                "rport": None
+                            },
+                            "stop": {},
+                            "install": {
+                                "cluster": False,
+                                "password": "guest"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+
+
+def _zone():
+    return {
+        "zone": {
+            "name": "fake_zone",
+            "properties": {
+                "fake_property_key": "fake_property_value"
+            },
+            "_links": None,
+            "components": [
+                {
+                    "name": "mysql",
+                    "properties": [
+                        {
+                            "set_quantum": {
+                                "root_pass": "stackops",
+                                "quantum_password": "stackops",
+                                "quantum_user": "quantum"
+                            },
+                            "set_keystone": {
+                                "root_pass": "stackops",
+                                "keystone_password": "stackops",
+                                "keystone_user": "keystone"
+                            },
+                            "teardown": {},
+                            "set_cinder": {
+                                "cinder_user": "cinder",
+                                "root_pass": "stackops",
+                                "cinder_password": "stackops"
+                            },
+                            "set_automation": {
+                                "automation_password": "stackops",
+                                "root_pass": "stackops",
+                                "automation_user": "automation"
+                            },
+                            "set_accounting": {
+                                "accounting_user": "activity",
+                                "root_pass": "stackops",
+                                "accounting_password": "stackops"
+                            },
+                            "set_nova": {
+                                "root_pass": "stackops",
+                                "nova_password": "stackops",
+                                "nova_user": "nova"
+                            },
+                            "install": {
+                                "root_pass": "stackops",
+                                "keystone_user": "keystone",
+                                "cinder_user": "cinder",
+                                "quantum_password": "stackops",
+                                "glance_password": "stackops",
+                                "automation_user": "automation",
+                                "quantum_user": "quantum",
+                                "automation_password": "stackops",
+                                "keystone_password": "stackops",
+                                "cinder_password": "stackops",
+                                "glance_user": "glance",
+                                "nova_user": "nova",
+                                "nova_password": "stackops"
+                            },
+                            "set_glance": {
+                                "root_pass": "stackops",
+                                "glance_password": "stackops",
+                                "glance_user": "glance"
+                            },
+                            "validate": {
+                                "username": "",
+                                "drop_schema": None,
+                                "install_database": None,
+                                "database_type": "",
+                                "host": "",
+                                "password": "",
+                                "port": "",
+                                "schema": ""
+                            },
+                            "set_portal": {
+                                "root_pass": "stackops",
                                 "portal_user": "portal",
                                 "portal_password": "stackops"
                             }
@@ -364,18 +472,76 @@ class ShellTest(utils.TestCase):
 
     def test_profile_property_create(self):
         self.run_command('profile-property-create '
-                         '1234 1234 new_property_key new_property_value')
-        # TODO(jvalderrama) Check options as body expected
+                         '1234 '
+                         '1234 '
+                         'new_fake_property_key '
+                         'new_fake_property_value')
+        #expected = _profile()
+        #TODO(jvalderrama) Check options as body expected
         self.assert_called('PUT', '/archs/1234/profiles/1234')
 
     def test_profile_property_update(self):
         self.run_command('profile-property-update '
-                         '1234 1234 property_key property_value')
-        # TODO(jvalderrama) Check options as body expected
+                         '1234 1234 fake_property_key fake_property_value')
+        #expected = _profile()
+        #TODO(jvalderrama) Check options as body expected
         self.assert_called('PUT', '/archs/1234/profiles/1234')
 
     def test_profile_property_delete(self):
         self.run_command('profile-property-delete '
-                         '1234 1234 property_key')
-        # TODO(jvalderrama) Check options as body expected
+                         '1234 1234 fake_property_key')
+        #expected = _profile()
+        #TODO(jvalderrama) Check options as body expected
         self.assert_called('PUT', '/archs/1234/profiles/1234')
+
+    #
+    # Zones
+    #
+    def test_zone_list(self):
+        self.run_command('zone-list')
+        self.assert_called('GET', '/zones')
+
+    def test_zone_show(self):
+        self.run_command('zone-show 1234')
+        self.assert_called('GET', '/zones/1234')
+
+    def test_zone_create(self):
+        file = os.path.join(os.getcwd(),
+                            "automationclient/tests/v1_1/"
+                            "fake_files/fake_zone_create.json")
+        self.run_command('zone-create 1234 %s' % file)
+        expected = _zone()
+        self.assert_called('POST', '/archs/1234/apply', body=expected)
+
+    def test_zone_delete(self):
+        self.run_command('zone-delete 1234')
+        self.assert_called('DELETE', '/zones/1234')
+
+    def test_zone_json(self):
+        self.run_command('zone-json 1234')
+        self.assert_called('GET', '/zones/1234')
+
+    def test_zone_tasks_list(self):
+        self.run_command('zone-tasks-list 1234')
+        self.assert_called('GET', '/zones/1234/tasks')
+
+    def test_zone_property_create(self):
+        self.run_command('zone-property-create '
+                         '1234 new_fake_property_key new_fake_property_value')
+        #expected = _zone()
+        #TODO(jvalderrama) Check options as body expected
+        self.assert_called('PUT', '/zones/1234')
+
+    def test_zone_property_update(self):
+        self.run_command('zone-property-update '
+                         '1234 fake_property_key fake_property_key_value')
+        #expected = _zone()
+        #TODO(jvalderrama) Check options as body expected
+        self.assert_called('PUT', '/zones/1234')
+
+    def test_zone_property_delete(self):
+        self.run_command('zone-property-delete '
+                         '1234 fake_property_key')
+        #expected = _zone()
+        #TODO(jvalderrama) Check options as body expected
+        self.assert_called('PUT', '/zones/1234')
