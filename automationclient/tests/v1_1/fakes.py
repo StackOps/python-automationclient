@@ -462,7 +462,6 @@ class FakeHTTPClient(base_client.HTTPClient):
         return (204, {}, {})
 
     def post_pool_devices_1234_activate(self, **kw):
-        device = _stub_device(id='1234')
         return (204, {}, {'device': _stub_device(id='1234')})
 
     #

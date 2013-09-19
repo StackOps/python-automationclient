@@ -48,4 +48,5 @@ class NodeManager(base.ManagerWithFind):
         :param profile: The ID of the :class: `Node` to get.
         :rtype: :class:`Node`
         """
-        return self._get("/zones/%s/nodes/%s" % (base.getid(zone), node), 'node')
+        return self._get("/zones/%s/nodes/%s" % (base.getid(zone), node),
+                         'node')
