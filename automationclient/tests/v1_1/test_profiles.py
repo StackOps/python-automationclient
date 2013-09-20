@@ -189,7 +189,7 @@ class ProfilesTest(utils.TestCase):
         json_profile = utils.from_manager_to_dict(profile)
         self.assertIsInstance(json_profile, dict)
 
-    def test_profile_propery_create(self):
+    def test_profile_property_create(self):
         architecture = cs.architectures.get(1234)
         cs.assert_called('GET', '/archs/1234')
         self.assertIsInstance(architecture, Architecture)
@@ -205,7 +205,7 @@ class ProfilesTest(utils.TestCase):
         cs.assert_called('PUT', '/archs/1234/profiles/1234')
         self.assertIsInstance(profile, dict)
 
-    def test_profile_propery_update(self):
+    def test_profile_property_update(self):
         architecture = cs.architectures.get(1234)
         cs.assert_called('GET', '/archs/1234')
         self.assertIsInstance(architecture, Architecture)
@@ -221,7 +221,7 @@ class ProfilesTest(utils.TestCase):
         cs.assert_called('PUT', '/archs/1234/profiles/1234')
         self.assertIsInstance(profile, dict)
 
-    def test_profile_propery_delete(self):
+    def test_profile_property_delete(self):
         architecture = cs.architectures.get(1234)
         cs.assert_called('GET', '/archs/1234')
         self.assertIsInstance(architecture, Architecture)

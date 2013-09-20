@@ -155,6 +155,7 @@ class RolesTest(utils.TestCase):
         components = cs.components.list_zone_role(zone, role)
         cs.assert_called('GET', '/zones/1234/roles/1234/components')
         self.assertEqual(len(components), 2)
-        [self.assertTrue(isinstance(component, Component)) for component in components]
+        [self.assertTrue(isinstance(component, Component))
+         for component in components]
         json_components = utils.from_manager_to_dict(components)
         [self.assertTrue(isinstance(comp, dict)) for comp in json_components]

@@ -584,7 +584,9 @@ def do_global_property_create(cs, args):
     """
     property_key = args.property_key
     property_value = args.property_value
-    cs.properties.create(property_key, property_value)
+    property = cs.properties.create(property_key, property_value)
+    property = property['properties']
+    utils.print_dict(property)
 
 
 @utils.arg('property_key', metavar='<property-key>',
@@ -599,8 +601,9 @@ def do_global_property_update(cs, args):
     """
     property_key = args.property_key
     property_value = args.property_value
-    cs.properties.update(property_key, property_value)
-    do_global_property_list(cs, args)
+    property = cs.properties.update(property_key, property_value)
+    property = property['properties']
+    utils.print_dict(property)
 
 
 @utils.arg('property_key', metavar='<property-key>',
@@ -612,7 +615,9 @@ def do_global_property_delete(cs, args):
     :param args:
     """
     property_key = args.property_key
-    cs.properties.delete(property_key)
+    property = cs.properties.delete(property_key)
+    property = property['properties']
+    utils.print_dict(property)
 
 
 @utils.service_type('automation')

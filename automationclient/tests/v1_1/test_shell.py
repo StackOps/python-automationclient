@@ -657,3 +657,38 @@ class ShellTest(utils.TestCase):
     def test_role_component_json(self):
         self.run_command('role-component-json 1234 1234 1234 1234')
         self.assert_called('GET', '/zones/1234/roles/1234/components/1234')
+
+    #
+    # Global Properties
+    #
+    def test_global_property_list(self):
+        self.run_command('global-property-list')
+        self.assert_called('GET', '/properties')
+
+    def test_global_property_create(self):
+        self.run_command('global-property-create '
+                         'new_fake_property_key new_fake_property_value')
+        #TODO(jvalderrama) Check options as body expected
+        #expected = {"properties": {
+        #    "sample-property1": 1234,
+        #    "sample-property2": 5678,
+        #    "new_fake_property_key": "new_fake_property_value"
+        #}}
+        self.assert_called('PUT', '/properties')
+
+    def test_global_property_update(self):
+        self.run_command('global-property-update sample-property2 9870')
+        #TODO(jvalderrama) Check options as body expected
+        #expected = {"properties": {
+        #    "sample-property1": 1234,
+        #    "sample-property2": 9870
+        #}}
+        self.assert_called('PUT', '/properties')
+
+    def test_global_property_delete(self):
+        self.run_command('global-property-delete sample-property2')
+        #TODO(jvalderrama) Check options as body expected
+        #expected = {"properties": {
+        #    "sample-property1": 1234
+        #}}
+        self.assert_called('PUT', '/properties')

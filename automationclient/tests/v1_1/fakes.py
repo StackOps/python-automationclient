@@ -695,3 +695,18 @@ class FakeHTTPClient(base_client.HTTPClient):
 
     def put_zones_1234_roles_1234_components_1234(self, **kw):
         return (200, {}, {'component': _stub_component(name='1234')})
+
+    #
+    # Global Properties
+    #
+    def get_properties(self):
+        return (200, {}, {"properties": {
+            'sample-property1': 1234,
+            'sample-property2': 5678}
+        })
+
+    def put_properties(self, **kw):
+        return (200, {}, {"properties": {
+            'sample-property1': 1234,
+            'sample-property2': 9870}
+        })

@@ -64,7 +64,7 @@ class PropertyManager(base.ManagerWithFind):
         properties = self.list()
         if property_key in properties:
             properties[property_key] = property_value
-            self._update("/properties", properties)
+            return self._update("/properties", properties)
         else:
             msg = "No %s with a key '%s' exists." % \
                   (self.resource_class.__name__.lower(), property_key)
@@ -80,7 +80,7 @@ class PropertyManager(base.ManagerWithFind):
         properties = self.list()
         if property_key in properties:
             del properties[property_key]
-            self._update("/properties", properties)
+            return self._update("/properties", properties)
         else:
             msg = "No %s with a key '%s' exists." % \
                   (self.resource_class.__name__.lower(), property_key)
