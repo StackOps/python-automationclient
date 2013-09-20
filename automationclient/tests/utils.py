@@ -16,6 +16,16 @@ import os
 import fixtures
 import requests
 import testtools
+from automationclient.v1_1.devices import Device
+from automationclient.v1_1.components import Component
+from automationclient.v1_1.services import Service
+from automationclient.v1_1.architectures import Architecture
+from automationclient.v1_1.profiles import Profile
+from automationclient.v1_1.properties import Property
+from automationclient.v1_1.zones import Zone
+from automationclient.v1_1.tasks import Task
+from automationclient.v1_1.roles import Role
+from automationclient.v1_1.nodes import Node
 
 
 class TestCase(testtools.TestCase):
@@ -26,11 +36,11 @@ class TestCase(testtools.TestCase):
     def setUp(self):
         super(TestCase, self).setUp()
         if (os.environ.get('OS_STDOUT_CAPTURE') == 'True' or
-                os.environ.get('OS_STDOUT_CAPTURE') == '1'):
+                    os.environ.get('OS_STDOUT_CAPTURE') == '1'):
             stdout = self.useFixture(fixtures.StringStream('stdout')).stream
             self.useFixture(fixtures.MonkeyPatch('sys.stdout', stdout))
         if (os.environ.get('OS_STDERR_CAPTURE') == 'True' or
-                os.environ.get('OS_STDERR_CAPTURE') == '1'):
+                    os.environ.get('OS_STDERR_CAPTURE') == '1'):
             stderr = self.useFixture(fixtures.StringStream('stderr')).stream
             self.useFixture(fixtures.MonkeyPatch('sys.stderr', stderr))
 
@@ -60,7 +70,20 @@ class TestResponse(requests.Response):
 
 
 def from_manager_to_dict(manager):
-    final_dict = {}
-    for key, value in manager._info.items():
+    print(type(manager))
+    t = Device, Component, Service, Architecture, Profile, Property, Zone, \
+        Task, Role, Node
+    if isinstance(manager, t):
+        final_dict = {}
+        for key, value in manager._info.items():
             final_dict.update({key: value})
-    return final_dict
+        return final_dict
+    elif isinstance(manager, list):
+        final_list = []
+        for object_manager in manager:
+            if isinstance(object_manager, t):
+                dict = {}
+                for key, value in object_manager._info.items():
+                    dict.update({key: value})
+                final_list.append(dict)
+        return final_list
