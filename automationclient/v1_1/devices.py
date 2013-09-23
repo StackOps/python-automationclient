@@ -54,7 +54,8 @@ class DeviceManager(base.ManagerWithFind):
         :param device: Device to activate
         """
 
-        return self._action('activate', device, **kwargs)
+        return self._action('activate', device, body=kwargs,
+                            response_key='node')
 
     def power_on(self, device, **kwargs):
         """
@@ -63,7 +64,7 @@ class DeviceManager(base.ManagerWithFind):
         :param device: Device to power on
         """
 
-        return self._action('poweron', device, **kwargs)
+        return self._action('poweron', device, body=kwargs)
 
     def power_off(self, device, **kwargs):
         """
@@ -72,7 +73,7 @@ class DeviceManager(base.ManagerWithFind):
         :param device: Device to power off
         """
 
-        return self._action('poweroff', device, **kwargs)
+        return self._action('poweroff', device, body=kwargs)
 
     def reboot(self, device, **kwargs):
         """
@@ -81,7 +82,7 @@ class DeviceManager(base.ManagerWithFind):
         :param device: Device to reboot
         """
 
-        return self._action('reboot', device, **kwargs)
+        return self._action('reboot', device, body=kwargs)
 
     def shutdown(self, device):
         """
@@ -122,7 +123,7 @@ class DeviceManager(base.ManagerWithFind):
         :param device: The :class:`Device` to delete.
         """
 
-        self._action('delete', device, **kwargs)
+        self._action('delete', device, body=kwargs)
 
     def replace(self, device, **kwargs):
         """
@@ -130,10 +131,17 @@ class DeviceManager(base.ManagerWithFind):
 
         :param device: the device to be replaced with.
         """
-        return self._action('replace', device, **kwargs)
+        return self._action('replace', device, body=kwargs,
+                            response_key='node')
 
-    def _action(self, url, device, **kwargs):
+    def _action(self, action, device, body, response_key=None):
         """Perform a device action."""
 
-        url = '/pool/devices/%s/%s' % (device.mac, url)
-        return self.api.client.post(url, body=kwargs)
+        url = '/pool/devices/{}/{}'.format(device.mac, action)
+
+        resp, body = self.api.client.post(url, body=body)
+
+        if response_key is not None:
+            return body[response_key]
+
+        return body

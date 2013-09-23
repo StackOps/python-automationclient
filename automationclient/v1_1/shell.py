@@ -187,12 +187,15 @@ def do_device_activate(cs, args):
 
     if args.lom_password is not None:
         kwargs['lom_password'] = args.lom_password
+
     device = _find_device(cs, args.mac)
+
     node = cs.devices.activate(device, **kwargs)
-    dict = node[1]['device']
-    del dict['_links']
-    del dict['connection_data']
-    utils.print_dict(dict)
+
+    del node['_links']
+    del node['connection_data']
+
+    utils.print_dict(node)
 
 
 @utils.arg('mac', metavar='<mac>',
@@ -219,6 +222,7 @@ def do_device_activate(cs, args):
 def do_device_replace(cs, args):
     """Replaces a node in a zone by a specific device in the pool."""
     kwargs = {'zone_id': args.zone_id}
+
     if args.lom_user_node_to_remove is not None:
         kwargs['lom_user_node_to_remove'] = args.lom_user_node_to_remove
 
@@ -231,14 +235,18 @@ def do_device_replace(cs, args):
 
     if args.lom_password_node_to_add is not None:
         kwargs['lom_password_node_to_add'] = args.lom_password_node_to_add
+
     kwargs['role_id'] = args.role_id
     kwargs['node_id'] = args.node_id
+
     device = _find_device(cs, args.mac)
+
     node = cs.devices.replace(device, **kwargs)
-    dict = node[1]['device']
-    del dict['_links']
-    del dict['connection_data']
-    utils.print_dict(dict)
+
+    del node['_links']
+    del node['connection_data']
+
+    utils.print_dict(node)
 
 
 @utils.arg('mac', metavar='<mac>',
