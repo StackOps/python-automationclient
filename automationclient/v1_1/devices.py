@@ -134,7 +134,7 @@ class DeviceManager(base.ManagerWithFind):
         return self._action('replace', device, body=kwargs,
                             response_key='node')
 
-    def _action(self, action, device, body, response_key=None):
+    def _action(self, action, device, body=None, response_key=None):
         """Perform a device action."""
 
         url = '/pool/devices/{}/{}'.format(device.mac, action)
