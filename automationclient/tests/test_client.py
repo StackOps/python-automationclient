@@ -17,7 +17,6 @@
 
 import automationclient.client
 import automationclient.v1_1.client
-import automationclient.v2.client
 from automationclient.tests import utils
 
 
@@ -26,10 +25,6 @@ class ClientTest(utils.TestCase):
     def test_get_client_class_v1_1(self):
         output = automationclient.client.get_client_class('1.1')
         self.assertEqual(output, automationclient.v1_1.client.Client)
-
-    def test_get_client_class_v2(self):
-        output = automationclient.client.get_client_class('2')
-        self.assertEqual(output, automationclient.v2.client.Client)
 
     def test_get_client_class_unknown(self):
         self.assertRaises(automationclient.exceptions.UnsupportedVersion,
