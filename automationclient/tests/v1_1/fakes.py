@@ -484,6 +484,17 @@ def _stub_role(**kwargs):
     return role
 
 
+def _stub_service():
+    service = \
+        {
+            "_links": None,
+            "name": "install",
+            "description": "Prepares a database and a user password for each "
+                           "StackOps schemas"
+        }
+    return service
+
+
 class FakeHTTPClient(base_client.HTTPClient):
     def __init__(self, **kwargs):
         self.username = 'username'
@@ -710,3 +721,22 @@ class FakeHTTPClient(base_client.HTTPClient):
             'sample-property1': 1234,
             'sample-property2': 9870}
         })
+
+    #
+    # Services
+    #
+    def get_zones_1234_roles_1234_components_1234_services(self):
+        return (200, {}, {"services": [
+            {'id': 1234, 'name': 'sample-service1'},
+            {'id': 5678, 'name': 'sample-service2'}
+        ]})
+
+    def get_zones_1234_roles_1234_components_1234_services_1234(self):
+        return (200, {}, {'service': _stub_service()})
+
+    def post_zones_1234_roles_1234_components_1234_services_install(self,
+                                                                    **kw):
+        return (201, {}, {"tasks": [
+            {'id': 1234, 'name': 'sample-tasks1'},
+            {'id': 5678, 'name': 'sample-tasks2'}
+        ]})

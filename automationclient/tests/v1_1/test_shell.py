@@ -692,3 +692,23 @@ class ShellTest(utils.TestCase):
         #    "sample-property1": 1234
         #}}
         self.assert_called('PUT', '/properties')
+
+    #
+    # Services
+    #
+    def test_service_list(self):
+        self.run_command('service-list 1234 1234 1234')
+        self.assert_called('GET',
+                           '/zones/1234/roles/1234/components/1234/services')
+
+    def test_service_show(self):
+        self.run_command('service-show 1234 1234 1234 1234')
+        self.assert_called(
+            'GET',
+            '/zones/1234/roles/1234/components/1234/services/1234')
+
+    def test_service_execute(self):
+        self.run_command('service-execute 1234 1234 1234 1234')
+        self.assert_called(
+            'POST',
+            '/zones/1234/roles/1234/components/1234/services/install')
