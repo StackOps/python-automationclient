@@ -495,6 +495,55 @@ def _stub_service():
     return service
 
 
+def _stub_node(**kwargs):
+    node = \
+        {
+            "ip": "192.168.2.107",
+            "updated": "2013-09-23 09:26:11",
+            "megaherzs": 0,
+            "id": 1234,
+            "management_network_gateway": None,
+            "_links": None,
+            "certified": True,
+            "memory": 1073741824,
+            "management_network_ip": "192.168.2.107",
+            "status": "ACTIVATED",
+            "product": "VMware Virtual Platform ()",
+            "vendor": "VMware, Inc.",
+            "mac": "00:50:56:3f:b9:48",
+            "threads": 1,
+            "connection_data": {
+                "username": "stackops",
+                "host": "192.168.2.107",
+                "ssh_key_file": "/var/lib/stackops-head/etc/nonsecureid_rsa",
+                "port": 22
+            },
+            "lom_mac": None,
+            "lom_ip": None,
+            "zone_id": 2,
+            "management_network_dns": None,
+            "disk_size": 17179869184,
+            "name": "controller-my-zone",
+            "created": "2013-09-23 08:47:40",
+            "management_network_netmask": None,
+            "cores": 1,
+            "ports": 1
+        }
+
+    return node
+
+
+def _stub_task(**kwargs):
+    task =\
+        {
+            "state": "PENDING",
+            "id": "1234",
+            "result": "NOT_READY"
+        }
+
+    return task
+
+
 class FakeHTTPClient(base_client.HTTPClient):
     def __init__(self, **kwargs):
         self.username = 'username'
@@ -740,3 +789,27 @@ class FakeHTTPClient(base_client.HTTPClient):
             {'id': 1234, 'name': 'sample-tasks1'},
             {'id': 5678, 'name': 'sample-tasks2'}
         ]})
+
+    #
+    # Nodes
+    #
+    def get_zones_1234_nodes(self):
+        return (200, {}, {"nodes": [
+            {'id': 1234, 'name': 'sample-node1'},
+            {'id': 5678, 'name': 'sample-node2'}
+        ]})
+
+    def get_zones_1234_nodes_1234(self):
+        return (200, {}, {'node': _stub_node(id='1234')})
+
+    def get_zones_1234_nodes_1234_tasks(self):
+        return (200, {}, {"tasks": [
+            {'id': 1234, 'name': 'sample-tasks1'},
+            {'id': 5678, 'name': 'sample-tasks2'}
+        ]})
+
+    def get_zones_1234_nodes_1234_tasks_1234(self):
+        return (200, {}, {'task': _stub_task(id='1234')})
+
+    def post_zones_1234_nodes_1234_tasks_1234_cancel(self):
+        return (200, {}, {'task': _stub_task(id='1234')})

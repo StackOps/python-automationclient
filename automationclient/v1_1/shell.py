@@ -799,7 +799,7 @@ def do_node_tasks_list(cs, args):
     zone = _find_zone(cs, args.zone)
     node = _find_node(cs, args.zone, args.node)
     tasks = cs.tasks.list_node(zone, node)
-    utils.print_list(tasks, ['id', 'name', 'uuid', 'state', 'result'])
+    utils.print_list(tasks, ['id', 'name', 'uuid', 'state'])
 
 
 @utils.arg('zone', metavar='<zone-id>',
@@ -834,7 +834,8 @@ def do_node_task_cancel(cs, args):
     node = _find_node(cs, args.zone, args.node)
     task = _find_task(cs, args.zone, args.node, args.task)
     task = cs.tasks.cancel(zone, node, task)
-    utils.print_dict(task._info)
+    dict = task[1]['task']
+    utils.print_dict(dict)
 
 
 @utils.arg('zone', metavar='<zone-id>',

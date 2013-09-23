@@ -712,3 +712,26 @@ class ShellTest(utils.TestCase):
         self.assert_called(
             'POST',
             '/zones/1234/roles/1234/components/1234/services/install')
+
+    #
+    # Nodes
+    #
+    def test_node_list(self):
+        self.run_command('node-list 1234')
+        self.assert_called('GET', '/zones/1234/nodes')
+
+    def test_node_show(self):
+        self.run_command('node-show 1234 1234')
+        self.assert_called('GET', '/zones/1234/nodes/1234')
+
+    def test_node_tasks_list(self):
+        self.run_command('node-tasks-list 1234 1234')
+        self.assert_called('GET', '/zones/1234/nodes/1234/tasks')
+
+    def test_node_task_state(self):
+        self.run_command('node-task-state 1234 1234 1234')
+        self.assert_called('GET', '/zones/1234/nodes/1234/tasks/1234')
+
+    def test_node_task_state(self):
+        self.run_command('node-task-cancel 1234 1234 1234')
+        self.assert_called('POST', '/zones/1234/nodes/1234/tasks/1234/cancel')
