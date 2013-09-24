@@ -50,3 +50,16 @@ class NodeManager(base.ManagerWithFind):
         """
         return self._get("/zones/%s/nodes/%s" % (base.getid(zone), node),
                          'node')
+
+    def deactivate(self, zone, node, options):
+        """Deactivates the given node."""
+
+        url = '/zones/{}/nodes/{}/deactivate'.format(base.getid(zone),
+                                                     base.getid(node))
+
+        return self._post(url, body=options, response_key='device')
+
+    def _post(self, url, body, response_key):
+        resp, body = self.api.client.post(url, body=body)
+
+        return body[response_key]

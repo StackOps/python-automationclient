@@ -735,3 +735,14 @@ class ShellTest(utils.TestCase):
     def test_node_task_state(self):
         self.run_command('node-task-cancel 1234 1234 1234')
         self.assert_called('POST', '/zones/1234/nodes/1234/tasks/1234/cancel')
+
+    def test_node_deactivate(self):
+        self.run_command('node-deactivate 1234 1234')
+        self.assert_called('POST', '/zones/1234/nodes/1234/deactivate')
+
+    def test_node_deactivate_with_lom_data(self):
+        self.run_command(
+            'node-deactivate --lom-user foo --lom-password bar 1234 1234')
+
+        self.assert_called('POST', '/zones/1234/nodes/1234/deactivate',
+                           body={'lom_user': 'foo', 'lom_password': 'bar'})

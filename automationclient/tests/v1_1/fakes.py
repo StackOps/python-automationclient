@@ -813,3 +813,6 @@ class FakeHTTPClient(base_client.HTTPClient):
 
     def post_zones_1234_nodes_1234_tasks_1234_cancel(self):
         return (200, {}, {'task': _stub_task(id='1234')})
+
+    def post_zones_1234_nodes_1234_deactivate(self, **kwargs):
+        return (200, {}, {'device': _stub_device()})

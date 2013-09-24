@@ -73,3 +73,21 @@ class NodeTest(utils.TestCase):
         task = cs.tasks.cancel(zone, node, 1234)
         cs.assert_called('POST', '/zones/1234/nodes/1234/tasks/1234/cancel')
         self.assertIsInstance(task, tuple)
+
+    def test_node_deactivate_without_lom_data(self):
+        zone = cs.zones.get(1234)
+        device = cs.nodes.deactivate(zone, 1234, {})
+
+        cs.assert_called('POST', '/zones/1234/nodes/1234/deactivate', body={})
+        self.assertIsInstance(device, dict)
+
+    def test_node_deactivate_with_lom_data(self):
+        lom_data = {'lom_user': 'foo', 'lom_password': 'bar'}
+
+        zone = cs.zones.get(1234)
+        device = cs.nodes.deactivate(zone, 1234, lom_data)
+
+        cs.assert_called('POST', '/zones/1234/nodes/1234/deactivate',
+                         body=lom_data)
+
+        self.assertIsInstance(device, dict)

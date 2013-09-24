@@ -841,6 +841,41 @@ def do_node_task_cancel(cs, args):
 @utils.arg('zone', metavar='<zone-id>',
            type=int,
            help='ID of the zone.')
+@utils.arg('node', metavar='<node-id>',
+           type=int,
+           help='ID of the node.')
+@utils.arg('--lom-user', metavar='<lom-user>',
+           help='Out-of-band user')
+@utils.arg('--lom-password', metavar='<lom-password>',
+           help='Out-of-Band user password')
+@utils.service_type('automation')
+def do_node_deactivate(cs, args):
+    """Deactivates a zone node. Moves an activated node from the zone
+    to the pool.
+
+    """
+    options = {}
+
+    if args.lom_user is not None:
+        options['lom_user'] = args.lom_user
+
+    if args.lom_password is not None:
+        options['lom_password'] = args.lom_password
+
+    zone = _find_zone(cs, args.zone)
+    node = _find_node(cs, args.zone, args.node)
+
+    device = cs.nodes.deactivate(zone, node, options)
+
+    del device['_links']
+    del device['connection_data']
+
+    utils.print_dict(device)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
 @utils.service_type('automation')
 def do_role_list(cs, args):
     """List all the roles by zone."""
