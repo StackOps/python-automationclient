@@ -110,6 +110,21 @@ You'll find complete documentation on the shell by running
                             automation.
         component-services  List all the services by a component.
         component-show      Show details about a component.
+        datastore-add       Validate and add to the pool a NFS endpoint or GLUSTER
+                            endpoint.
+        datastore-attach    Attach a specific datastore to a zone.
+        datastore-content   List top content (first level) of a specific
+                            datastore.
+        datastore-delete    Delete specific datastore.
+        datastore-detach    Detach a specific datastore from a zone.
+        datastore-discovery
+                            Discovery endpoints from NFS.
+        datastore-list      List a pool of datastores.
+        datastore-show      Show details about a datastore.
+        datastore-space     Show the space of a specific datastore.
+        datastore-update    Update parameters of a specific datastore.
+        datastore-validate  Validate a discovered NFS endpoint or just a GLUSTER
+                            endpoint.
         device-activate     Activate a specific device in the pool.
         device-delete       Remove a specific device from pool.
         device-list         List all the devices in the pool.
@@ -142,6 +157,8 @@ You'll find complete documentation on the shell by running
                         DB.
         node-task-state     Show details about a task from a node in a zone.
         node-tasks-list     List all tasks from a node in a zone.
+        node-task-delete    Remove a task from a node in a zone from automation
+                            DB.
         profile-create      Add a new profile by architecture.
         profile-delete      Remove a specific profile by architecture.
         profile-json        Gets the JSON of the profile.

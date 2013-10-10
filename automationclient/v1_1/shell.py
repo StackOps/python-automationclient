@@ -97,6 +97,11 @@ def _find_task(cs, zone, node, task):
     return cs.tasks.get_node(obj_zone, obj_node, task)
 
 
+def _find_datastore(cs, datastore):
+    """Get a datastore by ID."""
+    return utils.find_resource(cs.datastores, datastore)
+
+
 @utils.service_type('automation')
 def do_device_list(cs, args):
     """List all the devices in the pool."""
@@ -240,7 +245,7 @@ def do_device_replace(cs, args):
         kwargs['lom_user_node_to_remove'] = args.lom_user_node_to_remove
 
     if args.lom_password_node_to_remove is not None:
-        kwargs['lom_password_node_to_remove'] = args.\
+        kwargs['lom_password_node_to_remove'] = args. \
             lom_password_node_to_remove
 
     if args.lom_user_node_to_add is not None:
@@ -1135,6 +1140,228 @@ def do_service_execute(cs, args):
     task = cs.tasks.execute_service(zone, role, component, service, node)
     final_dict = utils.remove_values_from_manager_dict(task, [])
     final_dict = utils.check_json_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
+
+
+@utils.arg('endpoint', metavar='<endpoint>',
+           help='NFS endpoint to discovery')
+@utils.service_type('automation')
+def do_datastore_discovery(cs, args):
+    """Discovery endpoints from NFS."""
+    options = {
+        'storage_type': 'NFS',
+        'endpoint': args.endpoint
+    }
+    datastores = cs.datastores.discovery(**options)
+    utils.print_list(datastores, ['store', 'allowed'])
+
+
+@utils.arg('storage_type', metavar='<storage_type>',
+           type=str,
+           help='Can be NFS or GLUSTER')
+@utils.arg('endpoint', metavar='<endpoint>',
+           help='NFS or GLUSTER endpoint to validate')
+@utils.arg('datastore', metavar='<datastore>',
+           help='datastore/store/volume to validate')
+@utils.arg('identifier', metavar='<identifier>',
+           help='Some identifier to operate with the datastore/store/volume')
+@utils.service_type('automation')
+def do_datastore_validate(cs, args):
+    """Validate a discovered NFS endpoint or just a GLUSTER endpoint."""
+    options = {
+        'endpoint': args.endpoint,
+        'store': args.datastore,
+        'identifier': args.identifier,
+        'storage_type': args.storage_type
+    }
+    datastore = cs.datastores.validate(**options)
+    dict = datastore[1]['datastore']
+    final_dict = utils.check_json_pretty_value_for_dict(dict)
+    utils.print_dict(final_dict)
+
+
+@utils.service_type('automation')
+def do_datastore_list(cs, args):
+    """List a pool of datastores."""
+    datastores = cs.datastores.list()
+    utils.print_list(datastores, ['id', 'identifier', 'id_storage_types',
+                                  'endpoint', 'store', 'status',
+                                  'resource_type'])
+
+
+@utils.arg('datastore', metavar='<datastore-id>',
+           type=int,
+           help='ID of the datastore/store/volume in the pool')
+@utils.service_type('automation')
+def do_datastore_show(cs, args):
+    """Show details about a datastore."""
+    datastore = _find_datastore(cs, args.datastore)
+    keys = ['actions']
+    final_dict = utils.remove_values_from_manager_dict(datastore, keys)
+    utils.print_dict(final_dict)
+
+
+@utils.arg('datastore', metavar='<datastore-id>',
+           type=int,
+           help='ID of the datastore/store/volume in the pool')
+@utils.service_type('automation')
+def do_datastore_content(cs, args):
+    """List top content (first level) of a specific datastore."""
+    datastore = _find_datastore(cs, args.datastore)
+    datastore = cs.datastores.content(datastore)
+    datastore = utils.check_json_value_for_dict(datastore._info)
+    utils.print_dict(datastore)
+
+
+@utils.arg('datastore', metavar='<datastore-id>',
+           type=int,
+           help='ID of the datastore/store/volume in the pool')
+@utils.service_type('automation')
+def do_datastore_space(cs, args):
+    """Show the space of a specific datastore."""
+    datastore = _find_datastore(cs, args.datastore)
+    datastore = cs.datastores.space(datastore)
+    utils.print_dict(datastore._info)
+
+
+@utils.arg('datastore', metavar='<datastore-id>',
+           type=int,
+           help='ID of the datastore/store/volume in the pool')
+@utils.arg('parameters', metavar='<parameters>',
+           type=list,
+           help='Parameters to define the new datastore/store/volume in the '
+                'pool, each parameter must be separate by a comma. Ex. 1,3,5')
+@utils.service_type('automation')
+def do_datastore_update(cs, args):
+    """Update parameters of a specific datastore."""
+    parameters = ''.join(args.parameters)
+    parameters = parameters.replace(',', ' ')
+    datastore = _find_datastore(cs, args.datastore)
+
+    options = {
+        'parameters': parameters
+    }
+    datastore = cs.datastores.update(datastore, **options)
+    datastore = datastore['datastore']
+    del datastore['actions'],
+    utils.print_dict(datastore)
+
+
+@utils.arg('datastore', metavar='<datastore-id>',
+           type=int,
+           help='ID of the datastore/store/volume in the pool')
+@utils.service_type('automation')
+def do_datastore_delete(cs, args):
+    """Delete specific datastore."""
+    datastore = _find_datastore(cs, args.datastore)
+    cs.datastores.delete(datastore)
+
+
+@utils.arg('datastore', metavar='<datastore-id>',
+           type=int,
+           help='ID of the datastore/store/volume in the pool')
+@utils.arg('zone', metavar='<zone>',
+           type=int,
+           help='ID of the zone to attach the resource')
+@utils.arg('role', metavar='<role>',
+           type=int,
+           help='ID of the role to attach the resource')
+@utils.arg('component', metavar='<component-name>',
+           type=str,
+           help='Name of the component catalog used that has the properties '
+                'related with storage')
+@utils.arg('resource', metavar='<resource>',
+           type=str,
+           help='Indicates the kind of the resource will be used. '
+                'Images, instances or volumes')
+@utils.arg('--secure', metavar='<secure>',
+           type=bool,
+           default=False,
+           help='Indicates whether the datastore/store/volume in the pool '
+                'won\'t be detached.')
+@utils.service_type('automation')
+def do_datastore_attach(cs, args):
+    """Attach a specific datastore to a zone."""
+    if args.secure:
+        secure = 'secure'
+    else:
+        secure = ''
+    zone = _find_zone(cs, args.zone)
+    role = _find_role(cs, args.zone, args.role)
+    component = _find_component(cs, args.component)
+    datastore = _find_datastore(cs, args.datastore)
+    options = {
+        'id_zone': zone.id,
+        'id_role': role.id,
+        'component_name': component.name,
+        'resource': args.resource,
+        'secure': secure
+    }
+    datastore = cs.datastores.attach(datastore, **options)
+    datastore = datastore['datastore']
+    del datastore['actions'],
+    utils.print_dict(datastore)
+
+
+@utils.arg('datastore', metavar='<datastore-id>',
+           type=int,
+           help='ID of the datastore/store/volume in the pool')
+@utils.arg('--force', metavar='<force>',
+           default=None,
+           help='Indicates whether the datastore/store/volume in the pool '
+                'will be detached perforce. Type the word \'force\' to force '
+                'the operation')
+@utils.service_type('automation')
+def do_datastore_detach(cs, args):
+    """Detach a specific datastore from a zone."""
+    datastore = _find_datastore(cs, args.datastore)
+    if datastore.id_nova_zone is None:
+        print('\nError: datastore/store/volume wihtout any zone attached. '
+              'Please verify attached datastores and/or stores')
+        raise SystemExit
+    datastore = _find_datastore(cs, args.datastore)
+    options = {
+        'force': args.force
+    }
+    datastore = cs.datastores.detach(datastore, **options)
+    datastore = datastore['datastore']
+    del datastore['actions'],
+    utils.print_dict(datastore)
+
+
+@utils.arg('storage_type', metavar='<storage_type>',
+           type=str,
+           help='Can be NFS or GLUSTER')
+@utils.arg('endpoint', metavar='<endpoint>',
+           help='NFS or GLUSTER endpoint to add')
+@utils.arg('datastore', metavar='<datastore>',
+           help='datastore/store/volume to add in the pool')
+@utils.arg('identifier', metavar='<identifier>',
+           help='Some identifier to operate with the datastore/store/volume')
+@utils.arg('--parameters', metavar='<parameters>',
+           type=list,
+           help='Parameters to define the new datastore/store/volume in the '
+                'pool, each parameter must be separate by a comma. Ex. 1,3,5')
+@utils.service_type('automation')
+def do_datastore_add(cs, args):
+    """Validate and add to the pool a NFS endpoint or GLUSTER endpoint."""
+    if args.parameters is None:
+        parameters = ''
+    else:
+        parameters = ''.join(args.parameters)
+        parameters = parameters.replace(',', ' ')
+
+    options = {
+        'endpoint': args.endpoint,
+        'store': args.datastore,
+        'identifier': args.identifier,
+        'storage_type': args.storage_type,
+        'persist': True,
+        'parameters': parameters
+    }
+    datastore = cs.datastores.prepare(**options)
+    dict = datastore[1]['datastore']
+    final_dict = utils.check_json_pretty_value_for_dict(dict)
     utils.print_dict(final_dict)
 
 

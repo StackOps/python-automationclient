@@ -545,6 +545,27 @@ def _stub_task(**kwargs):
     return task
 
 
+def _stub_datastore(**kwargs):
+
+    datastore = \
+        {
+            "status": "AVAILABLE",
+            "id_nova_zone": 2,
+            "updated_at": "2013-11-26 14:16:14",
+            "href": "http://0.0.0.0:8089/v1.1/datastores/1",
+            "id": "1234",
+            "endpoint": "192.168.1.52",
+            "parameters": "defaults",
+            "id_storage_types": "NFS",
+            "store": "/mnt/ada42",
+            "identifier": "nfs1",
+            "resource_type": "VOLUMES",
+            "actions": []
+        }
+    datastore.update(kwargs)
+    return datastore
+
+
 class FakeHTTPClient(base_client.HTTPClient):
     def __init__(self, **kwargs):
         self.username = 'username'
@@ -823,3 +844,45 @@ class FakeHTTPClient(base_client.HTTPClient):
 
     def post_zones_1234_nodes_1234_deactivate(self, **kwargs):
         return (200, {}, {'device': _stub_device()})
+
+    #
+    # Datastores
+    #
+    def get_datastores(self, **kw):
+        return (200, {}, {"datastores": [
+            {'id': 1234, 'name': 'sample-datastore1'},
+            {'id': 5678, 'name': 'sample-datastore2'}
+        ]})
+
+    def get_datastores_1234(self, **kw):
+        return (200, {}, {'datastore': _stub_datastore(id='1234')})
+
+    def get_datastores_1234_space(self, **kw):
+        return (200, {}, {'datastore': _stub_datastore(id='1234')})
+
+    def get_datastores_1234_content(self, **kw):
+        return (200, {}, {'datastore': _stub_datastore(id='1234')})
+
+    def put_datastores_1234(self, **kw):
+        datastore = _stub_datastore(id='1234')
+        datastore.update(kw)
+        return (200, {}, {'datastore': datastore})
+
+    def delete_datastores_1234(self, **kw):
+        return (204, {}, {})
+
+    def post_datastores_discovery(self, **kw):
+        return (200, {}, {"datastores": [
+            {'store': 1234, 'allowed': '127.0.*'},
+            {'store': 5678, 'allowed': '127.0.*'}
+        ]})
+
+    def put_datastores_1234_attach(self, **kw):
+        datastore = _stub_datastore(id='1234')
+        datastore.update(kw)
+        return (200, {}, {'datastore': datastore})
+
+    def put_datastores_1234_detach(self, **kw):
+        datastore = _stub_datastore(id='1234')
+        datastore.update(kw)
+        return (200, {}, {'datastore': datastore})

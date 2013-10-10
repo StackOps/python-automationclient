@@ -764,3 +764,47 @@ class ShellTest(utils.TestCase):
                 'lom_password': 'bar'
             }
         )
+
+    #
+    # Datastores
+    #
+    def test_datastore_list(self):
+        self.run_command('datastore-list')
+        self.assert_called('GET', '/datastores')
+
+    def test_datastore_show(self):
+        self.run_command('datastore-show 1234')
+        self.assert_called('GET', '/datastores/1234')
+
+    def test_datastore_space(self):
+        self.run_command('datastore-space 1234')
+        self.assert_called('GET', '/datastores/1234/space')
+
+    def test_datastore_content(self):
+        self.run_command('datastore-content 1234')
+        self.assert_called('GET', '/datastores/1234/content')
+
+    def test_datastore_delete(self):
+        self.run_command('datastore-delete 1234')
+        self.assert_called('DELETE', '/datastores/1234')
+
+    def test_datastore_update(self):
+        self.run_command('datastore-update 1234 par1,par2')
+        self.assert_called('PUT', '/datastores/1234', body={
+            'parameters': 'par1 par2'})
+
+    def test_datastore_discovery(self):
+        self.run_command('datastore-space 127.0.0.1')
+        self.assert_called('POST' '/datastores/discovery', body={
+            'storage_type': 'NFS', 'endpoint': '127.0.0.1'})
+
+    def test_datastore_1234_attach(self):
+        self.run_command('datastore-attach 1234 1234 1234 1234 images')
+        self.assert_called('PUT', '/datastores/1234/attach', body={
+            'id_zone': 1234, 'id_role': 1234, 'resource': 'images',
+            'secure': '', 'component_name': '1234'})
+
+    def test_datastore_1234_detach(self):
+        self.run_command('datastore-detach 1234 1234')
+        self.assert_called('PUT', '/datastores/1234/attach', body={
+            'force': None, 'id_role': 4, 'component_name': 1234})
