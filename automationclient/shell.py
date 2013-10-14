@@ -174,7 +174,7 @@ class StackopsAutomationShell(object):
                                               default=
                                               DEFAULT_OS_AUTOMATION_API_VERSION
                                               ),
-                            help='Accepts 1 or 2,defaults '
+                            help='Accepts 1.1 or 2,defaults '
                                  'to env[OS_AUTOMATION_API_VERSION].')
         parser.add_argument('--os_automation_api_version',
                             help=argparse.SUPPRESS)
@@ -190,7 +190,11 @@ class StackopsAutomationShell(object):
                             default=utils.env('AUTOMATIONCLIENT_INSECURE',
                                               default=False),
                             action='store_true',
-                            help=argparse.SUPPRESS)
+                            help='Explicitly allow automationclient to perform'
+                                 ' "insecure" TLS (https) requests. The '
+                                 'server\'s certificate will not be verified '
+                                 'against any certificate authorities. This '
+                                 'option should be used with caution.')
 
         parser.add_argument('--retries',
                             metavar='<retries>',

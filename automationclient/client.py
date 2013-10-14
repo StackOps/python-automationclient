@@ -57,9 +57,9 @@ class HTTPClient(object):
 
     USER_AGENT = 'python-automationclient'
 
-    def __init__(self, user, password, projectid, auth_url, insecure=False,
-                 timeout=None, tenant_id=None, proxy_tenant_id=None,
-                 proxy_token=None, region_name=None,
+    def __init__(self, user, password, projectid, auth_url,
+                 insecure=False, timeout=None, tenant_id=None,
+                 proxy_tenant_id=None, proxy_token=None, region_name=None,
                  endpoint_type='publicURL', service_type=None,
                  service_name=None, retries=None,
                  http_log_debug=False, cacert=None):
@@ -385,6 +385,8 @@ class HTTPClient(object):
         magic_tuple = urlparse.urlsplit(self.management_url)
         scheme, netloc, path, query, frag = magic_tuple
         v = path.split("/")[1]
+        if v == 'automation':
+            v = 'v1.1'
         valid_versions = ['v1.1', 'v2']
         if v not in valid_versions:
             msg = "Invalid client version '%s'. must be one of: %s" % (
