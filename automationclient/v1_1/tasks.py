@@ -5,7 +5,7 @@
 # You may obtain a copy of the License at
 #
 #
-# http://www.apache.org/licenses/LICENSE-2.0
+# http://www.apache.or/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,6 +27,16 @@ class Task(base.Resource):
     def __repr__(self):
         return "<Task: %s>" % self.name
 
+    def get(self):
+        # set_loaded() first ... so if we have to bail, we know we tried.
+        self.set_loaded(True)
+        if not hasattr(self.manager, 'get'):
+            return
+
+        new = self.manager.get(self.zone.id, self.node.id, self.id)
+        if new:
+            self._add_details(new._info)
+
 
 class TaskManager(base.ManagerWithFind):
     """Manage :class:`Zone` resources."""
@@ -41,7 +51,7 @@ class TaskManager(base.ManagerWithFind):
         """
         return self._list("/zones/%s/tasks" % zone.id, "tasks")
 
-    def get(self, zone, task):
+    def get(self, zone, node, task):
         """Get a specific task by zone.
 
         :param zone: The ID of the :class: `Zone` to get.
@@ -50,8 +60,9 @@ class TaskManager(base.ManagerWithFind):
         :param task: The ID of the :class: `Task` to get.
         :rtype: :class:`Task`
         """
-        return self._get("/zones/%s/tasks/%s" % (base.getid(zone),
-                                                 base.getid(task)),
+        return self._get("/zones/%s/nodes/%s/tasks/%s" % (base.getid(zone),
+                                                          base.getid(node),
+                                                          base.getid(task)),
                          "task")
 
     def deploy(self, zone, role, node):
@@ -126,7 +137,7 @@ class TaskManager(base.ManagerWithFind):
                                                           task),
                          "task")
 
-    def execute_service(self, zone, role, component, service):
+    def execute_service(self, zone, role, component, service, node):
         """Execute a specific service by zone, role, component
 
         :param zone: The ID of the :class: `Zone` to get.
@@ -139,12 +150,22 @@ class TaskManager(base.ManagerWithFind):
         `Component` to get.
         :rtype: :class:`Component`
 
-        :param component: The ID of the :class: `Service` to get.
+        :param service: The ID of the :class: `Service` to get.
         :rtype: :class:`Service`
+
+        :param node: The ID of the :class: `Node` where to execute the action.
+        :rtype: :class:`Node`
         """
 
-        return self._list("/zones/%s/roles/%s/components/%s/services/%s"
-                          % (base.getid(zone),
-                             base.getid(role),
-                             component.name,
-                             service.name), "tasks", customize=True)
+        body = {
+            'node_id': base.getid(node)
+        }
+
+        res = self._create("/zones/%s/roles/%s/components/%s/services/%s"
+                           % (base.getid(zone),
+                              base.getid(role),
+                              component.name,
+                              service.name), body=body, response_key="task")
+        res.zone = zone
+        res.node = node
+        return res

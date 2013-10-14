@@ -1061,6 +1061,9 @@ def do_service_show(cs, args):
            help='Name of the component.')
 @utils.arg('service', metavar='<service-name>',
            help='Name of the service.')
+@utils.arg('node', metavar='<node>',
+           type=int,
+           help='Identifier of the node.')
 @utils.service_type('automation')
 #TODO(jvalderrama) Test again
 def do_service_execute(cs, args):
@@ -1070,8 +1073,11 @@ def do_service_execute(cs, args):
     component = _find_component(cs, args.component)
     service = _find_service(cs, args.zone, args.role, args.component,
                             args.service)
-    tasks = cs.tasks.execute_service(zone, role, component, service)
-    utils.print_list(tasks, ['id', 'name', 'uuid', 'state', 'result'])
+    node = _find_node(cs, args.zone, args.node)
+    task = cs.tasks.execute_service(zone, role, component, service, node)
+    final_dict = utils.remove_values_from_manager_dict(task, [])
+    final_dict = utils.check_json_value_for_dict(final_dict)
+    utils.print_dict(final_dict)
 
 
 def do_endpoints(cs, args):
