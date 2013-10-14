@@ -785,10 +785,7 @@ class FakeHTTPClient(base_client.HTTPClient):
 
     def post_zones_1234_roles_1234_components_1234_services_install(self,
                                                                     **kw):
-        return (201, {}, {"tasks": [
-            {'id': 1234, 'name': 'sample-tasks1'},
-            {'id': 5678, 'name': 'sample-tasks2'}
-        ]})
+        return (201, {}, {"task": {'id': 1234, 'name': 'sample-tasks1'}})
 
     #
     # Nodes

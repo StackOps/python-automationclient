@@ -56,6 +56,7 @@ class ServiceTest(utils.TestCase):
         self.assertIsInstance(service, Service)
 
     def test_service_execute(self):
+        node = cs.nodes.get(1234, 1234)
         zone = cs.zones.get(1234)
         cs.assert_called('GET', '/zones/1234')
         self.assertIsInstance(zone, Zone)
@@ -70,6 +71,5 @@ class ServiceTest(utils.TestCase):
         cs.assert_called(
             'GET', '/zones/1234/roles/1234/components/1234/services/1234')
         self.assertIsInstance(service, Service)
-        tasks = cs.tasks.execute_service(zone, role, component, service)
-        self.assertEqual(len(tasks), 2)
-        [self.assertTrue(isinstance(task, Task)) for task in tasks]
+        task = cs.tasks.execute_service(zone, role, component, service, node)
+        self.assertTrue(isinstance(task, Task))
