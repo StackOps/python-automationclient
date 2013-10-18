@@ -23,6 +23,17 @@ import json
 from automationclient import utils
 
 
+def _validate_json_format_file(file):
+    with open(file) as f:
+        try:
+            final_file = json.load(f)
+            return final_file
+        except Exception:
+            print("\nError: The JSON file %s must have an syntax error, "
+                  "please check it" % file)
+            raise SystemExit
+
+
 def _validate_extension_file(file, extension):
     ext = os.path.splitext(file)[-1].lower()
     if ext == ".%s" % extension:
@@ -420,7 +431,9 @@ def do_profile_json(cs, args):
     profile = _find_profile(cs, args.architecture, args.profile)
     keys = ['_links']
     final_dict = utils.remove_values_from_manager_dict(profile, keys)
-    print(final_dict)
+    profile = {'profile': ''}
+    profile.update({'profile': final_dict})
+    print(profile)
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -449,12 +462,9 @@ def do_profile_show(cs, args):
 def do_profile_create(cs, args):
     """Add a new profile by architecture."""
     _validate_extension_file(args.profile, 'json')
-
     architecture = _find_architecture(cs, args.architecture)
-
-    with open(args.profile) as f:
-        profile = cs.profiles.create(architecture, json.load(f))
-
+    file = _validate_json_format_file(args.profile)
+    profile = cs.profiles.create(architecture, file)
     keys = ['_links']
     final_dict = utils.remove_values_from_manager_dict(profile, keys)
     final_dict = utils.check_json_pretty_value_for_dict(final_dict)
@@ -474,15 +484,14 @@ def do_profile_create(cs, args):
 def do_profile_update(cs, args):
     """Update a profile by architecture."""
     _validate_extension_file(args.profile_file, 'json')
-
     architecture = _find_architecture(cs, args.architecture)
     profile = _find_profile(cs, args.architecture, args.profile)
-
-    with open(args.profile_file) as f:
-        profile = cs.profiles.update(architecture, profile, json.load(f))
-
+    final_profile_file = _validate_json_format_file(args.profile_file)
+    profile = cs.profiles.update(architecture, profile, final_profile_file)
     profile = profile['profile']
-    utils.print_dict(profile)
+    del profile['_links'],
+    final_dict = utils.check_json_pretty_value_for_dict(profile)
+    utils.print_dict(final_dict)
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -657,25 +666,33 @@ def do_zone_json(cs, args):
     zone = _find_zone(cs, args.zone)
     keys = ['_links']
     final_dict = utils.remove_values_from_manager_dict(zone, keys)
-    print(final_dict)
+    zone = {'zone': ''}
+    zone.update({'zone': final_dict})
+    print(zone)
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
            type=int,
            help='ID of the architecture to create a new zone based on it')
+@utils.arg('name', metavar='<name',
+           type=str,
+           help='Name to new zone to create')
 @utils.arg('zone', metavar='<zone-file>',
            help='File with extension *.json describing the '
                 'new zone to create.')
 @utils.service_type('automation')
 def do_zone_create(cs, args):
-    """Add a new zone by architecture."""
+    """Add a new zone by architecture according to a JSON profile."""
     _validate_extension_file(args.zone, 'json')
-
     architecture = _find_architecture(cs, args.architecture)
-
-    with open(args.zone) as f:
-        zone = cs.zones.create(architecture, json.load(f))
-
+    file = _validate_json_format_file(args.zone)
+    base_profile = file['profile']
+    for key, value in base_profile.items():
+        if key == 'name':
+            base_profile.update({key: args.name})
+    zone = {'zone': ''}
+    zone.update({'zone': base_profile})
+    zone = cs.zones.create(architecture, zone)
     keys = ['_links']
     final_dict = utils.remove_values_from_manager_dict(zone, keys)
     final_dict = utils.check_json_pretty_value_for_dict(final_dict)
@@ -1004,10 +1021,8 @@ def do_role_component_update(cs, args):
     zone = _find_zone(cs, args.zone)
     role = _find_role(cs, args.zone, args.role)
     component = args.component
-    with open(args.component_file) as f:
-        component = cs.components.update_zone_role(zone, role, component,
-                                                   json.load(f))
-
+    file = _validate_json_format_file(args.component_file)
+    component = cs.components.update_zone_role(zone, role, component, file)
     component = component['component']
     del component['_links'],
     final_dict = utils.check_json_pretty_value_for_dict(component)
