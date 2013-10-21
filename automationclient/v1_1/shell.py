@@ -673,13 +673,14 @@ def do_zone_json(cs, args):
 
 @utils.arg('architecture', metavar='<architecture-id>',
            type=int,
-           help='ID of the architecture to create a new zone based on it')
-@utils.arg('name', metavar='<name',
+           help='ID of the architecture')
+@utils.arg('name', metavar='<name>',
            type=str,
-           help='Name to new zone to create')
-@utils.arg('zone', metavar='<zone-file>',
+           help='Name to the new zone to create')
+@utils.arg('zone', metavar='<profile-file>',
            help='File with extension *.json describing the '
-                'new zone to create.')
+                'new zone to create. It is took from the operation '
+                'profile-json as reference.')
 @utils.service_type('automation')
 def do_zone_create(cs, args):
     """Add a new zone by architecture according to a JSON profile."""
