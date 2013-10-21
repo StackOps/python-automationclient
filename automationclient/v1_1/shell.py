@@ -455,6 +455,9 @@ def do_profile_show(cs, args):
 @utils.arg('architecture', metavar='<architecture-id>',
            type=int,
            help='ID of the architecture to create a new profile on it')
+@utils.arg('name', metavar='<name>',
+           type=str,
+           help='Name for the new profile')
 @utils.arg('profile', metavar='<profile-file>',
            help='File with extension *.json describing the '
                 'new profile to create.')
@@ -463,8 +466,11 @@ def do_profile_create(cs, args):
     """Add a new profile by architecture."""
     _validate_extension_file(args.profile, 'json')
     architecture = _find_architecture(cs, args.architecture)
-    file = _validate_json_format_file(args.profile)
-    profile = cs.profiles.create(architecture, file)
+    data = _validate_json_format_file(args.profile)
+    data['profile']['name'] = args.name
+
+    profile = cs.profiles.create(architecture, data)
+
     keys = ['_links']
     final_dict = utils.remove_values_from_manager_dict(profile, keys)
     final_dict = utils.check_json_pretty_value_for_dict(final_dict)
