@@ -933,13 +933,20 @@ def do_role_show(cs, args):
 @utils.arg('node', metavar='<node-id>',
            type=int,
            help='ID of the node.')
+@utils.arg('--bypass', metavar='<bypass>',
+           help='Bypass role reployment')
 @utils.service_type('automation')
 def do_role_deploy(cs, args):
     """Associate a role to a node."""
+
+    bypass = False
+
+    if args.bypass is not None:
+        bypass = args.bypass
     zone = _find_zone(cs, args.zone)
     role = _find_role(cs, args.zone, args.role)
     node = _find_node(cs, args.zone, args.node)
-    tasks = cs.tasks.deploy(zone, role, node)
+    tasks = cs.tasks.deploy(zone, role, node, bypass)
     utils.print_list(tasks, ['id', 'name', 'uuid', 'state', 'result'])
 
 
