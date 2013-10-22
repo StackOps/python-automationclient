@@ -6,3 +6,5 @@ In order to use the python api directly, you must first obtain an auth token and
 >>> from automationclient import Client
 >>> automation = Client('1', endpoint=OS_AUTOMATION_ENDPOINT, token=OS_AUTH_TOKEN)
 >>> components = automation.componentes.list()
+
+That's all!!
