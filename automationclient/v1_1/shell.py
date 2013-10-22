@@ -433,7 +433,7 @@ def do_profile_json(cs, args):
     final_dict = utils.remove_values_from_manager_dict(profile, keys)
     profile = {'profile': ''}
     profile.update({'profile': final_dict})
-    print(profile)
+    print(json.dumps(profile))
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
@@ -674,7 +674,7 @@ def do_zone_json(cs, args):
     final_dict = utils.remove_values_from_manager_dict(zone, keys)
     zone = {'zone': ''}
     zone.update({'zone': final_dict})
-    print(zone)
+    print(json.dumps(zone))
 
 
 @utils.arg('architecture', metavar='<architecture-id>',
