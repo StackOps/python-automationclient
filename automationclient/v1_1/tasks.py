@@ -65,7 +65,7 @@ class TaskManager(base.ManagerWithFind):
                                                           base.getid(task)),
                          "task")
 
-    def deploy(self, zone, role, node):
+    def deploy(self, zone, role, node, bypass):
         """Deploy a role ().
 
         :param zone: The ID of the :class: `Zone` to get.
@@ -75,15 +75,16 @@ class TaskManager(base.ManagerWithFind):
         :rtype: :class:`Role`
 
         :param node: Node JSON format define
+        :param bypass: bypass role deployment.
         """
 
         body = {
             'node': {
                 'href': "http://localhost:8089/v1.1/zones/%s/nodes/%s"
                         % (base.getid(zone), base.getid(node))
-            }
+            },
+            'bypass': bypass
         }
-
         return self._list("/zones/%s/roles/%s/deploy"
                           % ((base.getid(zone),
                               base.getid(role))),
