@@ -868,6 +868,8 @@ def do_node_task_cancel(cs, args):
 @utils.arg('node', metavar='<node-id>',
            type=int,
            help='ID of the node.')
+@utils.arg('--action', metavar='<action>',
+           help='Lifecycle action to perform')
 @utils.arg('--lom-user', metavar='<lom-user>',
            help='Out-of-band user')
 @utils.arg('--lom-password', metavar='<lom-password>',
@@ -879,6 +881,8 @@ def do_node_deactivate(cs, args):
 
     """
     options = {}
+
+    options['action'] = 'nothing' if args.action is None else args.action
 
     if args.lom_user is not None:
         options['lom_user'] = args.lom_user
