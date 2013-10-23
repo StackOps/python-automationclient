@@ -61,13 +61,13 @@ List devices from pool
 
 .. code-block:: bash
 
-   $device-list
-    +----+-------------------+-------------------+------------+
-    | id |        name       |        mac        |   status   |
-    +----+-------------------+-------------------+------------+
-    | 2  | 08:00:27:81:ea:46 | 08:00:27:81:ea:46 | INSTALLING |
-    | 3  | 08:00:27:68:1c:62 | 08:00:27:68:1c:62 | INSTALLING |
-    +----+-------------------+-------------------+------------+
+   $ device-list
+   +----+-------------------+-------------------+------------+
+   | id |        name       |        mac        |   status   |
+   +----+-------------------+-------------------+------------+
+   | 2  | 08:00:27:81:ea:46 | 08:00:27:81:ea:46 | INSTALLING |
+   | 3  | 08:00:27:68:1c:62 | 08:00:27:68:1c:62 | INSTALLING |
+   +----+-------------------+-------------------+------------+
 
 Show a specific device from pool
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -75,35 +75,35 @@ To show details about a device this one must be reference by its MAC
 
 .. code-block:: bash
 
-   $device-show 08:00:27:81:ea:46
-    +----------------------------+----------------------------------------------------------------------------------------+
-    |          Property          |                                         Value                                          |
-    +----------------------------+----------------------------------------------------------------------------------------+
-    |         certified          |                                         False                                          |
-    |      connection_data       | {"username": "stackops", "key_name": "nonsecure", "host": "180.10.10.196", "port": 22} |
-    |           cores            |                                           1                                            |
-    |          created           |                                  2013-10-09 11:18:42                                   |
-    |         disk_size          |                                       8589934592                                       |
-    |             id             |                                           2                                            |
-    |             ip             |                                     180.10.10.196                                      |
-    |           lom_ip           |                                          None                                          |
-    |          lom_mac           |                                          None                                          |
-    |            mac             |                                   08:00:27:81:ea:46                                    |
-    |   management_network_dns   |                                          None                                          |
-    | management_network_gateway |                                          None                                          |
-    |   management_network_ip    |                                     180.10.10.196                                      |
-    | management_network_netmask |                                          None                                          |
-    |         megaherzs          |                                           0                                            |
-    |           memory           |                                       1043963904                                       |
-    |            name            |                                   08:00:27:81:ea:46                                    |
-    |           ports            |                                           1                                            |
-    |          product           |                                     VirtualBox ()                                      |
-    |           status           |                                       INSTALLING                                       |
-    |          threads           |                                           1                                            |
-    |          updated           |                                          None                                          |
-    |           vendor           |                                      innotek GmbH                                      |
-    |          zone_id           |                                          None                                          |
-    +----------------------------+----------------------------------------------------------------------------------------+
+   $ device-show 08:00:27:81:ea:46
+   +----------------------------+----------------------------------------------------------------------------------------+
+   |          Property          |                                         Value                                          |
+   +----------------------------+----------------------------------------------------------------------------------------+
+   |         certified          |                                         False                                          |
+   |      connection_data       | {"username": "stackops", "key_name": "nonsecure", "host": "180.10.10.196", "port": 22} |
+   |           cores            |                                           1                                            |
+   |          created           |                                  2013-10-09 11:18:42                                   |
+   |         disk_size          |                                       8589934592                                       |
+   |             id             |                                           2                                            |
+   |             ip             |                                     180.10.10.196                                      |
+   |           lom_ip           |                                          None                                          |
+   |          lom_mac           |                                          None                                          |
+   |            mac             |                                   08:00:27:81:ea:46                                    |
+   |   management_network_dns   |                                          None                                          |
+   | management_network_gateway |                                          None                                          |
+   |   management_network_ip    |                                     180.10.10.196                                      |
+   | management_network_netmask |                                          None                                          |
+   |         megaherzs          |                                           0                                            |
+   |           memory           |                                       1043963904                                       |
+   |            name            |                                   08:00:27:81:ea:46                                    |
+   |           ports            |                                           1                                            |
+   |          product           |                                     VirtualBox ()                                      |
+   |           status           |                                       INSTALLING                                       |
+   |          threads           |                                           1                                            |
+   |          updated           |                                          None                                          |
+   |           vendor           |                                      innotek GmbH                                      |
+   |          zone_id           |                                          None                                          |
+   +----------------------------+----------------------------------------------------------------------------------------+
 
 Modify a specific device from pool
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -113,10 +113,10 @@ To update a device all arguments are mandatory
   
    $ help device-update 
      usage: automation device-update <mac> <lom-ip> <lom-mac>
-                                <management-network-ip>
-                                <management-network-netmask>
-                                <management-network-gateway>
-                                <management-network-dns>
+                                     <management-network-ip>
+                                     <management-network-netmask>
+                                     <management-network-gateway>
+                                     <management-network-dns>
 
      Update a device.
 
@@ -125,7 +125,7 @@ To update a device all arguments are mandatory
      <lom-ip>            New lom_ip for the device.
      <lom-mac>           New lom_mac for the device
      <management-network-ip>
-                        New IP for management network of the device
+                         New IP for management network of the device
      <management-network-netmask>
                         New netmask for the management network of the device
      <management-network-gateway>
@@ -134,7 +134,7 @@ To update a device all arguments are mandatory
                         New DNS for the management network of the device
 
 
-   $device-update 08:00:27:81:ea:46 None None 180.10.10.196 None None None
+   $ device-update 08:00:27:81:ea:46 None None 180.10.10.196 None None None
    +----------------------------+----------------------------------------------------------------------------------------+
    |          Property          |                                         Value                                          |
    +----------------------------+----------------------------------------------------------------------------------------+
@@ -171,14 +171,14 @@ To delete a device, this one must be reference by its MAC
 
 .. code-block:: bash
   
-   $device-delete 08:00:27:68:1c:62
+   $ device-delete 08:00:27:68:1c:62
    
-   $device-list
-     +----+-------------------+-------------------+------------+
-     | id |        name       |        mac        |   status   |
-     +----+-------------------+-------------------+------------+
-     | 2  | 08:00:27:81:ea:46 | 08:00:27:81:ea:46 | INSTALLING |
-     +----+-------------------+-------------------+------------+
+   $ device-list
+   +----+-------------------+-------------------+------------+
+   | id |        name       |        mac        |   status   |
+   +----+-------------------+-------------------+------------+
+   | 2  | 08:00:27:81:ea:46 | 08:00:27:81:ea:46 | INSTALLING |
+   +----+-------------------+-------------------+------------+
 
 
 Power off a device
@@ -187,17 +187,17 @@ To power-off a device all arguments are mandatory
 
 .. code-block:: bash
   
-   $help device-power-off 
-    usage: automation device-power-off <mac> <lom-user> <lom-password>
+   $ help device-power-off 
+     usage: automation device-power-off <mac> <lom-user> <lom-password>
 
-    Power off a specific device in the pool.
+     Power off a specific device in the pool.
 
-    Positional arguments:
-    <mac>           Mac of the device to power off.
-    <lom-user>      lom_user credential.
-    <lom-password>  lom_password for lom_user credential
+     Positional arguments:
+     <mac>           Mac of the device to power off.
+     <lom-user>      lom_user credential.
+     <lom-password>  lom_password for lom_user credential
 
-   $device-power-off  08:00:27:81:ea:46 stackops stackops
+   $ device-power-off  08:00:27:81:ea:46 stackops stackops
 
 
 Power on a device
@@ -205,7 +205,8 @@ Power on a device
 To power-on a device all arguments are mandatory
 
 .. code-block:: bash
-   $help device-power-on
+   
+   $ help device-power-on
      usage: automation device-power-on <mac> <lom-user> <lom-password>
 
      Power on a specific device in the pool.
@@ -215,7 +216,7 @@ To power-on a device all arguments are mandatory
      <lom-user>      lom_user credential.
      <lom-password>  lom_password for lom_user credential
 
-    $device-power-on 08:00:27:81:ea:46 stackops stackops
+   $ device-power-on 08:00:27:81:ea:46 stackops stackops
 
 
 Reboot a device
@@ -224,32 +225,99 @@ To reboot a device all arguments are mandatory
 
 .. code-block:: bash
 
-   $help device-reboot
-    usage: automation device-reboot <mac> <lom-user> <lom-password>
+   $ help device-reboot
+     usage: automation device-reboot <mac> <lom-user> <lom-password>
 
-    Reboot a specific device in the pool.
+     Reboot a specific device in the pool.
 
-    Positional arguments:
-    <mac>           Mac of the device to reboot.
-    <lom-user>      lom_user credential.
-    <lom-password>  lom_password for lom_user credential
+     Positional arguments:
+     <mac>           Mac of the device to reboot.
+     <lom-user>      lom_user credential.
+     <lom-password>  lom_password for lom_user credential
  
-    $device-reboot 08:00:27:81:ea:46 stackops stackops
+   $ device-reboot 08:00:27:81:ea:46 stackops stackops
  
 Shutdown a device
 ^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
+   $ help device-shutdown
+     usage: automation device-shutdown <mac>
+
+     Shutdown a specific device in the pool.
+
+     Positional arguments:
+     <mac>  Mac of the device to shutdown.
+
+   $ device-shutdown 08:00:27:81:ea:46
+
+
 Soft reboot a device
 ^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
+   $ help device-soft-reboot
+     usage: automation device-soft-reboot <mac>
+
+     Soft reboot a specific device in the pool.
+
+     Positional arguments:
+     <mac>  Mac of the device to soft reboot.
+
+   $ device-soft-reboot 08:00:27:81:ea:46
+
 Activate a device
 ^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
+
+   $ help device-activate
+     usage: automation device-activate [--lom-user <lom-user>]
+                                       [--lom-password <lom-password>]
+                                       <mac> <zone-id>
+
+     Activate a specific device in the pool.
+
+     Positional arguments:
+     <mac>                 Mac of the device to activate.
+     <zone-id>             ID of the zone to activate the device
+
+     Optional arguments:
+     --lom-user <lom-user>
+                        Out-of-band user
+     --lom-password <lom-password>
+                        Out-of-Band user password
+    
+   $ device-activate  08:00:27:81:ea:46 1
+   +----------------------------+----------------------------+
+   |          Property          |           Value            |
+   +----------------------------+----------------------------+
+   |         certified          |           False            |
+   |           cores            |             1              |
+   |          created           |    2013-10-09 11:18:42     |
+   |         disk_size          |         8589934592         |
+   |             id             |             2              |
+   |             ip             |       180.10.10.196        |
+   |           lom_ip           |            None            |
+   |          lom_mac           |            None            |
+   |            mac             |     08:00:27:81:ea:46      |
+   |   management_network_dns   |            None            |
+   | management_network_gateway |            None            |
+   |   management_network_ip    |       180.10.10.196        |
+   | management_network_netmask |            None            |
+   |         megaherzs          |             0              |
+   |           memory           |         1043963904         |
+   |            name            |     08:00:27:81:ea:46      |
+   |           ports            |             1              |
+   |          product           |       VirtualBox ()        |
+   |           status           |         ACTIVATED          |
+   |          threads           |             1              |
+   |          updated           | 2013-10-23 09:17:38.504076 |
+   |           vendor           |        innotek GmbH        |
+   |          zone_id           |             1              |
+   +----------------------------+----------------------------+
 
 Replace a device
 ^^^^^^^^^^^^^^^^
@@ -257,30 +325,58 @@ To replace a device to another one in a zone you must to provide mac, zone-id, r
 
 .. code-block:: bash
 
-   $help device-replace
-   usage: automation device-replace
-                                   [--lom-user-node-to-remove <lom-user-node-to-remove>]
-                                   [--lom_password-node-to-remove <lom-password-node-to-remove>]
-                                   [--lom-user-node-to-add <lom-user-node-to-add>]
-                                   [--lom-password-node-to-add <lom-password-node-to-add>]
-                                   <mac> <zone-id> <role-id> <node-id>
+   $ help device-replace
+     usage: automation device-replace
+                                     [--lom-user-node-to-remove <lom-user-node-to-remove>]
+                                     [--lom_password-node-to-remove <lom-password-node-to-remove>]
+                                     [--lom-user-node-to-add <lom-user-node-to-add>]
+                                     [--lom-password-node-to-add <lom-password-node-to-add>]
+                                     <mac> <zone-id> <role-id> <node-id>
 
-   Replaces a node in a zone by a specific device in the pool.
+     Replaces a node in a zone by a specific device in the pool.
 
-   Positional arguments:
-   <mac>                 Mac of the device to activate.
-   <zone-id>             ID of the zone of the node to replace
-   <role-id>             The ID of the role to deploy in the new node
-   <node-id>             The ID of the node to be replaced
+     Positional arguments:
+     <mac>                 Mac of the device to activate.
+     <zone-id>             ID of the zone of the node to replace
+     <role-id>             The ID of the role to deploy in the new node
+     <node-id>             The ID of the node to be replaced
 
-   Optional arguments:
-    --lom-user-node-to-remove <lom-user-node-to-remove>
+     Optional arguments:
+     --lom-user-node-to-remove <lom-user-node-to-remove>
                         Out-of-band user of the node to remove
-    --lom_password-node-to-remove <lom-password-node-to-remove>
+     --lom_password-node-to-remove <lom-password-node-to-remove>
                         Out-of-Band user password of the node to remove
-    --lom-user-node-to-add <lom-user-node-to-add>
+     --lom-user-node-to-add <lom-user-node-to-add>
                         Out-of-band user of the device to add
-    --lom-password-node-to-add <lom-password-node-to-add>
+     --lom-password-node-to-add <lom-password-node-to-add>
                         Out-of-Band user password of the device to add
 
-
+   $ device-replace 08:00:31:71:ae:45 1 1 1
+   
+   +----------------------------+----------------------------+
+   |          Property          |           Value            |
+   +----------------------------+----------------------------+
+   |         certified          |           False            |
+   |           cores            |             1              |
+   |          created           |    2013-10-09 11:18:42     |
+   |         disk_size          |         8589934592         |
+   |             id             |             2              |
+   |             ip             |       180.10.10.197        |
+   |           lom_ip           |            None            |
+   |          lom_mac           |            None            |
+   |            mac             |     08:00:31:71:ae:45      |
+   |   management_network_dns   |            None            |
+   | management_network_gateway |            None            |
+   |   management_network_ip    |       180.10.10.197        |
+   | management_network_netmask |            None            |
+   |         megaherzs          |             0              |
+   |           memory           |         1043963904         |
+   |            name            |     08:00:31:71:ae:45      |
+   |           ports            |             1              |
+   |          product           |       VirtualBox ()        |
+   |           status           |         ACTIVATED          |
+   |          threads           |             1              |
+   |          updated           | 2013-10-23 09:25:28.504076 |
+   |           vendor           |        innotek GmbH        |
+   |          zone_id           |             1              |
+   +----------------------------+----------------------------+
