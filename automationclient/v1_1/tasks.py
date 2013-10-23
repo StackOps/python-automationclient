@@ -65,7 +65,7 @@ class TaskManager(base.ManagerWithFind):
                                                           base.getid(task)),
                          "task")
 
-    def deploy(self, zone, role, node, bypass):
+    def deploy(self, zone, role, node, bypass, hostname, dhcp_reload):
         """Deploy a role ().
 
         :param zone: The ID of the :class: `Zone` to get.
@@ -75,16 +75,29 @@ class TaskManager(base.ManagerWithFind):
         :rtype: :class:`Role`
 
         :param node: Node JSON format define
+
         :param bypass: bypass role deployment.
+
+        :param hostname: the hostname of the node if known
+        :rtype: :class:`string`
+
+        :param dhcp_reload: whether we should ask for an IP after the node
+                            is deployed.
+        :rtype: :class:`bool`
         """
 
         body = {
             'node': {
                 'href': "http://localhost:8089/v1.1/zones/%s/nodes/%s"
-                        % (base.getid(zone), base.getid(node))
-            },
-            'bypass': bypass
+                        % (base.getid(zone), base.getid(node)),
+                'dhcp_reload': dhcp_reload,
+                'bypass': bypass
+            }
         }
+
+        if hostname:
+            body['node']['hostname'] = hostname
+
         return self._list("/zones/%s/roles/%s/deploy"
                           % ((base.getid(zone),
                               base.getid(role))),

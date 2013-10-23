@@ -17,6 +17,7 @@
 #    under the License.
 
 from __future__ import print_function
+import argparse
 import os
 import json
 
@@ -222,7 +223,7 @@ def do_device_activate(cs, args):
            help='The ID of the node to be replaced')
 @utils.arg('--lom-user-node-to-remove', metavar='<lom-user-node-to-remove>',
            help='Out-of-band user of the node to remove')
-@utils.arg('--lom_password-node-to-remove',
+@utils.arg('--lom-password-node-to-remove',
            metavar='<lom-password-node-to-remove>',
            help='Out-of-Band user password of the node to remove')
 @utils.arg('--lom-user-node-to-add', metavar='<lom-user-node-to-add>',
@@ -937,20 +938,30 @@ def do_role_show(cs, args):
 @utils.arg('node', metavar='<node-id>',
            type=int,
            help='ID of the node.')
-@utils.arg('--bypass', metavar='<bypass>',
-           help='Bypass role reployment')
 @utils.service_type('automation')
+@utils.arg('--hostname', metavar='<hostname>',
+           help='We know the hostname of the node')
+@utils.arg('--no-dhcp-reload',
+           dest='no_dhcp_reload',
+           action="store_true",
+           default=False,
+           help='Specifies dhcp request in target node should ask for an IP')
+@utils.arg('--bypass',
+           dest='bypass',
+           action="store_true",
+           default=False,
+           help=('Specifies if role should apply should be skipped.'
+                 'Default is False')
+           )
 def do_role_deploy(cs, args):
     """Associate a role to a node."""
 
-    bypass = False
-
-    if args.bypass is not None:
-        bypass = args.bypass
     zone = _find_zone(cs, args.zone)
     role = _find_role(cs, args.zone, args.role)
     node = _find_node(cs, args.zone, args.node)
-    tasks = cs.tasks.deploy(zone, role, node, bypass)
+    tasks = cs.tasks.deploy(zone, role, node,
+                            args.bypass, args.hostname,
+                            not args.no_dhcp_reload)
     utils.print_list(tasks, ['id', 'name', 'uuid', 'state', 'result'])
 
 
