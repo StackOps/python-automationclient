@@ -740,9 +740,23 @@ class ShellTest(utils.TestCase):
         self.run_command('node-deactivate 1234 1234')
         self.assert_called('POST', '/zones/1234/nodes/1234/deactivate')
 
-    def test_node_deactivate_with_lom_data(self):
-        self.run_command(
-            'node-deactivate --lom-user foo --lom-password bar 1234 1234')
+    def test_node_deactivate_without_lifecycle_action(self):
+        self.run_command('node-deactivate 1234 1234')
 
-        self.assert_called('POST', '/zones/1234/nodes/1234/deactivate',
-                           body={'lom_user': 'foo', 'lom_password': 'bar'})
+        self.assert_called(
+            'POST', '/zones/1234/nodes/1234/deactivate',
+            body={'action': 'nothing'})
+
+    def test_node_deactivate_with_lifecycle_action(self):
+        self.run_command(
+            'node-deactivate --action poweroff --lom-user foo '
+            '--lom-password bar 1234 1234')
+
+        self.assert_called(
+            'POST', '/zones/1234/nodes/1234/deactivate',
+            body={
+                'action': 'poweroff',
+                'lom_user': 'foo',
+                'lom_password': 'bar'
+            }
+        )
