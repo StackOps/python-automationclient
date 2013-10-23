@@ -1,7 +1,7 @@
 Devices
 =======
 
-Urderstandig what is a Pool and why Devices?
+Understandig what is a Pool and why Devices?
 --------------------------------------------
 
 What is the pool?
