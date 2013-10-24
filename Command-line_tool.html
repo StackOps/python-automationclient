@@ -1,0 +1,290 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Command-line Tool &mdash; python-automationclient 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-automationclient 0.1 documentation" href="index.html" />
+    <link rel="up" title="Reference" href="Reference.html" />
+    <link rel="next" title="Devices" href="Device.html" />
+    <link rel="prev" title="Python API" href="Python_API.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Device.html" title="Devices"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Python_API.html" title="Python API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">python-automationclient 0.1 documentation</a> &raquo;</li>
+          <li><a href="Reference.html" accesskey="U">Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="command-line-tool">
+<h1>Command-line Tool<a class="headerlink" href="#command-line-tool" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Device.html">Devices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Device.html#understandig-what-is-a-pool-and-why-devices">Understandig what is a Pool and why Devices?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Device.html#life-cycle-management-basics">Life cycle management basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Device.html#managing-the-pool">Managing the pool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Component.html">Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Component.html#what-is-a-component">What is a Component?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Component.html#what-is-catalog-of-components">What is Catalog of Components?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Architecture.html">Architectures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Architecture.html#what-is-an-architecture">What is an Architecture?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Architecture.html#managing-architectures">Managing Architectures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Profile.html">Profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Node.html">Nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Zone.html">Zones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Global_Properties.html">Global Properties</a></li>
+</ul>
+</div>
+<p>In order to use the CLI, you must provide your Automation username, password, tenant, and auth endpoint. Use the corresponding configuration options (&#8211;os-username, &#8211;os-password, &#8211;os-tenant-id, and &#8211;os-auth-url) or set them in environment variables:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">export </span><span class="nv">OS_USERNAME</span><span class="o">=</span>user
+<span class="nb">export </span><span class="nv">OS_PASSWORD</span><span class="o">=</span>pass
+<span class="nb">export </span><span class="nv">OS_TENANT_NAME</span><span class="o">=</span>admin
+<span class="nb">export </span><span class="nv">OS_AUTH_URL</span><span class="o">=</span>http://auth.example.com:8089/v1.1
+</pre></div>
+</div>
+<p>Once you&#8217;ve configured your authentication parameters, you can run &#8216;automation help&#8217; to see a complete listing of available commands.</p>
+<div class="highlight-bash"><pre>$ automation help
+  usage: automation [--version] [--debug] [--os-username &lt;auth-user-name&gt;]
+                    [--os-password &lt;auth-password&gt;]
+                    [--os-tenant-name &lt;auth-tenant-name&gt;]
+                    [--os-tenant-id &lt;auth-tenant-id&gt;] [--os-auth-url &lt;auth-url&gt;]
+                    [--os-region-name &lt;region-name&gt;]
+                    [--service-type &lt;service-type&gt;]
+                    [--service-name &lt;service-name&gt;]
+                    [--endpoint-type &lt;endpoint-type&gt;]
+                    [--os-automation-api-version &lt;automation-api-ver&gt;]
+                    [--os-cacert &lt;ca-certificate&gt;] [--insecure]
+                    [--retries &lt;retries&gt;]
+                    &lt;subcommand&gt; ...
+
+Command-line interface to the Stackops Automation API.
+
+Positional arguments:
+&lt;subcommand&gt;
+ architecture-create
+                     Add a new architecture.
+ architecture-delete
+                     Remove a specific architecture.
+ architecture-list   List all the architectures that are available on
+                     automation.
+ architecture-show   Show details about an architecture.
+ architecture-template
+                     Get template from a specific architecture.
+ component-list      List all the components that are available on
+                     automation.
+ component-services  List all the services by a component.
+ component-show      Show details about a component.
+ device-activate     Activate a specific device in the pool.
+ device-delete       Remove a specific device from pool.
+ device-list         List all the devices in the pool.
+ device-power-off    Power off a specific device in the pool.
+ device-power-on     Power on a specific device in the pool.
+ device-reboot       Reboot a specific device in the pool.
+ device-replace      Replaces a node in a zone by a specific device in the
+                     pool.
+ device-show         Show details about a device.
+ device-shutdown     Shutdown a specific device in the pool.
+ device-soft-reboot  Soft reboot a specific device in the pool.
+ device-update       Update a device.
+ endpoints           Discover endpoints that get returned from the
+                     authenticate services.
+ global-property-create
+                     Add a new property.
+ global-property-delete
+                     Delete a property.
+ global-property-list
+                     List all the properties that are available on
+                     automation.
+ global-property-update
+                     Updates a property.
+ node-deactivate     Deactivates a zone node. Moves an activated node from
+                     the zone
+ node-list           List all activate devices in a zone.
+ node-show           Show details about a node in a zone.
+ node-task-cancel    Cancel a task from a node in a zone.
+ node-task-state     Show details about a task from a node in a zone.
+ node-tasks-list     List all tasks from a node in a zone.
+ profile-create      Add a new profile by architecture.
+ profile-delete      Remove a specific profile by architecture.
+ profile-json        Gets the JSON of the profile.
+ profile-list        List all the profiles by architecture.
+ profile-property-create
+                     Create a profile property by architecture.
+ profile-property-delete
+                     Delete a profile property by architecture.
+ profile-property-update
+                     Update a profile property by architecture.
+ profile-show        Show details about a profile by architecture.
+ profile-update      Update a profile by architecture.
+ role-component-json
+                     Gets the JSON of the component by zone and role.
+ role-component-list
+                     List all components by zone and role.
+ role-component-show
+                     Show details about a component by zone and role.
+ role-component-update
+                     Update a component by zone and role .
+ role-deploy         Associate a role to a node.
+ role-list           List all the roles by zone.
+ role-show           Show details about a role.
+ service-execute     Execute a service by zone, role and component.
+ service-list        List all the services by zone, role and component.
+ service-show        Show details about a service by zone, role and
+                     component.
+ zone-create         Add a new zone by architecture according to a JSON
+                     profile.
+ zone-delete         Remove a specific zone.
+ zone-json           Gets the JSON of the zone.
+ zone-list           List all the zones.
+ zone-property-create
+                     Create a zone property.
+ zone-property-delete
+                     Delete a zone property.
+ zone-property-update
+                     Update a zone property.
+ zone-show           Show details about a zone.
+ zone-tasks-list     List all the tasks by zone.
+ bash-completion     Print arguments for bash_completion.
+ help                Display help about this program or one of its
+                     subcommands.
+ list-extensions     List all the os-api extensions that are available.
+
+ Optional arguments:
+  --version          show program's version number and exit
+  --debug            Print debugging output
+  --os-username &lt;auth-user-name&gt;
+                     Defaults to env[OS_USERNAME].
+  --os-password &lt;auth-password&gt;
+                     Defaults to env[OS_PASSWORD].
+  --os-tenant-name &lt;auth-tenant-name&gt;
+                     Defaults to env[OS_TENANT_NAME].
+  --os-tenant-id &lt;auth-tenant-id&gt;
+                     Defaults to env[OS_TENANT_ID].
+  --os-auth-url &lt;auth-url&gt;
+                     Defaults to env[OS_AUTH_URL].
+  --os-region-name &lt;region-name&gt;
+                     Defaults to env[OS_REGION_NAME].
+  --service-type &lt;service-type&gt;
+                     Defaults to automation for most actions
+  --service-name &lt;service-name&gt;
+                     Defaults to env[AUTOMATION_SERVICE_NAME]
+  --endpoint-type &lt;endpoint-type&gt;
+                     Defaults to env[AUTOMATION_ENDPOINT_TYPE] or
+                     publicURL.
+  --os-automation-api-version &lt;automation-api-ver&gt;
+                     Accepts 1.1 or 2,defaults to
+                     env[OS_AUTOMATION_API_VERSION].
+  --os-cacert &lt;ca-certificate&gt;
+                     Specify a CA bundle file to use in verifying a TLS
+                     (https) server certificate. Defaults to env[OS_CACERT]
+  --insecure         Explicitly allow automationclient to perform
+                     "insecure" TLS (https) requests. The server's
+                     certificate will not be verified against any
+                     certificate authorities. This option should be used
+                     with caution.
+  --retries &lt;retries&gt;   Number of retries.
+
+See "automation help COMMAND" for help on a specific command.
+$</pre>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Python_API.html"
+                        title="previous chapter">Python API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Device.html"
+                        title="next chapter">Devices</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Command-line_tool.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Device.html" title="Devices"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Python_API.html" title="Python API"
+             >previous</a> |</li>
+        <li><a href="index.html">python-automationclient 0.1 documentation</a> &raquo;</li>
+          <li><a href="Reference.html" >Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Stackops S.L..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

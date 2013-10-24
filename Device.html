@@ -1,0 +1,500 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Devices &mdash; python-automationclient 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-automationclient 0.1 documentation" href="index.html" />
+    <link rel="up" title="Command-line Tool" href="Command-line_tool.html" />
+    <link rel="next" title="Components" href="Component.html" />
+    <link rel="prev" title="Command-line Tool" href="Command-line_tool.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Component.html" title="Components"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Command-line_tool.html" title="Command-line Tool"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">python-automationclient 0.1 documentation</a> &raquo;</li>
+          <li><a href="Reference.html" >Reference</a> &raquo;</li>
+          <li><a href="Command-line_tool.html" accesskey="U">Command-line Tool</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="devices">
+<h1>Devices<a class="headerlink" href="#devices" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="understandig-what-is-a-pool-and-why-devices">
+<h2>Understandig what is a Pool and why Devices?<a class="headerlink" href="#understandig-what-is-a-pool-and-why-devices" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="what-is-the-pool">
+<h3>What is the pool?<a class="headerlink" href="#what-is-the-pool" title="Permalink to this headline">¶</a></h3>
+<p>One of the most tedious and repetitive tasks in a Data Center is the provisioning and implementation of new servers. The different steps required to complete the process, from the moment a server arrives at a given facility to its final implementation, are the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Reception and cataloging of server</li>
+<li>Server testing</li>
+<li>Decision on who will use the server</li>
+<li>Decision on where the server will be located</li>
+<li>Installation of operating system</li>
+<li>Configuration of applications that will run on the system</li>
+<li>Delivery to client</li>
+<li>The server Pool management and activation within zones implements this process automatically in Automation.</li>
+</ul>
+</div></blockquote>
+<p>Basically the pool allows to provision new servers into the zones. But it can also perform other interesting feature:</p>
+<p>Replacement of failing servers (Failover): Automation offers the possibility to automatically replace malfunctioning servers in an unattended way. The images residing in the different VMs, the network and the general configuration is replicated.</p>
+</div>
+<div class="section" id="what-is-the-a-device">
+<h3>What is the a device?<a class="headerlink" href="#what-is-the-a-device" title="Permalink to this headline">¶</a></h3>
+<p>A device is a server or another type of device identified by their MAC and it is a candidate to take part in an OpenStack Zone. A device is view in the pool once it has been added to.</p>
+</div>
+</div>
+<div class="section" id="life-cycle-management-basics">
+<h2>Life cycle management basics<a class="headerlink" href="#life-cycle-management-basics" title="Permalink to this headline">¶</a></h2>
+<p>The server Pool is the tool included in StackOps Automation, that automates this whole process. This chart shows the different states (described below) a server can have in the tool:</p>
+<img alt="Pool life cycle for a device" class="align-center" src="_images/poolifecycle.png" />
+</div>
+<div class="section" id="managing-the-pool">
+<h2>Managing the pool<a class="headerlink" href="#managing-the-pool" title="Permalink to this headline">¶</a></h2>
+<p>The operations allow in the python-automatioclient are.</p>
+<div class="highlight-bash"><div class="highlight"><pre>device-list         List all the devices in the pool.
+device-show         Show details about a device.
+device-update       Update a device.
+device-delete       Remove a specific device from pool.
+device-power-off    Power off a specific device in the pool.
+device-power-on     Power on a specific device in the pool.
+device-reboot       Reboot a specific device in the pool.
+device-replace      Replaces a node in a zone by a specific device in the
+                    pool.
+device-shutdown     Shutdown a specific device in the pool.
+device-soft-reboot  Soft reboot a specific device in the pool.
+device-activate     Activate a specific device in the pool.
+</pre></div>
+</div>
+<div class="section" id="list-devices-from-pool">
+<h3>List devices from pool<a class="headerlink" href="#list-devices-from-pool" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>device-list
++----+-------------------+-------------------+------------+
+| id |        name       |        mac        |   status   |
++----+-------------------+-------------------+------------+
+| 2  | 08:00:27:81:ea:46 | 08:00:27:81:ea:46 | INSTALLING |
+| 3  | 08:00:27:68:1c:62 | 08:00:27:68:1c:62 | INSTALLING |
++----+-------------------+-------------------+------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-a-specific-device-from-pool">
+<h3>Show a specific device from pool<a class="headerlink" href="#show-a-specific-device-from-pool" title="Permalink to this headline">¶</a></h3>
+<p>To show details about a device this one must be reference by its MAC</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>device-show 08:00:27:81:ea:46
++----------------------------+----------------------------------------------------------------------------------------+
+|          Property          |                                         Value                                          |
++----------------------------+----------------------------------------------------------------------------------------+
+|         certified          |                                         False                                          |
+|      connection_data       | <span class="o">{</span><span class="s2">&quot;username&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;key_name&quot;</span>: <span class="s2">&quot;nonsecure&quot;</span>, <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;180.10.10.196&quot;</span>, <span class="s2">&quot;port&quot;</span>: 22<span class="o">}</span> |
+|           cores            |                                           1                                            |
+|          created           |                                  2013-10-09 11:18:42                                   |
+|         disk_size          |                                       8589934592                                       |
+|             id             |                                           2                                            |
+|             ip             |                                     180.10.10.196                                      |
+|           lom_ip           |                                          None                                          |
+|          lom_mac           |                                          None                                          |
+|            mac             |                                   08:00:27:81:ea:46                                    |
+|   management_network_dns   |                                          None                                          |
+| management_network_gateway |                                          None                                          |
+|   management_network_ip    |                                     180.10.10.196                                      |
+| management_network_netmask |                                          None                                          |
+|         megaherzs          |                                           0                                            |
+|           memory           |                                       1043963904                                       |
+|            name            |                                   08:00:27:81:ea:46                                    |
+|           ports            |                                           1                                            |
+|          product           |                                     VirtualBox <span class="o">()</span>                                      |
+|           status           |                                       INSTALLING                                       |
+|          threads           |                                           1                                            |
+|          updated           |                                          None                                          |
+|           vendor           |                                      innotek GmbH                                      |
+|          zone_id           |                                          None                                          |
++----------------------------+----------------------------------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="modify-a-specific-device-from-pool">
+<h3>Modify a specific device from pool<a class="headerlink" href="#modify-a-specific-device-from-pool" title="Permalink to this headline">¶</a></h3>
+<p>To update a device all arguments are mandatory</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-update
+  usage: automation device-update &lt;mac&gt; &lt;lom-ip&gt; &lt;lom-mac&gt;
+                                  &lt;management-network-ip&gt;
+                                  &lt;management-network-netmask&gt;
+                                  &lt;management-network-gateway&gt;
+                                  &lt;management-network-dns&gt;
+
+  Update a device.
+
+  Positional arguments:
+  &lt;mac&gt;               MAC of the device.
+  &lt;lom-ip&gt;            New lom_ip <span class="k">for </span>the device.
+  &lt;lom-mac&gt;           New lom_mac <span class="k">for </span>the device
+  &lt;management-network-ip&gt;
+                      New IP <span class="k">for </span>management network of the device
+  &lt;management-network-netmask&gt;
+                     New netmask <span class="k">for </span>the management network of the device
+  &lt;management-network-gateway&gt;
+                     New gateway <span class="k">for </span>the management network of the device
+  &lt;management-network-dns&gt;
+                     New DNS <span class="k">for </span>the management network of the device
+
+
+<span class="nv">$ </span>device-update 08:00:27:81:ea:46 None None 180.10.10.196 None None None
++----------------------------+----------------------------------------------------------------------------------------+
+|          Property          |                                         Value                                          |
++----------------------------+----------------------------------------------------------------------------------------+
+|         certified          |                                         False                                          |
+|      connection_data       | <span class="o">{</span><span class="s2">&quot;username&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;key_name&quot;</span>: <span class="s2">&quot;nonsecure&quot;</span>, <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;180.10.10.196&quot;</span>, <span class="s2">&quot;port&quot;</span>: 22<span class="o">}</span> |
+|           cores            |                                           1                                            |
+|          created           |                                  2013-10-09 11:18:42                                   |
+|         disk_size          |                                       8589934592                                       |
+|             id             |                                           2                                            |
+|             ip             |                                     180.10.10.196                                      |
+|           lom_ip           |                                          None                                          |
+|          lom_mac           |                                          None                                          |
+|            mac             |                                   08:00:27:81:ea:46                                    |
+|   management_network_dns   |                                          None                                          |
+| management_network_gateway |                                          None                                          |
+|   management_network_ip    |                                     180.10.10.196                                      |
+| management_network_netmask |                                          None                                          |
+|         megaherzs          |                                           0                                            |
+|           memory           |                                       1043963904                                       |
+|            name            |                                   08:00:27:81:ea:46                                    |
+|           ports            |                                           1                                            |
+|          product           |                                     VirtualBox <span class="o">()</span>                                      |
+|           status           |                                       INSTALLING                                       |
+|          threads           |                                           1                                            |
+|          updated           |                               2013-10-22 15:35:51.347526                               |
+|           vendor           |                                      innotek GmbH                                      |
+|          zone_id           |                                          None                                          |
++----------------------------+----------------------------------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete-a-device-from-pool">
+<h3>Delete a device from pool<a class="headerlink" href="#delete-a-device-from-pool" title="Permalink to this headline">¶</a></h3>
+<p>To delete a device, this one must be reference by its MAC</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>device-delete 08:00:27:68:1c:62
+
+<span class="nv">$ </span>device-list
++----+-------------------+-------------------+------------+
+| id |        name       |        mac        |   status   |
++----+-------------------+-------------------+------------+
+| 2  | 08:00:27:81:ea:46 | 08:00:27:81:ea:46 | INSTALLING |
++----+-------------------+-------------------+------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="power-off-a-device">
+<h3>Power off a device<a class="headerlink" href="#power-off-a-device" title="Permalink to this headline">¶</a></h3>
+<p>To power-off a device all arguments are mandatory</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-power-off
+  usage: automation device-power-off &lt;mac&gt; &lt;lom-user&gt; &lt;lom-password&gt;
+
+  Power off a specific device in the pool.
+
+  Positional arguments:
+  &lt;mac&gt;           Mac of the device to power off.
+  &lt;lom-user&gt;      lom_user credential.
+  &lt;lom-password&gt;  lom_password <span class="k">for </span>lom_user credential
+
+<span class="nv">$ </span>device-power-off  08:00:27:81:ea:46 stackops stackops
+</pre></div>
+</div>
+</div>
+<div class="section" id="power-on-a-device">
+<h3>Power on a device<a class="headerlink" href="#power-on-a-device" title="Permalink to this headline">¶</a></h3>
+<p>To power-on a device all arguments are mandatory</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-power-on
+  usage: automation device-power-on &lt;mac&gt; &lt;lom-user&gt; &lt;lom-password&gt;
+
+  Power on a specific device in the pool.
+
+  Positional arguments:
+  &lt;mac&gt;           Mac of the device to power on.
+  &lt;lom-user&gt;      lom_user credential.
+  &lt;lom-password&gt;  lom_password <span class="k">for </span>lom_user credential
+
+<span class="nv">$ </span>device-power-on 08:00:27:81:ea:46 stackops stackops
+</pre></div>
+</div>
+</div>
+<div class="section" id="reboot-a-device">
+<h3>Reboot a device<a class="headerlink" href="#reboot-a-device" title="Permalink to this headline">¶</a></h3>
+<p>To reboot a device all arguments are mandatory</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-reboot
+  usage: automation device-reboot &lt;mac&gt; &lt;lom-user&gt; &lt;lom-password&gt;
+
+  Reboot a specific device in the pool.
+
+  Positional arguments:
+  &lt;mac&gt;           Mac of the device to reboot.
+  &lt;lom-user&gt;      lom_user credential.
+  &lt;lom-password&gt;  lom_password <span class="k">for </span>lom_user credential
+
+<span class="nv">$ </span>device-reboot 08:00:27:81:ea:46 stackops stackops
+</pre></div>
+</div>
+</div>
+<div class="section" id="shutdown-a-device">
+<h3>Shutdown a device<a class="headerlink" href="#shutdown-a-device" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-shutdown
+  usage: automation device-shutdown &lt;mac&gt;
+
+  Shutdown a specific device in the pool.
+
+  Positional arguments:
+  &lt;mac&gt;  Mac of the device to shutdown.
+
+<span class="nv">$ </span>device-shutdown 08:00:27:81:ea:46
+</pre></div>
+</div>
+</div>
+<div class="section" id="soft-reboot-a-device">
+<h3>Soft reboot a device<a class="headerlink" href="#soft-reboot-a-device" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-soft-reboot
+  usage: automation device-soft-reboot &lt;mac&gt;
+
+  Soft reboot a specific device in the pool.
+
+  Positional arguments:
+  &lt;mac&gt;  Mac of the device to soft reboot.
+
+<span class="nv">$ </span>device-soft-reboot 08:00:27:81:ea:46
+</pre></div>
+</div>
+</div>
+<div class="section" id="activate-a-device">
+<h3>Activate a device<a class="headerlink" href="#activate-a-device" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-activate
+  usage: automation device-activate <span class="o">[</span>--lom-user &lt;lom-user&gt;<span class="o">]</span>
+                                    <span class="o">[</span>--lom-password &lt;lom-password&gt;<span class="o">]</span>
+                                    &lt;mac&gt; &lt;zone-id&gt;
+
+  Activate a specific device in the pool.
+
+  Positional arguments:
+  &lt;mac&gt;                 Mac of the device to activate.
+  &lt;zone-id&gt;             ID of the zone to activate the device
+
+  Optional arguments:
+  --lom-user &lt;lom-user&gt;
+                     Out-of-band user
+  --lom-password &lt;lom-password&gt;
+                     Out-of-Band user password
+
+<span class="nv">$ </span>device-activate  08:00:27:81:ea:46 1
++----------------------------+----------------------------+
+|          Property          |           Value            |
++----------------------------+----------------------------+
+|         certified          |           False            |
+|           cores            |             1              |
+|          created           |    2013-10-09 11:18:42     |
+|         disk_size          |         8589934592         |
+|             id             |             2              |
+|             ip             |       180.10.10.196        |
+|           lom_ip           |            None            |
+|          lom_mac           |            None            |
+|            mac             |     08:00:27:81:ea:46      |
+|   management_network_dns   |            None            |
+| management_network_gateway |            None            |
+|   management_network_ip    |       180.10.10.196        |
+| management_network_netmask |            None            |
+|         megaherzs          |             0              |
+|           memory           |         1043963904         |
+|            name            |     08:00:27:81:ea:46      |
+|           ports            |             1              |
+|          product           |       VirtualBox <span class="o">()</span>        |
+|           status           |         ACTIVATED          |
+|          threads           |             1              |
+|          updated           | 2013-10-23 09:17:38.504076 |
+|           vendor           |        innotek GmbH        |
+|          zone_id           |             1              |
++----------------------------+----------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="replace-a-device">
+<h3>Replace a device<a class="headerlink" href="#replace-a-device" title="Permalink to this headline">¶</a></h3>
+<p>To replace a device to another one in a zone you must to provide mac, zone-id, role-id and node-id as manatories</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-replace
+  usage: automation device-replace
+                                  <span class="o">[</span>--lom-user-node-to-remove &lt;lom-user-node-to-remove&gt;<span class="o">]</span>
+                                  <span class="o">[</span>--lom_password-node-to-remove &lt;lom-password-node-to-remove&gt;<span class="o">]</span>
+                                  <span class="o">[</span>--lom-user-node-to-add &lt;lom-user-node-to-add&gt;<span class="o">]</span>
+                                  <span class="o">[</span>--lom-password-node-to-add &lt;lom-password-node-to-add&gt;<span class="o">]</span>
+                                  &lt;mac&gt; &lt;zone-id&gt; &lt;role-id&gt; &lt;node-id&gt;
+
+  Replaces a node in a zone by a specific device in the pool.
+
+  Positional arguments:
+  &lt;mac&gt;                 Mac of the device to activate.
+  &lt;zone-id&gt;             ID of the zone of the node to replace
+  &lt;role-id&gt;             The ID of the role to deploy in the new node
+  &lt;node-id&gt;             The ID of the node to be replaced
+
+  Optional arguments:
+  --lom-user-node-to-remove &lt;lom-user-node-to-remove&gt;
+                     Out-of-band user of the node to remove
+  --lom_password-node-to-remove &lt;lom-password-node-to-remove&gt;
+                     Out-of-Band user password of the node to remove
+  --lom-user-node-to-add &lt;lom-user-node-to-add&gt;
+                     Out-of-band user of the device to add
+  --lom-password-node-to-add &lt;lom-password-node-to-add&gt;
+                     Out-of-Band user password of the device to add
+
+<span class="nv">$ </span>device-replace 08:00:31:71:ae:45 1 1 1
+
++----------------------------+----------------------------+
+|          Property          |           Value            |
++----------------------------+----------------------------+
+|         certified          |           False            |
+|           cores            |             1              |
+|          created           |    2013-10-09 11:18:42     |
+|         disk_size          |         8589934592         |
+|             id             |             2              |
+|             ip             |       180.10.10.197        |
+|           lom_ip           |            None            |
+|          lom_mac           |            None            |
+|            mac             |     08:00:31:71:ae:45      |
+|   management_network_dns   |            None            |
+| management_network_gateway |            None            |
+|   management_network_ip    |       180.10.10.197        |
+| management_network_netmask |            None            |
+|         megaherzs          |             0              |
+|           memory           |         1043963904         |
+|            name            |     08:00:31:71:ae:45      |
+|           ports            |             1              |
+|          product           |       VirtualBox <span class="o">()</span>        |
+|           status           |         ACTIVATED          |
+|          threads           |             1              |
+|          updated           | 2013-10-23 09:25:28.504076 |
+|           vendor           |        innotek GmbH        |
+|          zone_id           |             1              |
++----------------------------+----------------------------+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Devices</a><ul>
+<li><a class="reference internal" href="#understandig-what-is-a-pool-and-why-devices">Understandig what is a Pool and why Devices?</a><ul>
+<li><a class="reference internal" href="#what-is-the-pool">What is the pool?</a></li>
+<li><a class="reference internal" href="#what-is-the-a-device">What is the a device?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#life-cycle-management-basics">Life cycle management basics</a></li>
+<li><a class="reference internal" href="#managing-the-pool">Managing the pool</a><ul>
+<li><a class="reference internal" href="#list-devices-from-pool">List devices from pool</a></li>
+<li><a class="reference internal" href="#show-a-specific-device-from-pool">Show a specific device from pool</a></li>
+<li><a class="reference internal" href="#modify-a-specific-device-from-pool">Modify a specific device from pool</a></li>
+<li><a class="reference internal" href="#delete-a-device-from-pool">Delete a device from pool</a></li>
+<li><a class="reference internal" href="#power-off-a-device">Power off a device</a></li>
+<li><a class="reference internal" href="#power-on-a-device">Power on a device</a></li>
+<li><a class="reference internal" href="#reboot-a-device">Reboot a device</a></li>
+<li><a class="reference internal" href="#shutdown-a-device">Shutdown a device</a></li>
+<li><a class="reference internal" href="#soft-reboot-a-device">Soft reboot a device</a></li>
+<li><a class="reference internal" href="#activate-a-device">Activate a device</a></li>
+<li><a class="reference internal" href="#replace-a-device">Replace a device</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Command-line_tool.html"
+                        title="previous chapter">Command-line Tool</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Component.html"
+                        title="next chapter">Components</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Device.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Component.html" title="Components"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Command-line_tool.html" title="Command-line Tool"
+             >previous</a> |</li>
+        <li><a href="index.html">python-automationclient 0.1 documentation</a> &raquo;</li>
+          <li><a href="Reference.html" >Reference</a> &raquo;</li>
+          <li><a href="Command-line_tool.html" >Command-line Tool</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Stackops S.L..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

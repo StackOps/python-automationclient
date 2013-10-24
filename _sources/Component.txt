@@ -1,0 +1,14 @@
+Components
+==========
+
+What is a Component?
+--------------------
+
+A component is the most fundamental configuration element in FABuloso, where each component has a set of gathered services, this services have methods that define a specific configuration of an Openstack or Stackops Service, previously a set of properties that defines to itself.
+
+`FABuloso <http://fabuloso.stackops.org/>`_ is a python tool to easily organize and deploy an OpenStack architecture using Fabric. FABuloso manages configuration with components within `catalogs <>https://github.com/StackOps/fabuloso-catalog`.
+
+What is Catalog of Components?
+------------------------------
+
+The Catalog of components are a set of components by itself, used to deploy an Openstack Architecture, this catalog are hosted in github as an open project `here <https://github.com/StackOps/fabuloso-catalog>`

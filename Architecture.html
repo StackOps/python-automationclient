@@ -1,0 +1,254 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Architectures &mdash; python-automationclient 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-automationclient 0.1 documentation" href="index.html" />
+    <link rel="up" title="Command-line Tool" href="Command-line_tool.html" />
+    <link rel="next" title="Profiles" href="Profile.html" />
+    <link rel="prev" title="Components" href="Component.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Profile.html" title="Profiles"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Component.html" title="Components"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">python-automationclient 0.1 documentation</a> &raquo;</li>
+          <li><a href="Reference.html" >Reference</a> &raquo;</li>
+          <li><a href="Command-line_tool.html" accesskey="U">Command-line Tool</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="architectures">
+<h1>Architectures<a class="headerlink" href="#architectures" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-an-architecture">
+<h2>What is an Architecture?<a class="headerlink" href="#what-is-an-architecture" title="Permalink to this headline">¶</a></h2>
+<p>To define what an Architecture is, we first need to explain what we understand an Openstack Nova is in StackOps. For us, Openstack Nova is not a product. We don’t even start discussing if it is a finished product or not. We think Openstack Nova is a great set of tools, a Toolkit, which put together enable a vendor to offer a Cloud Fabric.</p>
+<p>This Cloud Fabric solution is not enough to be able to offer services to third parties by itself. To be able to offer these services with Openstack Nova, we must first define an Architecture that will enable service provisioning. In StackOps, this architecture can be divided in three areas:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Nova Components Architecture: The various Nova components can be configured in several ways to work in different modes. At StackOps we believe we can define a reduced set of
+options that group most of the clients’ needs, significantly simplifying the solution.</li>
+<li>Reference Architecture: The way the different Nova components work is not the same when deployed over one hardware system or another. Therefore, in our concept of architecture,
+one fundamental piece not covered by the Openstack community is the Reference Systems Architecture used for the deployment of Nova.</li>
+<li>Service Architecture: How the different Nova components are grouped over the system architecture to be commercialized by the Service provider or used by an IT Department is also
+not a responsibility of the Openstack community, but of companies such as StackOps, which packages the whole solution taking into account the specific needs of its customers:</li>
+</ul>
+</div></blockquote>
+<p>The architectures are the essential key to the deployment of OpenStack solutions. They are ready-made solutions accelerating the deployment of OpenStack. Each architecture is formed hierarchically by:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Components: Where the services are running, with specific properties</li>
+<li>Services: Properties group.</li>
+<li>Properties: Set of parameters to define the architecture</li>
+</ul>
+</div></blockquote>
+<div class="section" id="general-architecture-and-automation">
+<h3>General Architecture and Automation<a class="headerlink" href="#general-architecture-and-automation" title="Permalink to this headline">¶</a></h3>
+<p>This diagram shows the distribution of the different service components that configure a client’s Architecture. In the right side of the diagram, we can view the ‘orchestrator’ component for deployment and operation: Automation.</p>
+<p>This component, developed by StackOps, is in charge of implementing different Openstack Nova Service Architectures in the client’s data center. As shown in the diagram, automation can deploy different Openstack architecture solutions for different system operation environments.</p>
+<p>Apart from the predefined system architectures, automation can be extended to be able to deploy and manage ad-hoc architectures with a client’s specific needs (ISVs, HPC, Grid…)</p>
+<p>To be able to deploy these architectures, the client must deploy first a Reference Architecture recommended by StackOps, and a Nova Component Architecture based on StackOps Distro.</p>
+<img alt="General Architecture and Automation" class="align-center" src="_images/architecturegeneral.png" style="width: 800pt;" />
+</div>
+<div class="section" id="dualnode-architecture-example">
+<h3>DualNode Architecture Example<a class="headerlink" href="#dualnode-architecture-example" title="Permalink to this headline">¶</a></h3>
+<p>This example shows how a client may deploy a DualNode Service Architecture supported by a Reference Architecture that uses a storage system based on a NAS (Network Attached Storage), monitoring based on Nagios, and SMNP. Within this architecture, each zone has all Nova components deployed over one single node, except for computing nodes. The controller node that contains all Novacomponents can also be deployed in a Virtualized system with high consolidation capacity (for financial optimization).</p>
+<p>This type of Architecture may be used to sell on-Demand Private Clouds, what we call Virtual Private Cloud</p>
+<img alt="Dual Node Architecture and Automation" class="align-center" src="_images/architectureDualNode.png" style="width: 800pt;" />
+</div>
+<div class="section" id="multinode-ha-architecture-example">
+<h3>MultiNode HA Architecture Example<a class="headerlink" href="#multinode-ha-architecture-example" title="Permalink to this headline">¶</a></h3>
+<p>This other example shows a Highly Available MultiNode Service Architecture supported by a Reference Architecture that uses a SAN (Storage Array Network) or Distributed NAS storage system, monitoring based on Nagios and SNMP, Keystone as a centralized Identity Management system and StackOps own Accounting and Chargeback systems. Within this architecture, each zone has each one of the Nova components deployed in their own physical node, with a High Availability configuration.</p>
+<p>This type of Architecture is the traditional one used in the deployment of Public Cloud or Highly Scalable Private Cloud solutions.</p>
+<img alt="Multinode HA Architecture and Automation" class="align-center" src="_images/architectureMultiNodeHA.png" style="width: 800pt;" />
+</div>
+</div>
+<div class="section" id="managing-architectures">
+<h2>Managing Architectures<a class="headerlink" href="#managing-architectures" title="Permalink to this headline">¶</a></h2>
+<p>The operations allow in the python-automatioclient are.</p>
+<div class="highlight-bash"><div class="highlight"><pre>architecture-list     List all the architectures that are available on
+                      automation.
+architecture-show     Show details about an architecture.
+architecture-create   Add a new architecture.
+architecture-delete   Remove a specific architecture.
+architecture-template Get template from a specific architecture.
+</pre></div>
+</div>
+<div class="section" id="list-architectures">
+<h3>List architectures<a class="headerlink" href="#list-architectures" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>architecture-list
++----+----------------------+
+| id |         name         |
++----+----------------------+
+| 1  | sample-architecture1 |
+| 2  | sample-architecture- |
++----+----------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-a-specific-architecture">
+<h3>Show a specific architecture<a class="headerlink" href="#show-a-specific-architecture" title="Permalink to this headline">¶</a></h3>
+<p>To show details about an architecture this one must be reference by its id</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>architecture-show 1
++----------+----------------------------+
+| Property |           Value            |
++----------+----------------------------+
+|    id    |             1              |
+|   name   |    sample-architecture1    |
+|  roles   |             <span class="o">{</span>              |
+|          |     <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;controller&quot;</span>,  |
+|          |           <span class="s2">&quot;steps&quot;</span>: <span class="o">[</span>       |
+|          |                 <span class="o">{</span>          |
+|          |                 <span class="s2">&quot;1&quot;</span>: <span class="o">[</span>     |
+|          |                  <span class="s2">&quot;mysql&quot;</span>   |
+|          |                   <span class="o">]</span>        |
+|          |                 <span class="o">}</span>,         |
+|          |                 <span class="o">{</span>          |
+|          |                 <span class="s2">&quot;2&quot;</span>: <span class="o">[</span>     |
+|          |                 <span class="s2">&quot;rabbitmq&quot;</span> |
+|          |                   <span class="o">]</span>        |
+|          |                 <span class="o">}</span>          |
+|          |               <span class="o">]</span>            |
+|          |             <span class="o">}</span>              |
++----------+----------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete-a-specific-architecture">
+<h3>Delete a specific architecture<a class="headerlink" href="#delete-a-specific-architecture" title="Permalink to this headline">¶</a></h3>
+<p>To delete a specific architecture this one must be reference by its id</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>architecture-delete 2
+
+<span class="nv">$ </span>architecture-list
++----+----------------------+
+| id |         name         |
++----+----------------------+
+| 1  | sample-architecture1 |
++----+----------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-template-from-a-specific-architecture">
+<h3>Show template from a specific architecture<a class="headerlink" href="#show-template-from-a-specific-architecture" title="Permalink to this headline">¶</a></h3>
+<p>To show the template of a specific architecture this one must be reference by its id</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>architecture-template 1
+
+<span class="o">{</span><span class="s2">&quot;profile&quot;</span>: <span class="o">{</span><span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;&quot;</span>, <span class="s2">&quot;components&quot;</span>: <span class="o">[{</span><span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;mysql&quot;</span>, <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span><span class="s2">&quot;set_quantum&quot;</span>: <span class="o">{</span><span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;quantum_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;quantum_user&quot;</span>: <span class="s2">&quot;quantum&quot;</span><span class="o">}</span>, <span class="s2">&quot;set_keystone&quot;</span>: <span class="o">{</span><span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;keystone_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;keystone_user&quot;</span>: <span class="s2">&quot;keystone&quot;</span><span class="o">}</span>, <span class="s2">&quot;teardown&quot;</span>: <span class="o">{}</span>, <span class="s2">&quot;set_cinder&quot;</span>: <span class="o">{</span><span class="s2">&quot;cinder_user&quot;</span>: <span class="s2">&quot;cinder&quot;</span>, <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;cinder_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span><span class="o">}</span>, <span class="s2">&quot;set_automation&quot;</span>: <span class="o">{</span><span class="s2">&quot;automation_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;automation_user&quot;</span>: <span class="s2">&quot;automation&quot;</span><span class="o">}</span>, <span class="s2">&quot;set_accounting&quot;</span>: <span class="o">{</span><span class="s2">&quot;accounting_user&quot;</span>: <span class="s2">&quot;activity&quot;</span>, <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;accounting_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span><span class="o">}</span>, <span class="s2">&quot;set_nova&quot;</span>: <span class="o">{</span><span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;nova_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;nova_user&quot;</span>: <span class="s2">&quot;nova&quot;</span><span class="o">}</span>, <span class="s2">&quot;install&quot;</span>: <span class="o">{</span><span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;keystone_user&quot;</span>: <span class="s2">&quot;keystone&quot;</span>, <span class="s2">&quot;cinder_user&quot;</span>: <span class="s2">&quot;cinder&quot;</span>, <span class="s2">&quot;quantum_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;glance_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;automation_user&quot;</span>: <span class="s2">&quot;automation&quot;</span>, <span class="s2">&quot;quantum_user&quot;</span>: <span class="s2">&quot;quantum&quot;</span>, <span class="s2">&quot;automation_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;keystone_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;cinder_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;glance_user&quot;</span>: <span class="s2">&quot;glance&quot;</span>, <span class="s2">&quot;nova_user&quot;</span>: <span class="s2">&quot;nova&quot;</span>, <span class="s2">&quot;nova_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span><span class="o">}</span>, <span class="s2">&quot;set_glance&quot;</span>: <span class="o">{</span><span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;glance_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;glance_user&quot;</span>: <span class="s2">&quot;glance&quot;</span><span class="o">}</span>, <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span><span class="s2">&quot;username&quot;</span>: <span class="s2">&quot;&quot;</span>, <span class="s2">&quot;drop_schema&quot;</span>: null, <span class="s2">&quot;install_database&quot;</span>: null, <span class="s2">&quot;database_type&quot;</span>: <span class="s2">&quot;&quot;</span>, <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>, <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;&quot;</span>, <span class="s2">&quot;port&quot;</span>: <span class="s2">&quot;&quot;</span>, <span class="s2">&quot;schema&quot;</span>: <span class="s2">&quot;&quot;</span><span class="o">}</span>, <span class="s2">&quot;set_portal&quot;</span>: <span class="o">{</span><span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;portal_user&quot;</span>: <span class="s2">&quot;portal&quot;</span>, <span class="s2">&quot;portal_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span><span class="o">}}}</span>, <span class="o">{</span><span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;rabbitmq&quot;</span>, <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span><span class="s2">&quot;start&quot;</span>: <span class="o">{}</span>, <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span><span class="s2">&quot;rpassword&quot;</span>: null, <span class="s2">&quot;virtual_host&quot;</span>: null, <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>, <span class="s2">&quot;ruser&quot;</span>: null, <span class="s2">&quot;service_type&quot;</span>: <span class="s2">&quot;&quot;</span>, <span class="s2">&quot;rport&quot;</span>: null<span class="o">}</span>, <span class="s2">&quot;stop&quot;</span>: <span class="o">{}</span>, <span class="s2">&quot;install&quot;</span>: <span class="o">{</span><span class="s2">&quot;cluster&quot;</span>: <span class="nb">false</span>, <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;guest&quot;</span><span class="o">}}}]</span>, <span class="s2">&quot;properties&quot;</span>: <span class="o">{}}}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Architectures</a><ul>
+<li><a class="reference internal" href="#what-is-an-architecture">What is an Architecture?</a><ul>
+<li><a class="reference internal" href="#general-architecture-and-automation">General Architecture and Automation</a></li>
+<li><a class="reference internal" href="#dualnode-architecture-example">DualNode Architecture Example</a></li>
+<li><a class="reference internal" href="#multinode-ha-architecture-example">MultiNode HA Architecture Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#managing-architectures">Managing Architectures</a><ul>
+<li><a class="reference internal" href="#list-architectures">List architectures</a></li>
+<li><a class="reference internal" href="#show-a-specific-architecture">Show a specific architecture</a></li>
+<li><a class="reference internal" href="#delete-a-specific-architecture">Delete a specific architecture</a></li>
+<li><a class="reference internal" href="#show-template-from-a-specific-architecture">Show template from a specific architecture</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Component.html"
+                        title="previous chapter">Components</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Profile.html"
+                        title="next chapter">Profiles</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Architecture.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Profile.html" title="Profiles"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Component.html" title="Components"
+             >previous</a> |</li>
+        <li><a href="index.html">python-automationclient 0.1 documentation</a> &raquo;</li>
+          <li><a href="Reference.html" >Reference</a> &raquo;</li>
+          <li><a href="Command-line_tool.html" >Command-line Tool</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Stackops S.L..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
