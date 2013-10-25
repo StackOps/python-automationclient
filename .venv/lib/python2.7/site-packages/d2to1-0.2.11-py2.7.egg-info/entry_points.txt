@@ -1,0 +1,9 @@
+[distutils.setup_keywords]
+d2to1 = d2to1.core:d2to1
+
+[zest.releaser.prereleaser.middle]
+d2_version = d2to1.zestreleaser:prereleaser_middle
+
+[zest.releaser.postreleaser.middle]
+d2_version = d2to1.zestreleaser:postreleaser_middle
+

@@ -1,0 +1,25 @@
+[flake8.extension]
+H801 = hacking.core:OnceGitCheckCommitTitleBug
+H802 = hacking.core:OnceGitCheckCommitTitleLength
+H803 = hacking.core:OnceGitCheckCommitTitlePeriodEnding
+H901 = hacking.core:hacking_is_not
+H902 = hacking.core:hacking_not_in
+H101 = hacking.core:hacking_todo_format
+H103 = hacking.core:hacking_has_correct_license
+H102 = hacking.core:hacking_has_license
+H202 = hacking.core:hacking_except_format_assert
+H201 = hacking.core:hacking_except_format
+H000 = hacking.core:ProxyChecks
+H501 = hacking.core:hacking_no_locals
+H700 = hacking.core:hacking_localization_strings
+H233 = hacking.core:hacking_python3x_print_function
+H232 = hacking.core:hacking_python3x_octal_literals
+H231 = hacking.core:hacking_python3x_except_compatible
+H601 = hacking.core:hacking_no_cr
+H306 = hacking.core:hacking_import_alphabetical
+H301 = hacking.core:hacking_import_rules
+H401 = hacking.core:hacking_docstring_start_space
+H402 = hacking.core:hacking_docstring_one_line
+H403 = hacking.core:hacking_docstring_multiline_end
+H404 = hacking.core:hacking_docstring_multiline_start
+

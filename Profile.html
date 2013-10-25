@@ -55,6 +55,446 @@
             
   <div class="section" id="profiles">
 <h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-a-profile">
+<h2>What is a Profile?<a class="headerlink" href="#what-is-a-profile" title="Permalink to this headline">¶</a></h2>
+<p>A profile is just a way to save <strong>predefined templates of an architecture without creating a full zone</strong>. User may want to use several common properties for all his zones, and some specific properties for each zone. A way to save the common properties without the need of fill the whole template each time, is by the use of profiles. The profile endpoint will never check the input properties (the zone endpoint will), so you can save any properties you like to use later on. Only the name attribute is mandatory.</p>
+<p>A profile is the set of architecture&#8217;s properties. A profile can be empty (returned by the architecture-template operation) half-filled, or full-filled. Is a dictionary-like structure with all the properties ofthe <strong>components</strong> the architecture can have, this properties are recovered from <strong>catalog components</strong> managed by <strong>FABuloso</strong>.</p>
+</div>
+<div class="section" id="profiles-and-their-properties">
+<h2>Profiles and their properties<a class="headerlink" href="#profiles-and-their-properties" title="Permalink to this headline">¶</a></h2>
+<p>A <strong>global profile property</strong> can be stored in a profile entity. To reference this global profile property in any component property use $property.profile_property_name convention. For example:</p>
+<p>If the next profile property is created:</p>
+<p>my_user=stackops_user</p>
+<p>A <strong>component property</strong> can reference it by setting the value property as follows:</p>
+<p>nova.user=$profile.my_user</p>
+<p>A profile can be empty (returned by the get_template) half-filled, or full-filled. Is a dictionary-like structure with all the properties of the components the architecture can have.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A profile must be used as an input at the moment to create a zone</p>
+</div>
+</div>
+<div class="section" id="managing-profiles">
+<h2>Managing Profiles<a class="headerlink" href="#managing-profiles" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre>profile-list        List all the profiles by architecture.
+profile-show        Show details about a profile by architecture.
+profile-create      Add a new profile by architecture.
+profile-update      Update a profile by architecture.
+profile-delete      Remove a specific profile by architecture.
+profile-json        Gets the JSON of the profile.
+profile-property-create
+                    Create a profile property by architecture.
+profile-property-delete
+                    Delete a profile property by architecture.
+profile-property-update
+                    Update a profile property by architecture.
+</pre></div>
+</div>
+<div class="section" id="list-profiles">
+<h3>List profiles<a class="headerlink" href="#list-profiles" title="Permalink to this headline">¶</a></h3>
+<p>At the moment to list profiles must be specified the ID architecture that has been taken</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>profile-list
+usage: automation profile-list &lt;architecture-id&gt;
+
+List all the profiles by architecture.
+
+Positional arguments:
+ &lt;architecture-id&gt;  ID of the architecture.
+
+<span class="nv">$ </span>profile-list 1
++----+-------------+
+| id |     name    |
++----+-------------+
+| 1  | profile-doc |
++----+-------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-a-specific-profile">
+<h3>Show a specific profile<a class="headerlink" href="#show-a-specific-profile" title="Permalink to this headline">¶</a></h3>
+<p>To show details about a profiles this one must be reference by its ID and must be specified the ID architecture that has been taken as reference</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>profile-show 1 1
++------------+------------------------------------------------+
+|  Property  |                     Value                      |
++------------+------------------------------------------------+
+| components |                       <span class="o">{</span>                        |
+|            |                <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;rabbitmq&quot;</span>,             |
+|            |                  <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>               |
+|            |                      <span class="s2">&quot;install&quot;</span>: <span class="o">{</span>              |
+|            |                     <span class="s2">&quot;cluster&quot;</span>: <span class="nb">false</span>,          |
+|            |                    <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;guest&quot;</span>         |
+|            |                           <span class="o">}</span>,                   |
+|            |                      <span class="s2">&quot;start&quot;</span>: <span class="o">{}</span>,              |
+|            |                      <span class="s2">&quot;stop&quot;</span>: <span class="o">{}</span>,               |
+|            |                     <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span>              |
+|            |                        <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>,             |
+|            |                     <span class="s2">&quot;rpassword&quot;</span>: null,         |
+|            |                       <span class="s2">&quot;rport&quot;</span>: null,           |
+|            |                       <span class="s2">&quot;ruser&quot;</span>: null,           |
+|            |                    <span class="s2">&quot;service_type&quot;</span>: <span class="s2">&quot;&quot;</span>,         |
+|            |                    <span class="s2">&quot;virtual_host&quot;</span>: null        |
+|            |                           <span class="o">}</span>                    |
+|            |                         <span class="o">}</span>                      |
+|            |                       <span class="o">}</span>                        |
+|     id     |                       1                        |
+|    name    |                  profile-doc                   |
+| properties |                       <span class="o">{</span>                        |
+|            |     <span class="s2">&quot;fake_property_key&quot;</span>: <span class="s2">&quot;fake_property_value&quot;</span> |
+|            |                       <span class="o">}</span>                        |
++------------+------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-profile">
+<h3>Create a profile<a class="headerlink" href="#create-a-profile" title="Permalink to this headline">¶</a></h3>
+<p>To create a profile you must to specific the ID architecture to take as reference, the name of the profile and a JSON file that can be generate with the operation architecture-template.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>profile-create
+usage: automation profile-create &lt;architecture-id&gt; &lt;name&gt; &lt;profile-file&gt;
+
+Add a new profile by architecture.
+
+Positional arguments:
+  &lt;architecture-id&gt;  ID of the architecture to create a new profile on it
+  &lt;name&gt;             Name <span class="k">for </span>the new profile
+  &lt;profile-file&gt;     File with extension .json describing the new profile to
+                     create.
+
+<span class="nv">$ </span>create 1 profile-CLI profile-cli.json
++------------+----------------------------------+
+|  Property  |              Value               |
++------------+----------------------------------+
+| components |                <span class="o">{</span>                 |
+|            |         <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;rabbitmq&quot;</span>,      |
+|            |           <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>        |
+|            |               <span class="s2">&quot;install&quot;</span>: <span class="o">{</span>       |
+|            |              <span class="s2">&quot;cluster&quot;</span>: <span class="nb">false</span>,   |
+|            |             <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;guest&quot;</span>  |
+|            |                    <span class="o">}</span>,            |
+|            |               <span class="s2">&quot;start&quot;</span>: <span class="o">{}</span>,       |
+|            |               <span class="s2">&quot;stop&quot;</span>: <span class="o">{}</span>,        |
+|            |              <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span>       |
+|            |                 <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>,      |
+|            |              <span class="s2">&quot;rpassword&quot;</span>: null,  |
+|            |                <span class="s2">&quot;rport&quot;</span>: null,    |
+|            |                <span class="s2">&quot;ruser&quot;</span>: null,    |
+|            |             <span class="s2">&quot;service_type&quot;</span>: <span class="s2">&quot;&quot;</span>,  |
+|            |             <span class="s2">&quot;virtual_host&quot;</span>: null |
+|            |                    <span class="o">}</span>             |
+|            |                  <span class="o">}</span>               |
+|            |                <span class="o">}</span>                 |
+|     id     |                2                 |
+|    name    |           profile-CLI            |
+| properties |                <span class="o">{}</span>                |
++------------+----------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="modify-a-specific-profile">
+<h3>Modify a specific profile<a class="headerlink" href="#modify-a-specific-profile" title="Permalink to this headline">¶</a></h3>
+<p>To update a profile you must to specific the ID architecture, the ID of the profile and a JSON file that can be generate with the operation profile-json and modify it.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span> <span class="nb">help </span>profile-update
+usage: automation profile-update &lt;architecture-id&gt; &lt;profile-id&gt; &lt;profile-file&gt;
+
+Update a profile by architecture.
+
+Positional arguments:
+ &lt;architecture-id&gt;  ID of the architecture.
+ &lt;profile-id&gt;       ID of the profile to update.
+ &lt;profile-file&gt;     File with extension .json describing the profile to
+                  modify.
+
+
+<span class="nv">$ </span>profile-update 1 2 profile-cli.json
++------------+----------------------------------+
+|  Property  |              Value               |
++------------+----------------------------------+
+| components |                <span class="o">{</span>                 |
+|            |         <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;rabbitmq&quot;</span>,      |
+|            |           <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>        |
+|            |               <span class="s2">&quot;install&quot;</span>: <span class="o">{</span>       |
+|            |              <span class="s2">&quot;cluster&quot;</span>: <span class="nb">false</span>,   |
+|            |             <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;guest&quot;</span>  |
+|            |                    <span class="o">}</span>,            |
+|            |               <span class="s2">&quot;start&quot;</span>: <span class="o">{}</span>,       |
+|            |               <span class="s2">&quot;stop&quot;</span>: <span class="o">{}</span>,        |
+|            |              <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span>       |
+|            |                 <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>,      |
+|            |              <span class="s2">&quot;rpassword&quot;</span>: null,  |
+|            |                <span class="s2">&quot;rport&quot;</span>: null,    |
+|            |                <span class="s2">&quot;ruser&quot;</span>: null,    |
+|            |             <span class="s2">&quot;service_type&quot;</span>: <span class="s2">&quot;&quot;</span>,  |
+|            |             <span class="s2">&quot;virtual_host&quot;</span>: null |
+|            |                    <span class="o">}</span>             |
+|            |                  <span class="o">}</span>               |
+|            |                <span class="o">}</span>                 |
+|     id     |                2                 |
+|    name    |                                  |
+| properties |                <span class="o">{}</span>                |
++------------+----------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-a-specific-profile">
+<h3>Remove a specific profile<a class="headerlink" href="#remove-a-specific-profile" title="Permalink to this headline">¶</a></h3>
+<p>To delete you must to specific the ID architecture and the ID of the profile.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>profile-delete 1 2
+</pre></div>
+</div>
+</div>
+<div class="section" id="generate-a-json-output-from-a-specific-profile">
+<h3>Generate a JSON output from a specific profile<a class="headerlink" href="#generate-a-json-output-from-a-specific-profile" title="Permalink to this headline">¶</a></h3>
+<p>This is one of the most useful operations in the CLI given that to operate with the profiles&#8217; options most of times must be used a JSON profile file, also as input at the moment to create a zone.</p>
+<p>To generate a JSON output you must to specific the ID architecture and the ID of the profile.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>profile-json 1 1
+<span class="o">{</span>
+ <span class="s2">&quot;profile&quot;</span>: <span class="o">{</span>
+     <span class="s2">&quot;id&quot;</span>: 1,
+     <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;profile-doc&quot;</span>,
+     <span class="s2">&quot;components&quot;</span>: <span class="o">[</span>
+         <span class="o">{</span>
+             <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;mysql&quot;</span>,
+             <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>
+                 <span class="s2">&quot;set_quantum&quot;</span>: <span class="o">{</span>
+                     <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;quantum_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;quantum_user&quot;</span>: <span class="s2">&quot;quantum&quot;</span>
+                 <span class="o">}</span>,
+                 <span class="s2">&quot;set_keystone&quot;</span>: <span class="o">{</span>
+                     <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;keystone_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;keystone_user&quot;</span>: <span class="s2">&quot;keystone&quot;</span>
+                 <span class="o">}</span>,
+                 <span class="s2">&quot;teardown&quot;</span>: <span class="o">{}</span>,
+                 <span class="s2">&quot;set_cinder&quot;</span>: <span class="o">{</span>
+                     <span class="s2">&quot;cinder_user&quot;</span>: <span class="s2">&quot;cinder&quot;</span>,
+                     <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;cinder_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>
+                 <span class="o">}</span>,
+                 <span class="s2">&quot;set_automation&quot;</span>: <span class="o">{</span>
+                     <span class="s2">&quot;automation_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;automation_user&quot;</span>: <span class="s2">&quot;automation&quot;</span>
+                 <span class="o">}</span>,
+                 <span class="s2">&quot;set_accounting&quot;</span>: <span class="o">{</span>
+                     <span class="s2">&quot;accounting_user&quot;</span>: <span class="s2">&quot;activity&quot;</span>,
+                     <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;accounting_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>
+                 <span class="o">}</span>,
+                 <span class="s2">&quot;set_nova&quot;</span>: <span class="o">{</span>
+                     <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;nova_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;nova_user&quot;</span>: <span class="s2">&quot;nova&quot;</span>
+                 <span class="o">}</span>,
+                 <span class="s2">&quot;install&quot;</span>: <span class="o">{</span>
+                     <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;keystone_user&quot;</span>: <span class="s2">&quot;keystone&quot;</span>,
+                     <span class="s2">&quot;cinder_user&quot;</span>: <span class="s2">&quot;cinder&quot;</span>,
+                     <span class="s2">&quot;quantum_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;glance_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;automation_user&quot;</span>: <span class="s2">&quot;automation&quot;</span>,
+                     <span class="s2">&quot;quantum_user&quot;</span>: <span class="s2">&quot;quantum&quot;</span>,
+                     <span class="s2">&quot;automation_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;keystone_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;cinder_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;glance_user&quot;</span>: <span class="s2">&quot;glance&quot;</span>,
+                     <span class="s2">&quot;nova_user&quot;</span>: <span class="s2">&quot;nova&quot;</span>,
+                     <span class="s2">&quot;nova_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>
+                 <span class="o">}</span>,
+                 <span class="s2">&quot;set_glance&quot;</span>: <span class="o">{</span>
+                     <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;glance_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;glance_user&quot;</span>: <span class="s2">&quot;glance&quot;</span>
+                 <span class="o">}</span>,
+                 <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span>
+                     <span class="s2">&quot;username&quot;</span>: <span class="s2">&quot;&quot;</span>,
+                     <span class="s2">&quot;drop_schema&quot;</span>: null,
+                     <span class="s2">&quot;install_database&quot;</span>: null,
+                     <span class="s2">&quot;database_type&quot;</span>: <span class="s2">&quot;&quot;</span>,
+                     <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>,
+                     <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;&quot;</span>,
+                     <span class="s2">&quot;port&quot;</span>: <span class="s2">&quot;&quot;</span>,
+                     <span class="s2">&quot;schema&quot;</span>: <span class="s2">&quot;&quot;</span>
+                 <span class="o">}</span>,
+                 <span class="s2">&quot;set_portal&quot;</span>: <span class="o">{</span>
+                     <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+                     <span class="s2">&quot;portal_user&quot;</span>: <span class="s2">&quot;portal&quot;</span>,
+                     <span class="s2">&quot;portal_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>
+                 <span class="o">}</span>
+             <span class="o">}</span>
+         <span class="o">}</span>,
+         <span class="o">{</span>
+             <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;rabbitmq&quot;</span>,
+             <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>
+                 <span class="s2">&quot;start&quot;</span>: <span class="o">{}</span>,
+                 <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span>
+                     <span class="s2">&quot;rpassword&quot;</span>: null,
+                     <span class="s2">&quot;virtual_host&quot;</span>: null,
+                     <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>,
+                     <span class="s2">&quot;ruser&quot;</span>: null,
+                     <span class="s2">&quot;service_type&quot;</span>: <span class="s2">&quot;&quot;</span>,
+                     <span class="s2">&quot;rport&quot;</span>: null
+                 <span class="o">}</span>,
+                 <span class="s2">&quot;stop&quot;</span>: <span class="o">{}</span>,
+                 <span class="s2">&quot;install&quot;</span>: <span class="o">{</span>
+                     <span class="s2">&quot;cluster&quot;</span>: <span class="nb">false</span>,
+                     <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;guest&quot;</span>
+                 <span class="o">}</span>
+             <span class="o">}</span>
+         <span class="o">}</span>
+     <span class="o">]</span>,
+     <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>
+         <span class="s2">&quot;fake_property_key&quot;</span>: <span class="s2">&quot;fake_property_value&quot;</span>
+     <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-profile-property">
+<h3>Create a profile property<a class="headerlink" href="#create-a-profile-property" title="Permalink to this headline">¶</a></h3>
+<p>To create a profile property you must to specific the ID architecture and the ID of the profile are mandatories, thus as the key and value of it</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>profile-property-create
+usage: automation profile-property-create &lt;architecture-id&gt; &lt;profile-id&gt;
+                                          &lt;property-key&gt; &lt;property-value&gt;
+
+Create a profile property by architecture.
+
+Positional arguments:
+  &lt;architecture-id&gt;  ID of the architecture to create a new property profile
+                     on it
+  &lt;profile-id&gt;       ID of the profile to create a property.
+  &lt;property-key&gt;     The key property.
+  &lt;property-value&gt;   The value property
+
+<span class="nv">$ </span>profile-property-create 1 1 cli-key-property cli-value-propery
++------------+------------------------------------------------+
+|  Property  |                     Value                      |
++------------+------------------------------------------------+
+| components |                       <span class="o">{</span>                        |
+|            |                <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;rabbitmq&quot;</span>,             |
+|            |                  <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>               |
+|            |                      <span class="s2">&quot;install&quot;</span>: <span class="o">{</span>              |
+|            |                     <span class="s2">&quot;cluster&quot;</span>: <span class="nb">false</span>,          |
+|            |                    <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;guest&quot;</span>         |
+|            |                           <span class="o">}</span>,                   |
+|            |                      <span class="s2">&quot;start&quot;</span>: <span class="o">{}</span>,              |
+|            |                      <span class="s2">&quot;stop&quot;</span>: <span class="o">{}</span>,               |
+|            |                     <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span>              |
+|            |                        <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>,             |
+|            |                     <span class="s2">&quot;rpassword&quot;</span>: null,         |
+|            |                       <span class="s2">&quot;rport&quot;</span>: null,           |
+|            |                       <span class="s2">&quot;ruser&quot;</span>: null,           |
+|            |                    <span class="s2">&quot;service_type&quot;</span>: <span class="s2">&quot;&quot;</span>,         |
+|            |                    <span class="s2">&quot;virtual_host&quot;</span>: null        |
+|            |                           <span class="o">}</span>                    |
+|            |                         <span class="o">}</span>                      |
+|            |                       <span class="o">}</span>                        |
+|     id     |                       1                        |
+|    name    |                  profile-doc                   |
+| properties |                       <span class="o">{</span>                        |
+|            |      <span class="s2">&quot;cli-key-property&quot;</span>: <span class="s2">&quot;cli-value-propery&quot;</span>,  |
+|            |     <span class="s2">&quot;fake_property_key&quot;</span>: <span class="s2">&quot;fake_property_value&quot;</span> |
+|            |                       <span class="o">}</span>                        |
++------------+------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="modify-specifc-profile-property">
+<h3>Modify specifc profile property<a class="headerlink" href="#modify-specifc-profile-property" title="Permalink to this headline">¶</a></h3>
+<p>To update a profile property you must to specific the ID architecture, the ID of the profile are mandatories and the key of it.</p>
+<div class="highlight-bash"><div class="highlight"><pre> <span class="nv">$ </span><span class="nb">help </span>profile-property-update
+ usage: automation profile-property-update &lt;architecture-id&gt; &lt;profile-id&gt;
+                                           &lt;property-key&gt; &lt;property-value&gt;
+
+ Update a profile property by architecture.
+
+ Positional arguments:
+   &lt;architecture-id&gt;  ID of the architecture to update a new property profile
+                      on it
+   &lt;profile-id&gt;       ID of the profile to update a property.
+   &lt;property-key&gt;     The key property.
+   &lt;property-value&gt;   The value property
+
+<span class="nv">$ </span>profile-property-update 1 1 cli-key-property cli-value-property_update
++------------+------------------------------------------------------+
+|  Property  |                        Value                         |
++------------+------------------------------------------------------+
+| components |                          <span class="o">{</span>                           |
+|            |                   <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;rabbitmq&quot;</span>,                |
+|            |                     <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>                  |
+|            |                         <span class="s2">&quot;install&quot;</span>: <span class="o">{</span>                 |
+|            |                        <span class="s2">&quot;cluster&quot;</span>: <span class="nb">false</span>,             |
+|            |                       <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;guest&quot;</span>            |
+|            |                              <span class="o">}</span>,                      |
+|            |                         <span class="s2">&quot;start&quot;</span>: <span class="o">{}</span>,                 |
+|            |                         <span class="s2">&quot;stop&quot;</span>: <span class="o">{}</span>,                  |
+|            |                        <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span>                 |
+|            |                           <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>,                |
+|            |                        <span class="s2">&quot;rpassword&quot;</span>: null,            |
+|            |                          <span class="s2">&quot;rport&quot;</span>: null,              |
+|            |                          <span class="s2">&quot;ruser&quot;</span>: null,              |
+|            |                       <span class="s2">&quot;service_type&quot;</span>: <span class="s2">&quot;&quot;</span>,            |
+|            |                       <span class="s2">&quot;virtual_host&quot;</span>: null           |
+|            |                              <span class="o">}</span>                       |
+|            |                            <span class="o">}</span>                         |
+|            |                          <span class="o">}</span>                           |
+|     id     |                          1                           |
+|    name    |                     profile-doc                      |
+| properties |                          <span class="o">{</span>                           |
+|            |     <span class="s2">&quot;cli-key-property&quot;</span>: <span class="s2">&quot;cli-value-property_update&quot;</span>, |
+|            |        <span class="s2">&quot;fake_property_key&quot;</span>: <span class="s2">&quot;fake_property_value&quot;</span>    |
+|            |                          <span class="o">}</span>                           |
++------------+------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-a-specific-profile-property">
+<h3>Remove a specific profile property<a class="headerlink" href="#remove-a-specific-profile-property" title="Permalink to this headline">¶</a></h3>
+<p>To delete a profile property you must to specific the ID architecture, the ID of the profile and the key of it</p>
+<div class="highlight-bash"><div class="highlight"><pre> <span class="nv">$ </span><span class="nb">help </span>profile-property-delete
+ usage: automation profile-property-delete &lt;architecture-id&gt; &lt;profile-id&gt;
+                                           &lt;property-key&gt;
+
+ Delete a profile property by architecture.
+
+ Positional arguments:
+   &lt;architecture-id&gt;  ID of the architecture to delete a new property profile
+                   on it
+   &lt;profile-id&gt;       ID of the profile to delete a property.
+   &lt;property-key&gt;     The key property.
+
+<span class="nv">$ </span>profile-property-delete 1 1 cli-key-property
++------------+------------------------------------------------+
+|  Property  |                     Value                      |
++------------+------------------------------------------------+
+| components |                       <span class="o">{</span>                        |
+|            |                <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;rabbitmq&quot;</span>,             |
+|            |                  <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>               |
+|            |                      <span class="s2">&quot;install&quot;</span>: <span class="o">{</span>              |
+|            |                     <span class="s2">&quot;cluster&quot;</span>: <span class="nb">false</span>,          |
+|            |                    <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;guest&quot;</span>         |
+|            |                           <span class="o">}</span>,                   |
+|            |                      <span class="s2">&quot;start&quot;</span>: <span class="o">{}</span>,              |
+|            |                      <span class="s2">&quot;stop&quot;</span>: <span class="o">{}</span>,               |
+|            |                     <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span>              |
+|            |                        <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>,             |
+|            |                     <span class="s2">&quot;rpassword&quot;</span>: null,         |
+|            |                       <span class="s2">&quot;rport&quot;</span>: null,           |
+|            |                       <span class="s2">&quot;ruser&quot;</span>: null,           |
+|            |                    <span class="s2">&quot;service_type&quot;</span>: <span class="s2">&quot;&quot;</span>,         |
+|            |                    <span class="s2">&quot;virtual_host&quot;</span>: null        |
+|            |                           <span class="o">}</span>                    |
+|            |                         <span class="o">}</span>                      |
+|            |                       <span class="o">}</span>                        |
+|     id     |                       1                        |
+|    name    |                  profile-doc                   |
+| properties |                       <span class="o">{</span>                        |
+|            |     <span class="s2">&quot;fake_property_key&quot;</span>: <span class="s2">&quot;fake_property_value&quot;</span> |
+|            |                       <span class="o">}</span>                        |
++------------+------------------------------------------------+
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -63,6 +503,27 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Profiles</a><ul>
+<li><a class="reference internal" href="#what-is-a-profile">What is a Profile?</a></li>
+<li><a class="reference internal" href="#profiles-and-their-properties">Profiles and their properties</a></li>
+<li><a class="reference internal" href="#managing-profiles">Managing Profiles</a><ul>
+<li><a class="reference internal" href="#list-profiles">List profiles</a></li>
+<li><a class="reference internal" href="#show-a-specific-profile">Show a specific profile</a></li>
+<li><a class="reference internal" href="#create-a-profile">Create a profile</a></li>
+<li><a class="reference internal" href="#modify-a-specific-profile">Modify a specific profile</a></li>
+<li><a class="reference internal" href="#remove-a-specific-profile">Remove a specific profile</a></li>
+<li><a class="reference internal" href="#generate-a-json-output-from-a-specific-profile">Generate a JSON output from a specific profile</a></li>
+<li><a class="reference internal" href="#create-a-profile-property">Create a profile property</a></li>
+<li><a class="reference internal" href="#modify-specifc-profile-property">Modify specifc profile property</a></li>
+<li><a class="reference internal" href="#remove-a-specific-profile-property">Remove a specific profile property</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="Architecture.html"
                         title="previous chapter">Architectures</a></p>

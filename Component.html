@@ -57,12 +57,154 @@
 <h1>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-is-a-component">
 <h2>What is a Component?<a class="headerlink" href="#what-is-a-component" title="Permalink to this headline">¶</a></h2>
-<p>A component is the most fundamental configuration element in FABuloso, where each component has a set of gathered services, this services have methods that define a specific configuration of an Openstack or Stackops Service, previously a set of properties that defines to itself.</p>
-<p><a class="reference external" href="http://fabuloso.stackops.org/">FABuloso</a> is a python tool to easily organize and deploy an OpenStack architecture using Fabric. FABuloso manages configuration with components within <cite>catalogs &lt;&gt;https://github.com/StackOps/fabuloso-catalog</cite>.</p>
+<p>A component is the most fundamental configuration element in <strong>FABuloso</strong>, where each component has a set of gathered services, this services have methods that define a specific configuration of an <strong>Openstack or Stackops Service</strong>, previously a set of properties that defines to itself.</p>
+<p><a class="reference external" href="http://fabuloso.stackops.org/index.html">FABuloso</a> is a python tool to easily organize and deploy an OpenStack architecture using Fabric. FABuloso manages configuration with components within <strong>catalogs</strong>.</p>
+<div class="figure align-center">
+<img alt="Some Openstack Components" src="_images/openstackComponents.png" style="width: 800pt;" />
+<p class="caption"><strong>Some Openstack Components</strong></p>
 </div>
-<div class="section" id="what-is-catalog-of-components">
-<h2>What is Catalog of Components?<a class="headerlink" href="#what-is-catalog-of-components" title="Permalink to this headline">¶</a></h2>
-<p>The Catalog of components are a set of components by itself, used to deploy an Openstack Architecture, this catalog are hosted in github as an open project <cite>here &lt;https://github.com/StackOps/fabuloso-catalog&gt;</cite></p>
+</div>
+<div class="section" id="what-is-catalog-components">
+<h2>What is Catalog Components?<a class="headerlink" href="#what-is-catalog-components" title="Permalink to this headline">¶</a></h2>
+<p>The Catalog components are a set of components by itself, used to deploy an Openstack Architecture, this catalog are hosted in github as an open project <a class="reference external" href="https://github.com/StackOps/fabuloso-catalog">here</a></p>
+</div>
+<div class="section" id="mananing-components">
+<h2>Mananing Components<a class="headerlink" href="#mananing-components" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre>component-list      List all the components that are available on
+                    automation.
+component-show      Show details about a component
+component-services  List all the services by a component
+</pre></div>
+</div>
+<div class="section" id="list-components">
+<h3>List components<a class="headerlink" href="#list-components" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>component-list
++-----------------+
+|       name      |
++-----------------+
+|    accounting   |
+|      apache     |
+|    automation   |
+|      cinder     |
+|     compute     |
+|       fake      |
+|      glance     |
+|     keystone    |
+|      mysql      |
+|       nova      |
+|        os       |
+|       portal    |
+|     quantum     |
+| quantum_plugins |
+|     rabbitmq    |
+|     storage     |
+|      swift      |
++-----------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-a-specific-component">
+<h3>Show a specific component<a class="headerlink" href="#show-a-specific-component" title="Permalink to this headline">¶</a></h3>
+<p>To show details about a component this one must be reference by its name</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>component-show mysql
++------------+--------------------------------------------+
+|  Property  |                   Value                    |
++------------+--------------------------------------------+
+|    name    |                   mysql                    |
+| properties |                     <span class="o">{</span>                      |
+|            |                  <span class="s2">&quot;install&quot;</span>: <span class="o">{</span>              |
+|            |         <span class="s2">&quot;automation_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, |
+|            |          <span class="s2">&quot;automation_user&quot;</span>: <span class="s2">&quot;automation&quot;</span>,  |
+|            |           <span class="s2">&quot;cinder_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;cinder_user&quot;</span>: <span class="s2">&quot;cinder&quot;</span>,      |
+|            |           <span class="s2">&quot;glance_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;glance_user&quot;</span>: <span class="s2">&quot;glance&quot;</span>,      |
+|            |          <span class="s2">&quot;keystone_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,  |
+|            |            <span class="s2">&quot;keystone_user&quot;</span>: <span class="s2">&quot;keystone&quot;</span>,    |
+|            |            <span class="s2">&quot;nova_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,    |
+|            |                <span class="s2">&quot;nova_user&quot;</span>: <span class="s2">&quot;nova&quot;</span>,        |
+|            |          <span class="s2">&quot;quantum_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |             <span class="s2">&quot;quantum_user&quot;</span>: <span class="s2">&quot;quantum&quot;</span>,     |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |              <span class="s2">&quot;set_accounting&quot;</span>: <span class="o">{</span>           |
+|            |         <span class="s2">&quot;accounting_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, |
+|            |           <span class="s2">&quot;accounting_user&quot;</span>: <span class="s2">&quot;activity&quot;</span>,   |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |              <span class="s2">&quot;set_automation&quot;</span>: <span class="o">{</span>           |
+|            |         <span class="s2">&quot;automation_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, |
+|            |          <span class="s2">&quot;automation_user&quot;</span>: <span class="s2">&quot;automation&quot;</span>,  |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;set_cinder&quot;</span>: <span class="o">{</span>             |
+|            |           <span class="s2">&quot;cinder_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;cinder_user&quot;</span>: <span class="s2">&quot;cinder&quot;</span>,      |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;set_glance&quot;</span>: <span class="o">{</span>             |
+|            |           <span class="s2">&quot;glance_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;glance_user&quot;</span>: <span class="s2">&quot;glance&quot;</span>,      |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |               <span class="s2">&quot;set_keystone&quot;</span>: <span class="o">{</span>            |
+|            |          <span class="s2">&quot;keystone_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,  |
+|            |            <span class="s2">&quot;keystone_user&quot;</span>: <span class="s2">&quot;keystone&quot;</span>,    |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                 <span class="s2">&quot;set_nova&quot;</span>: <span class="o">{</span>              |
+|            |            <span class="s2">&quot;nova_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,    |
+|            |                <span class="s2">&quot;nova_user&quot;</span>: <span class="s2">&quot;nova&quot;</span>,        |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;set_portal&quot;</span>: <span class="o">{</span>             |
+|            |           <span class="s2">&quot;portal_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;portal_user&quot;</span>: <span class="s2">&quot;portal&quot;</span>,      |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;set_quantum&quot;</span>: <span class="o">{</span>            |
+|            |          <span class="s2">&quot;quantum_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |             <span class="s2">&quot;quantum_user&quot;</span>: <span class="s2">&quot;quantum&quot;</span>,     |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;teardown&quot;</span>: <span class="o">{}</span>,             |
+|            |                 <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span>              |
+|            |                <span class="s2">&quot;database_type&quot;</span>: <span class="s2">&quot;&quot;</span>,        |
+|            |                <span class="s2">&quot;drop_schema&quot;</span>: null,        |
+|            |                    <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>,             |
+|            |             <span class="s2">&quot;install_database&quot;</span>: null,      |
+|            |                  <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;&quot;</span>,           |
+|            |                    <span class="s2">&quot;port&quot;</span>: <span class="s2">&quot;&quot;</span>,             |
+|            |                   <span class="s2">&quot;schema&quot;</span>: <span class="s2">&quot;&quot;</span>,            |
+|            |                   <span class="s2">&quot;username&quot;</span>: <span class="s2">&quot;&quot;</span>           |
+|            |                       <span class="o">}</span>                    |
+|            |                     <span class="o">}</span>                      |
++------------+--------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="list-services-by-a-specifi-component">
+<h3>List services by a specifi component<a class="headerlink" href="#list-services-by-a-specifi-component" title="Permalink to this headline">¶</a></h3>
+<p>To list the set of services about a component this one must be reference by its name</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>component-services mysql
++----------------+-------------------------------------------------------------------+
+|      Name      |                            description                            |
++----------------+-------------------------------------------------------------------+
+|    install     | Prepares a database and a user password <span class="k">for </span>each StackOps schemas |
+| set_accounting | Creates a new database <span class="k">for </span>accounting and grants privileges on it |
+| set_automation | Creates a new database <span class="k">for </span>automation and grants privileges on it |
+|   set_cinder   |   Creates a new database <span class="k">for </span>cinder and grants privileges on it   |
+|   set_glance   |   Creates a new database <span class="k">for </span>glance and grants privileges on it   |
+|  set_keystone  |  Creates a new database <span class="k">for </span>keystone and grants privileges on it  |
+|    set_nova    |    Creates a new database <span class="k">for </span>nova and grants privileges on it    |
+|   set_portal   |   Creates a new database <span class="k">for </span>portal and grants privileges on it   |
+|  set_quantum   |   Creates a new database <span class="k">for </span>quantum and grants privileges on it  |
+|    teardown    |                       Stop the mysql service                      |
+|    validate    |             Validates main database to operate with it            |
++----------------+-------------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -76,7 +218,13 @@
   <ul>
 <li><a class="reference internal" href="#">Components</a><ul>
 <li><a class="reference internal" href="#what-is-a-component">What is a Component?</a></li>
-<li><a class="reference internal" href="#what-is-catalog-of-components">What is Catalog of Components?</a></li>
+<li><a class="reference internal" href="#what-is-catalog-components">What is Catalog Components?</a></li>
+<li><a class="reference internal" href="#mananing-components">Mananing Components</a><ul>
+<li><a class="reference internal" href="#list-components">List components</a></li>
+<li><a class="reference internal" href="#show-a-specific-component">Show a specific component</a></li>
+<li><a class="reference internal" href="#list-services-by-a-specifi-component">List services by a specifi component</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
