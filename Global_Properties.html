@@ -51,6 +51,114 @@
             
   <div class="section" id="global-properties">
 <h1>Global Properties<a class="headerlink" href="#global-properties" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-are-global-properties">
+<h2>What are Global Properties?<a class="headerlink" href="#what-are-global-properties" title="Permalink to this headline">¶</a></h2>
+<p>Global properties is a high level repository that keeps a set of properties of the key/value form and are <strong>defined by Stackops or the same User</strong>; helps to define a <strong>component of the catalog</strong> and its properties previously, but also these properties (used in the catalog components: mysql, rabbitmq, keystone, etc) can be modified once again but setting its own value; but take into account the next:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The global property must be a reference of the whole componets that use it, that means if the property is <strong>called automation.user</strong> in the global properties and we going to work
+with the mysql component or rabbitmq component and this two components have a property called user the default value will be the given at the moment to define the global property:</li>
+</ul>
+</div></blockquote>
+<div class="highlight-bash"><div class="highlight"><pre><span class="s1">&#39;mysql&#39;</span>: <span class="o">{</span><span class="s1">&#39;automation_user&#39;</span>: <span class="s1">&#39;$automation.user&#39;</span><span class="o">}</span>
+<span class="s1">&#39;rabbitmq&#39;</span>: <span class="o">{</span><span class="s1">&#39;user&#39;</span>: <span class="s1">&#39;$automation.user&#39;</span><span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="managing-global-properties">
+<h2>Managing Global Properties<a class="headerlink" href="#managing-global-properties" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre>global-property-list
+                    List all the properties that are available on
+global-property-create
+                    Add a new property.
+global-property-update
+                    Updates a property.
+                    automation.
+global-property-delete
+                    Delete a property.
+</pre></div>
+</div>
+<div class="section" id="list-global-properties">
+<h3>List global properties<a class="headerlink" href="#list-global-properties" title="Permalink to this headline">¶</a></h3>
+<p>List all the properties that are available on automation.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>global-property-list
++----------------+-----------------+
+|    Property    |      Value      |
++----------------+-----------------+
+| key_docu_cli_1 | key_value_cli_1 |
+| key_docu_cli_2 | key_value_cli_2 |
++----------------+-----------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-new-global-property">
+<h3>Create a new global property<a class="headerlink" href="#create-a-new-global-property" title="Permalink to this headline">¶</a></h3>
+<p>To create a new global property you must to provide its key and value as mandatories</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>global-property-create
+usage: automation global-property-create &lt;property-key&gt; &lt;property-value&gt;
+
+Add a new property. :param cs: :param args:
+
+Positional arguments:
+  &lt;property-key&gt;    The key property.
+  &lt;property-value&gt;  The value property
+
+<span class="nv">$ </span>global-property-create key_docu_cli_3 key_value_cli_3
++----------------+-----------------+
+|    Property    |      Value      |
++----------------+-----------------+
+| key_docu_cli_1 | key_value_cli_1 |
+| key_docu_cli_2 | key_value_cli_2 |
+| key_docu_cli_3 | key_value_cli_3 |
++----------------+-----------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-a-specific-global-property">
+<h3>Update a specific global property<a class="headerlink" href="#update-a-specific-global-property" title="Permalink to this headline">¶</a></h3>
+<p>To modify a global property you must to provide its key and its new value as mandatories</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>global-property-update
+usage: automation global-property-update &lt;property-key&gt; &lt;property-value&gt;
+
+Updates a property. :param cs: :param args:
+
+Positional arguments:
+  &lt;property-key&gt;    The key property.
+  &lt;property-value&gt;  The value property
+
+<span class="nv">$ </span>global-property-update key_docu_cli_3 key_value_cli_3_update
++----------------+------------------------+
+|    Property    |         Value          |
++----------------+------------------------+
+| key_docu_cli_1 |    key_value_cli_1     |
+| key_docu_cli_2 |    key_value_cli_2     |
+| key_docu_cli_3 | key_value_cli_3_update |
++----------------+------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete-a-specific-global-property">
+<h3>Delete a specific global property<a class="headerlink" href="#delete-a-specific-global-property" title="Permalink to this headline">¶</a></h3>
+<p>To delete a global property you must to provide its key as mandatory</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>global-property-delete
+usage: automation global-property-delete &lt;property-key&gt;
+
+Delete a property. :param cs: :param args:
+
+Positional arguments:
+  &lt;property-key&gt;  The key property.
+
+<span class="nv">$ </span>global-property-delete key_docu_cli_3
++----------------+------------------------+
+|    Property    |         Value          |
++----------------+------------------------+
+| key_docu_cli_1 |    key_value_cli_1     |
+| key_docu_cli_2 |    key_value_cli_2     |
++----------------+------------------------+
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -59,6 +167,21 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Global Properties</a><ul>
+<li><a class="reference internal" href="#what-are-global-properties">What are Global Properties?</a></li>
+<li><a class="reference internal" href="#managing-global-properties">Managing Global Properties</a><ul>
+<li><a class="reference internal" href="#list-global-properties">List global properties</a></li>
+<li><a class="reference internal" href="#create-a-new-global-property">Create a new global property</a></li>
+<li><a class="reference internal" href="#update-a-specific-global-property">Update a specific global property</a></li>
+<li><a class="reference internal" href="#delete-a-specific-global-property">Delete a specific global property</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="Zone.html"
                         title="previous chapter">Zones</a></p>
