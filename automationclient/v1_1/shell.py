@@ -1042,8 +1042,9 @@ def do_role_component_json(cs, args):
 @utils.arg('component', metavar='<component>',
            help='Name of the component.')
 @utils.arg('component_file', metavar='<component-file>',
-           help='File with extension *.json describing the'
-                'component to update')
+           help='File with extension *.json describing the '
+                'component to update. It is took from the operation '
+                'role-component-json as reference.')
 @utils.service_type('automation')
 def do_role_component_update(cs, args):
     """Update a component by zone and role ."""

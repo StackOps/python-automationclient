@@ -4,15 +4,36 @@ Global Properties
 What are Global Properties?
 ---------------------------
 
+A global property is a global variable that is stored in automation and can be referenced by zone or architecture properties. The contents of a global property can vary, but they often include sensitive information (such as database passwords).
+
 Global properties is a high level repository that keeps a set of properties of the key/value form and are **defined by Stackops or the same User**; helps to define a **component of the catalog** and its properties previously, but also these properties (used in the catalog components: mysql, rabbitmq, keystone, etc) can be modified once again but setting its own value; but take into account the next:
 
-	- The global property must be a reference of the whole componets that use it, that means if the property is **called automation.user** in the global properties and we going to work 
+	- The global property must be a reference of the whole componets that use it, that means if the property is called **globals.user** in the global properties and we going to work 
           with the mysql component or rabbitmq component and this two components have a property called user the default value will be the given at the moment to define the global property:
 
 .. code-block:: bash
   
-   'mysql': {'automation_user': '$automation.user'}
-   'rabbitmq': {'user': '$automation.user'}
+   'mysql': {'automation_user': '$globals.user'}
+   'rabbitmq': {'user': '$globals.user'}
+
+
+How global properties can be referenced?
+----------------------------------------
+
+The basic way to use a global property is using the $globals prefix when setting a property. For instance, if a property mysql.host wants to use the global property database_password, the content of mysql.root_password should be:
+
+.. code-block:: bash
+  
+   {... : {"mysql": {"root_password": $globals.database_password}}}
+
+In some situations, we want that general properties be referenced automatically by global properties. For example, if we want that every component property root_password had the same password content, we should first create a global property called root.property:
+
+.. code-block:: bash
+  
+   {... :{"mysql": {"root_password": my_secret}}}
+
+Secondly, when the user will create a profile, every property matching component.root_password will be filled with $globals.root.password.
+
 
 Managing Global Properties
 --------------------------
