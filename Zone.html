@@ -26,8 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="python-automationclient 0.1 documentation" href="index.html" />
     <link rel="up" title="Command-line Tool" href="Command-line_tool.html" />
-    <link rel="next" title="Global Properties" href="Global_Properties.html" />
-    <link rel="prev" title="Nodes" href="Node.html" /> 
+    <link rel="prev" title="Profiles" href="Profile.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,10 +36,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Global_Properties.html" title="Global Properties"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="Node.html" title="Nodes"
+          <a href="Profile.html" title="Profiles"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">python-automationclient 0.1 documentation</a> &raquo;</li>
           <li><a href="Reference.html" >Reference</a> &raquo;</li>
@@ -55,6 +51,819 @@
             
   <div class="section" id="zones">
 <h1>Zones<a class="headerlink" href="#zones" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-a-zone">
+<h2>What is a Zone?<a class="headerlink" href="#what-is-a-zone" title="Permalink to this headline">¶</a></h2>
+<p>An Openstack deployment <strong>zone</strong> is usually called a Server Zone as well. A Zone allows the division of deployments within logical groups enabling better instance distribution. A Zone requires, at least, an API node, a Scheduler, a MySQL database and a RabbitMQ. A Nova Zone commonly contains, as well, Volume Storage nodes and Computing nodes.</p>
+<p>A Zone does not share any component with others. The only way a Zone can communicate with another is through the Openstack API, although this requires the Zones to be hierarchically configured to be able to see one another.</p>
+</div>
+<div class="section" id="what-can-i-do-with-a-zone">
+<h2>What can I do with a Zone?<a class="headerlink" href="#what-can-i-do-with-a-zone" title="Permalink to this headline">¶</a></h2>
+<p>A zone is a set of physical compute, storage and network resources that, thanks to OpenStack magic, are offered to users as virtual resources. For example: 10 physical servers with 12 cores and 64GB of RAM can become 120 cores and 640GB of RAM virtually available for the users of that particular zone.</p>
+<p>These zones can be enabled to customers in different ways:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Private Cloud: Any given IT Department sets up a StackOps Enterprise Edition and allocates part of one (or many) zone(s) to its internal customers, traditionally other departments or
+services.</li>
+<li>Public Cloud: A Hosting Company or a Service Provider decides to offer to its customers resources on demand under the pay-per-use model, allocating a single zone for multiple clients.</li>
+<li>Virtual Private Cloud: A Hosting Company or a Service Provider allocates a full zone to a single customer, where all the resources are served upon demand but not shared.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="zone-information">
+<h2>Zone information<a class="headerlink" href="#zone-information" title="Permalink to this headline">¶</a></h2>
+<p>Each zone implements an <strong>architecture</strong>. This architecture helps to configure the different <strong>Nodes</strong> of the zone based on the <strong>Properties taken from the architecture profile</strong>.</p>
+</div>
+<div class="section" id="zone-and-their-properties">
+<h2>Zone and their properties<a class="headerlink" href="#zone-and-their-properties" title="Permalink to this headline">¶</a></h2>
+<p>Automation admininistrators are able to edit the content of the profile architecture propagated when creating the zone.</p>
+<p>Similarly to system global properties and profile global properties, a global zone property can be stored in a zone. To reference this global zone property in any component property use $zone.zone_property_name convention. For example:</p>
+<p>If the next zone property is created:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">my_user</span><span class="o">=</span>stackops_user
+</pre></div>
+</div>
+<p>A component property can reference it by setting the value property as follows:</p>
+<div class="highlight-bash"><div class="highlight"><pre>nova.user<span class="o">=</span><span class="nv">$zone</span>.my_user
+</pre></div>
+</div>
+<p>Furthermore, zone properties propagated from the architecture profile may want to reference to other entities properties like node properties. To do that the content of these properties must follow the convention $node.id_node.node_property_name, for example:</p>
+<div class="highlight-bash"><div class="highlight"><pre>compute.mysql_host<span class="o">=</span><span class="nv">$node</span>.1.management_network_ip
+</pre></div>
+</div>
+</div>
+<div class="section" id="what-is-a-role">
+<h2>What is a Role?<a class="headerlink" href="#what-is-a-role" title="Permalink to this headline">¶</a></h2>
+<p>To know what a is role, you first need to know what is a component. A <a class="reference external" href="http://stackops.github.io/python-automationclient/Component.html#what-is-a-component">component</a> is a configured entity of the zone that defines its behaviour. It have a set of services that actually are actions over the component (stop, power on, install, reconfigure... etc).</p>
+<p><strong>Roles</strong> are created when user creates the zone. They are a set of components. A role might or might not be associated to a node.</p>
+<p>Once user associates a role to a node then all the components of it will be deployed to the node through Fabuloso. When we associate a role to a node we are actually deploying all of its components in the target physical machine.</p>
+</div>
+<div class="section" id="what-is-a-node">
+<h2>What is a Node?<a class="headerlink" href="#what-is-a-node" title="Permalink to this headline">¶</a></h2>
+<p>Each zone is composed of different servers, the so-called Nodes. Each node can host different Openstack processes plus some components and applications that Nova needs to run.
+Node properties</p>
+<p>Each Node can be identified by this list of properties (example):</p>
+<div class="highlight-bash"><div class="highlight"><pre>+----------------------------------+-------------------------------------------------------------+
+|Property                          |                          Sample Value                       |
++<span class="o">==================================</span>+<span class="o">=============================================================</span>+
+|certified                         | <span class="nb">true</span>                                                        |
++----------------------------------+-------------------------------------------------------------+
+|connection_data                   | <span class="o">{</span>                                                           |
+|                                  |    <span class="nv">username</span><span class="o">=</span><span class="s2">&quot;stackops&quot;</span>,                                     |
+|                                  |    <span class="nv">key_name</span><span class="o">=</span><span class="s2">&quot;nonsecure&quot;</span>,                                    |
+|                                  |    <span class="nv">host</span><span class="o">=</span><span class="s2">&quot;10.15.111.39&quot;</span>,                                     |
+|                                  |    <span class="nv">port</span><span class="o">=</span>22                                                  |
+|                                  | <span class="o">}</span>                                                           |
++----------------------------------+-------------------------------------------------------------+
+|cores                             | 1                                                           |
++----------------------------------+-------------------------------------------------------------+
+|created                           | <span class="s2">&quot;2013-09-30 08:39:42&quot;</span>                                       |
++----------------------------------+-------------------------------------------------------------+
+|disk_size                         | 17179869184                                                 |
++----------------------------------+-------------------------------------------------------------+
+|id                                | 1                                                           |
++----------------------------------+-------------------------------------------------------------+
+|ip                                | <span class="s2">&quot;10.15.111.39&quot;</span>                                              |
++----------------------------------+-------------------------------------------------------------+
+|lom_ip                            | <span class="s2">&quot;10.15.111.39&quot;</span>                                              |
++----------------------------------+-------------------------------------------------------------+
+|lom_mac                           | <span class="s2">&quot;00:50:56:3f:d7:60&quot;</span>                                         |
++----------------------------------+-------------------------------------------------------------+
+|mac                               | <span class="s2">&quot;00:50:56:3f:d7:60&quot;</span>                                         |
++----------------------------------+-------------------------------------------------------------+
+|management_network_dns            | <span class="s2">&quot;10.15.111.39&quot;</span>                                              |
++----------------------------------+-------------------------------------------------------------+
+|management_network_gateway        | <span class="s2">&quot;10.15.111.39&quot;</span>                                              |
++----------------------------------+-------------------------------------------------------------+
+|management_network_ip             | <span class="s2">&quot;10.15.111.39&quot;</span>                                              |
++----------------------------------+-------------------------------------------------------------+
+|management_network_netmask        | <span class="s2">&quot;10.15.111.39&quot;</span>                                              |
++----------------------------------+-------------------------------------------------------------+
+|megaherzs                         | 0                                                           |
++----------------------------------+-------------------------------------------------------------+
+|memory                            | 1073741824                                                  |
++----------------------------------+-------------------------------------------------------------+
+|name                              | <span class="s2">&quot;controller-trinode-zone1&quot;</span>                                  |
++----------------------------------+-------------------------------------------------------------+
+|ports                             | 1                                                           |
++----------------------------------+-------------------------------------------------------------+
+|product                           | <span class="s2">&quot;VMware Virtual Platform ()&quot;</span>                                |
++----------------------------------+-------------------------------------------------------------+
+|status                            | <span class="s2">&quot;HOST_DOWN&quot;</span>                                                 |
++----------------------------------+-------------------------------------------------------------+
+|threads                           | 1                                                           |
++----------------------------------+-------------------------------------------------------------+
+|updated                           | <span class="s2">&quot;2013-09-30 14:48:27&quot;</span>                                       |
++----------------------------------+-------------------------------------------------------------+
+|vendor                            | <span class="s2">&quot;VMware, Inc.&quot;</span>                                              |
++----------------------------------+-------------------------------------------------------------+
+|zone_id                           | 2                                                           |
++----------------------------------+-------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="what-is-a-task">
+<h2>What is a Task?<a class="headerlink" href="#what-is-a-task" title="Permalink to this headline">¶</a></h2>
+<p>We define a task as the execution of a specific service of a role&#8217;s component. You can not perform any operation after the task is been launched, unless this in the PENDING state, in which case the task can be cancelled.
+Each task can be identified by this list of properties (example):</p>
+<div class="highlight-bash"><div class="highlight"><pre>+-----------+--------------------------------------------------+
+|Property   | Sample Value                                     |
++<span class="o">===========</span>+<span class="o">==================================================</span>+
+|finished_at| <span class="s2">&quot;2013-09-30 09:57:03&quot;</span>                            |
++-----------+--------------------------------------------------+
+|id         | 1                                                |
++-----------+--------------------------------------------------+
+|name       | folsom.mysql.install                             |
++-----------+--------------------------------------------------+
+|node_id    | 2                                                |
++-----------+--------------------------------------------------+
+|result     | <span class="s2">&quot;Exception(u&#39;Output: 10...5.111.39 out: install&quot;</span> |
++-----------+--------------------------------------------------+
+|started_at | <span class="s2">&quot;None&quot;</span>                                           |
++-----------+--------------------------------------------------+
+|state      | <span class="s2">&quot;FAILURE&quot;</span>                                        |
++-----------+--------------------------------------------------+
+|uuid       | <span class="s2">&quot;0b288197-7a80-4ed3-bde7-188b3f6b9a8d&quot;</span>           |
++-----------+--------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="what-are-zone-properties">
+<h2>What are Zone Properties?<a class="headerlink" href="#what-are-zone-properties" title="Permalink to this headline">¶</a></h2>
+<p>Zone properties are extensions of a zone through the key/value form, these ones can be used later to define service properties in each role of its zone.
+In order to reference the value of these properties, use this nomenclature:</p>
+<div class="highlight-bash"><div class="highlight"><pre>zone.<span class="o">{</span>key<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="managing-zones">
+<h2>Managing Zones<a class="headerlink" href="#managing-zones" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre>zone-list           List all the zones.
+zone-show           Show details about a zone.
+zone-create         Add a new zone by architecture according to a JSON
+                    profile.
+zone-json           Gets the JSON of the zone.
+zone-delete         Remove a specific zone.
+zone-property-create
+                    Create a zone property.
+zone-property-update
+                    Update a zone property.
+zone-property-delete
+                    Delete a zone property.
+zone-tasks-list     List all the tasks by zone.
+role-list           List all the roles by zone.
+role-show           Show details about a role.
+role-deploy         Associate a role to a node.
+role-component-list
+                    List all components by zone and role.
+role-component-show
+                    Show details about a component by zone and role.
+role-component-update
+                    Update a component by zone and role .
+role-component-json
+                    Gets the JSON of the component by zone and role.
+service-list        List all the services by zone, role and component.
+service-show        Show details about a service by zone, role and
+                    component.
+service-execute     Execute a service by zone, role and component.
+node-list           List all activate devices in a zone.
+node-show           Show details about a node in a zone.
+node-tasks-list     List all tasks from a node in a zone.
+node-task-state     Show details about a task from a node in a zone.
+node-task-cancel    Cancel a task from a node in a zone.
+</pre></div>
+</div>
+<div class="section" id="zone-operations">
+<h3>Zone Operations<a class="headerlink" href="#zone-operations" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="list-zones">
+<h4>List zones<a class="headerlink" href="#list-zones" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>zone-list
++----+-----------------+
+| id |       name      |
++----+-----------------+
+| 1  | fakezonestorage |
++----+-----------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-a-specific-zone">
+<h4>Show a specific zone<a class="headerlink" href="#show-a-specific-zone" title="Permalink to this headline">¶</a></h4>
+<p>To show details about a zone, this one must be referenced by its ID</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>zone-show 1
++------------+------------------------------------------------+
+|  Property  |                     Value                      |
++------------+------------------------------------------------+
+|     id     |                       1                        |
+|    name    |                fakezonestorage                 |
+| properties |                       <span class="o">{</span>                        |
+|            |     <span class="s2">&quot;fake_property_key&quot;</span>: <span class="s2">&quot;fake_property_value&quot;</span> |
+|            |                       <span class="o">}</span>                        |
++------------+------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-zone">
+<h4>Create a zone<a class="headerlink" href="#create-a-zone" title="Permalink to this headline">¶</a></h4>
+<p>To create a zone you must specified the architecture ID, its name and generate through the operation <a class="reference external" href="http://stackops.github.io/python-automationclient/Profile.html#generate-a-json-output-from-a-specific-profile">profile-json</a> the JSON file to have as reference at the moment to create a zone</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>zone-create
+usage: automation zone-create &lt;architecture-id&gt; &lt;name&gt; &lt;profile-file&gt;
+
+Add a new zone by architecture according to a JSON profile.
+
+Positional arguments:
+ &lt;architecture-id&gt;  ID of the architecture
+ &lt;name&gt;             Name to the new zone to create
+ &lt;profile-file&gt;     File with extension .json describing the new zone to
+                    create. It is took from the operation profile-json as
+                    reference.
+
+<span class="nv">$ </span>zone-create 1 zone-docu zone-docu.json
++------------+------------------------------------------------+
+|  Property  |                     Value                      |
++------------+------------------------------------------------+
+|     id     |                       2                        |
+|    name    |                   zone-docu                    |
+| properties |                       <span class="o">{</span>                        |
+|            |     <span class="s2">&quot;fake_property_key&quot;</span>: <span class="s2">&quot;fake_property_value&quot;</span> |
+|            |                       <span class="o">}</span>                        |
++------------+------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="generate-json-file-from-a-zone">
+<h4>Generate JSON file from a zone<a class="headerlink" href="#generate-json-file-from-a-zone" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>zone-json 2
+<span class="o">{</span>
+ <span class="s2">&quot;zone&quot;</span>: <span class="o">{</span>
+     <span class="s2">&quot;id&quot;</span>: 2,
+     <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>
+              <span class="s2">&quot;fake_property_key&quot;</span>: <span class="s2">&quot;fake_property_value&quot;</span>
+     <span class="o">}</span>,
+     <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;zone-docu&quot;</span>
+ <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete-a-specific-zone">
+<h4>Delete a specific zone<a class="headerlink" href="#delete-a-specific-zone" title="Permalink to this headline">¶</a></h4>
+<p>To delete a zone, this one must be referenced by its ID</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>zone-delete 2
+</pre></div>
+</div>
+</div>
+<div class="section" id="list-taks-from-zone">
+<h4>List taks from zone<a class="headerlink" href="#list-taks-from-zone" title="Permalink to this headline">¶</a></h4>
+<p>To list all taks by zone, this one must be referenced by its ID</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>zone-tasks-list 1
++----+------+------+-------+--------+
+| id | name | uuid | state | result |
++----+------+------+-------+--------+
++----+------+------+-------+--------+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="properties-zone-operations">
+<h3>Properties Zone Operations<a class="headerlink" href="#properties-zone-operations" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="create-a-zone-property">
+<h4>Create a zone property<a class="headerlink" href="#create-a-zone-property" title="Permalink to this headline">¶</a></h4>
+<p>To create a zone property you must to specific the ID zone</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>zone-property-create
+usage: automation zone-property-create &lt;zone-id&gt; &lt;property-key&gt;
+                                       &lt;property-value&gt;
+
+Create a zone property.
+
+Positional arguments:
+  &lt;zone-id&gt;         ID of the zone to create a property.
+  &lt;property-key&gt;    The key property.
+  &lt;property-value&gt;  The value property
+
+<span class="nv">$ </span>zone-property-create 1 key_docu_property value_docu_property
++------------+-------------------------------------------------+
+|  Property  |                      Value                      |
++------------+-------------------------------------------------+
+|     id     |                        1                        |
+|    name    |                 fakezonestorage                 |
+| properties |                        <span class="o">{</span>                        |
+|            |     <span class="s2">&quot;fake_property_key&quot;</span>: <span class="s2">&quot;fake_property_value&quot;</span>, |
+|            |      <span class="s2">&quot;key_docu_property&quot;</span>: <span class="s2">&quot;value_docu_property&quot;</span> |
+|            |                        <span class="o">}</span>                        |
++------------+-------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="modify-specifc-profile-property">
+<h4>Modify specifc profile property<a class="headerlink" href="#modify-specifc-profile-property" title="Permalink to this headline">¶</a></h4>
+<p>To update a zone property you must to specific the ID zone and the key of it.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>zone-property-update
+usage: automation zone-property-update &lt;zone-id&gt; &lt;property-key&gt;
+                                    &lt;property-value&gt;
+
+Update a zone property.
+
+Positional arguments:
+  &lt;zone-id&gt;         ID of the zone to update a property.
+  &lt;property-key&gt;    The key property.
+  &lt;property-value&gt;  The value property
+
+<span class="nv">$ </span>zone-property-update 1 key_docu_property value_docu_property_update
++------------+-------------------------------------------------------+
+|  Property  |                         Value                         |
++------------+-------------------------------------------------------+
+|     id     |                           1                           |
+|    name    |                    fakezonestorage                    |
+| properties |                           <span class="o">{</span>                           |
+|            |        <span class="s2">&quot;fake_property_key&quot;</span>: <span class="s2">&quot;fake_property_value&quot;</span>,    |
+|            |     <span class="s2">&quot;key_docu_property&quot;</span>: <span class="s2">&quot;value_docu_property_update&quot;</span> |
+|            |                           <span class="o">}</span>                           |
++------------+-------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-a-specific-profile-property">
+<h4>Remove a specific profile property<a class="headerlink" href="#remove-a-specific-profile-property" title="Permalink to this headline">¶</a></h4>
+<p>To delete a zone property you must to specific the ID zone and the key of it</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>zone-property-delete
+usage: automation zone-property-delete &lt;zone-id&gt; &lt;property-key&gt;
+
+Delete a zone property.
+
+Positional arguments:
+   &lt;zone-id&gt;       ID of the zone to delete a property.
+   &lt;property-key&gt;  The key property.
+
+<span class="nv">$ </span>zone-property-delete 1 key_docu_property
++------------+------------------------------------------------+
+| Property   |                     Value                      |
++------------+------------------------------------------------+
+|     id     |                       1                        |
+|    name    |                fakezonestorage                 |
+| properties |                       <span class="o">{</span>                        |
+|            |     <span class="s2">&quot;fake_property_key&quot;</span>: <span class="s2">&quot;fake_property_value&quot;</span> |
+|            |                       <span class="o">}</span>                        |
++------------+------------------------------------------------+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="roles-operations">
+<h3>Roles Operations<a class="headerlink" href="#roles-operations" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="list-roles">
+<h4>List roles<a class="headerlink" href="#list-roles" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>role-list 1
++----+------------+
+| id |    name    |
++----+------------+
+| 1  | controller |
+| 2  | compute    |
++----+------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-details-about-a-specific-role">
+<h4>Show details about a specific role<a class="headerlink" href="#show-details-about-a-specific-role" title="Permalink to this headline">¶</a></h4>
+<p>To show details about a role you must specific the ID zone and the ID role</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>role-show
+usage: automation role-show &lt;zone-id&gt; &lt;role-id&gt;
+
+Show details about a role.
+
+Positional arguments:
+  &lt;zone-id&gt;  ID of the zone.
+  &lt;role-id&gt;  ID of the role.
+
+<span class="nv">$ </span>role-show 1 1
+role-show 1 1
++----------+------------+
+| Property |   Value    |
++----------+------------+
+|    id    |     1      |
+|   name   | controller |
++----------+------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="associate-a-node-pyshical-server-discovered-and-in-the-pool-to-a-role">
+<h4>Associate a node (pyshical server discovered and in the pool) to a role<a class="headerlink" href="#associate-a-node-pyshical-server-discovered-and-in-the-pool-to-a-role" title="Permalink to this headline">¶</a></h4>
+<p>This in <strong>one of the most important operations</strong> in the python-automationclient, due to perform a critical stage in the system allowing the installation, configuration and operation of the nodes in a zone, creating the differents tasks once has been defined an architecture to be deployed.</p>
+<p>To deploy a node must be specified the ID zone, ID role and the ID node as mandatories, other parameters can be add to perfom a different behavior</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>role-deploy
+usage: automation role-deploy <span class="o">[</span>--hostname &lt;hostname&gt;<span class="o">]</span> <span class="o">[</span>--no-dhcp-reload<span class="o">]</span>
+                              <span class="o">[</span>--bypass<span class="o">]</span>
+                              &lt;zone-id&gt; &lt;role-id&gt; &lt;node-id&gt;
+
+Associate a role to a node.
+
+Positional arguments:
+  &lt;zone-id&gt;             ID of the zone.
+  &lt;role-id&gt;             ID of the role.
+  &lt;node-id&gt;             ID of the node.
+
+Optional arguments:
+ --hostname &lt;hostname&gt;
+                       We know the hostname of the node
+ --no-dhcp-reload      Specifies dhcp request in target node should ask <span class="k">for</span>
+<span class="k">                       </span>an IP
+ --bypass              Specifies <span class="k">if </span>role should apply should be
+                       skipped.Default is False
+
+
+<span class="nv">$ </span>role-deploy 1 1 1
++----+------+------+-------+--------+
+| id | name | uuid | state | result |
++----+------+------+-------+--------+
++----+------+------+-------+--------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="list-all-component-by-zone-and-role">
+<h4>List all component by zone and role<a class="headerlink" href="#list-all-component-by-zone-and-role" title="Permalink to this headline">¶</a></h4>
+<p>To list all the components by zone and role defined at the moment to create the zone taken as reference an architecture you must specified the ID zone and the ID role</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>role-component-list
+usage: automation role-component-list &lt;zone-id&gt; &lt;role-id&gt;
+
+List all components by zone and role.
+
+Positional arguments:
+  &lt;zone-id&gt;  ID of the zone.
+  &lt;role-id&gt;  ID of the role.
+
+<span class="nv">$ </span>role-component-list 1 1
++----+----------+
+| id |   name   |
++----+----------+
+| 1  |  mysql   |
+| 2  | rabbitmq |
+| 3  | storage  |
++----+----------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-a-specific-component-in-a-node-by-zone-and-role">
+<h4>Show a specific component in a node by zone and role<a class="headerlink" href="#show-a-specific-component-in-a-node-by-zone-and-role" title="Permalink to this headline">¶</a></h4>
+<p>To show details about a component configuration in a node you must specific the ID zone, the ID role, the ID node and the Name of the component</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>role-component-show
+usage: automation role-component-show &lt;zone-id&gt; &lt;role-id&gt; &lt;node-id&gt;
+                                      &lt;component&gt;
+
+Show details about a component by zone and role.
+
+Positional arguments:
+  &lt;zone-id&gt;    ID of the zone.
+  &lt;role-id&gt;    ID of the role.
+  &lt;node-id&gt;    ID of the node.
+  &lt;component&gt;  Name of the component.
+
+<span class="nv">$ </span> role-component-show 1 1 1 mysql
++------------+--------------------------------------------+
+|  Property  |                   Value                    |
++------------+--------------------------------------------+
+|     id     |                     1                      |
+|    name    |                   mysql                    |
+| properties |                     <span class="o">{</span>                      |
+|            |                  <span class="s2">&quot;install&quot;</span>: <span class="o">{</span>              |
+|            |         <span class="s2">&quot;automation_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, |
+|            |          <span class="s2">&quot;automation_user&quot;</span>: <span class="s2">&quot;automation&quot;</span>,  |
+|            |           <span class="s2">&quot;cinder_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;cinder_user&quot;</span>: <span class="s2">&quot;cinder&quot;</span>,      |
+|            |           <span class="s2">&quot;glance_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;glance_user&quot;</span>: <span class="s2">&quot;glance&quot;</span>,      |
+|            |          <span class="s2">&quot;keystone_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,  |
+|            |            <span class="s2">&quot;keystone_user&quot;</span>: <span class="s2">&quot;keystone&quot;</span>,    |
+|            |            <span class="s2">&quot;nova_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,    |
+|            |                <span class="s2">&quot;nova_user&quot;</span>: <span class="s2">&quot;nova&quot;</span>,        |
+|            |          <span class="s2">&quot;quantum_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |             <span class="s2">&quot;quantum_user&quot;</span>: <span class="s2">&quot;quantum&quot;</span>,     |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |              <span class="s2">&quot;set_accounting&quot;</span>: <span class="o">{</span>           |
+|            |         <span class="s2">&quot;accounting_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, |
+|            |           <span class="s2">&quot;accounting_user&quot;</span>: <span class="s2">&quot;activity&quot;</span>,   |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |              <span class="s2">&quot;set_automation&quot;</span>: <span class="o">{</span>           |
+|            |         <span class="s2">&quot;automation_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, |
+|            |          <span class="s2">&quot;automation_user&quot;</span>: <span class="s2">&quot;automation&quot;</span>,  |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;set_cinder&quot;</span>: <span class="o">{</span>             |
+|            |           <span class="s2">&quot;cinder_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;cinder_user&quot;</span>: <span class="s2">&quot;cinder&quot;</span>,      |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;set_glance&quot;</span>: <span class="o">{</span>             |
+|            |           <span class="s2">&quot;glance_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;glance_user&quot;</span>: <span class="s2">&quot;glance&quot;</span>,      |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |               <span class="s2">&quot;set_keystone&quot;</span>: <span class="o">{</span>            |
+|            |          <span class="s2">&quot;keystone_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,  |
+|            |            <span class="s2">&quot;keystone_user&quot;</span>: <span class="s2">&quot;keystone&quot;</span>,    |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                 <span class="s2">&quot;set_nova&quot;</span>: <span class="o">{</span>              |
+|            |            <span class="s2">&quot;nova_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,    |
+|            |                <span class="s2">&quot;nova_user&quot;</span>: <span class="s2">&quot;nova&quot;</span>,        |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;set_portal&quot;</span>: <span class="o">{</span>             |
+|            |           <span class="s2">&quot;portal_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;portal_user&quot;</span>: <span class="s2">&quot;portal&quot;</span>,      |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;set_quantum&quot;</span>: <span class="o">{</span>            |
+|            |          <span class="s2">&quot;quantum_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |             <span class="s2">&quot;quantum_user&quot;</span>: <span class="s2">&quot;quantum&quot;</span>,     |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;teardown&quot;</span>: <span class="o">{}</span>,             |
+|            |                 <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span>              |
+|            |                <span class="s2">&quot;database_type&quot;</span>: <span class="s2">&quot;&quot;</span>,        |
+|            |                <span class="s2">&quot;drop_schema&quot;</span>: null,        |
+|            |                    <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>,             |
+|            |             <span class="s2">&quot;install_database&quot;</span>: null,      |
+|            |                  <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;&quot;</span>,           |
+|            |                    <span class="s2">&quot;port&quot;</span>: <span class="s2">&quot;&quot;</span>,             |
+|            |                   <span class="s2">&quot;schema&quot;</span>: <span class="s2">&quot;&quot;</span>,            |
+|            |                   <span class="s2">&quot;username&quot;</span>: <span class="s2">&quot;&quot;</span>           |
+|            |                       <span class="o">}</span>                    |
+|            |                     <span class="o">}</span>                      |
++------------+--------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="generate-json-component-file-in-a-node-by-zone-and-role">
+<h4>Generate JSON component file in a node by zone and role<a class="headerlink" href="#generate-json-component-file-in-a-node-by-zone-and-role" title="Permalink to this headline">¶</a></h4>
+<p>To generate a JSON file of a component configuration in a node you must specific the ID zone, the ID role, the ID node and the Name component</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span> <span class="nb">help </span>role-component-json
+usage: automation role-component-json &lt;zone-id&gt; &lt;role-id&gt; &lt;node-id&gt;
+                                      &lt;component&gt;
+
+Gets the JSON of the component by zone and role.
+
+Positional arguments:
+  &lt;zone-id&gt;    ID of the zone.
+  &lt;role-id&gt;    ID of the role.
+  &lt;node-id&gt;    ID of the node.
+  &lt;component&gt;  Name of the component.
+
+<span class="nv">$ </span><span class="o">{</span>
+   <span class="s2">&quot;component&quot;</span>: <span class="o">{</span>
+     <span class="s2">&quot;id&quot;</span>: 1,
+     <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>
+         <span class="s2">&quot;set_quantum&quot;</span>: <span class="o">{</span>
+             <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;quantum_user&quot;</span>: <span class="s2">&quot;quantum&quot;</span>,
+             <span class="s2">&quot;quantum_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>
+         <span class="o">}</span>,
+         <span class="s2">&quot;set_keystone&quot;</span>: <span class="o">{</span>
+             <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;keystone_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;keystone_user&quot;</span>: <span class="s2">&quot;keystone&quot;</span>
+         <span class="o">}</span>,
+         <span class="s2">&quot;teardown&quot;</span>: <span class="o">{}</span>,
+         <span class="s2">&quot;set_cinder&quot;</span>: <span class="o">{</span>
+             <span class="s2">&quot;cinder_user&quot;</span>: <span class="s2">&quot;cinder&quot;</span>,
+             <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;cinder_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>
+         <span class="o">}</span>,
+         <span class="s2">&quot;set_automation&quot;</span>: <span class="o">{</span>
+             <span class="s2">&quot;automation_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;automation_user&quot;</span>: <span class="s2">&quot;automation&quot;</span>
+         <span class="o">}</span>,
+         <span class="s2">&quot;set_accounting&quot;</span>: <span class="o">{</span>
+             <span class="s2">&quot;accounting_user&quot;</span>: <span class="s2">&quot;activity&quot;</span>,
+             <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;accounting_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>
+         <span class="o">}</span>,
+         <span class="s2">&quot;set_nova&quot;</span>: <span class="o">{</span>
+             <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;nova_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;nova_user&quot;</span>: <span class="s2">&quot;nova&quot;</span>
+         <span class="o">}</span>,
+         <span class="s2">&quot;install&quot;</span>: <span class="o">{</span>
+             <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;keystone_user&quot;</span>: <span class="s2">&quot;keystone&quot;</span>,
+             <span class="s2">&quot;cinder_user&quot;</span>: <span class="s2">&quot;cinder&quot;</span>,
+             <span class="s2">&quot;quantum_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;glance_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;automation_user&quot;</span>: <span class="s2">&quot;automation&quot;</span>,
+             <span class="s2">&quot;quantum_user&quot;</span>: <span class="s2">&quot;quantum&quot;</span>,
+             <span class="s2">&quot;automation_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;keystone_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;cinder_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;nova_user&quot;</span>: <span class="s2">&quot;nova&quot;</span>,
+             <span class="s2">&quot;glance_user&quot;</span>: <span class="s2">&quot;glance&quot;</span>,
+             <span class="s2">&quot;nova_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>
+         <span class="o">}</span>,
+         <span class="s2">&quot;set_glance&quot;</span>: <span class="o">{</span>
+             <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;glance_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;glance_user&quot;</span>: <span class="s2">&quot;glance&quot;</span>
+         <span class="o">}</span>,
+         <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span>
+             <span class="s2">&quot;username&quot;</span>: <span class="s2">&quot;&quot;</span>,
+             <span class="s2">&quot;drop_schema&quot;</span>: null,
+             <span class="s2">&quot;install_database&quot;</span>: null,
+             <span class="s2">&quot;database_type&quot;</span>: <span class="s2">&quot;&quot;</span>,
+             <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;&quot;</span>,
+             <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;&quot;</span>,
+             <span class="s2">&quot;port&quot;</span>: <span class="s2">&quot;&quot;</span>,
+             <span class="s2">&quot;schema&quot;</span>: <span class="s2">&quot;&quot;</span>
+         <span class="o">}</span>,
+         <span class="s2">&quot;set_portal&quot;</span>: <span class="o">{</span>
+             <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,
+             <span class="s2">&quot;portal_user&quot;</span>: <span class="s2">&quot;portal&quot;</span>,
+             <span class="s2">&quot;portal_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>
+         <span class="o">}</span>
+     <span class="o">}</span>,
+     <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;mysql&quot;</span>
+   <span class="o">}</span>
+  <span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modify-a-specific-component-in-a-node-by-zone-and-role">
+<h4>Modify a specific component in a node by zone and role<a class="headerlink" href="#modify-a-specific-component-in-a-node-by-zone-and-role" title="Permalink to this headline">¶</a></h4>
+<p>To update a component configuration in a node you must specific the ID zone, the ID role, the ID node, the Name component and the JSON file with the component to update generated through the operation <strong>component-role-json</strong> as input</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>role-component-update
+usage: automation role-component-update &lt;zone-id&gt; &lt;role-id&gt; &lt;node-id&gt;
+                                        &lt;component&gt; &lt;component-file&gt;
+
+Update a component by zone and role .
+
+Positional arguments:
+  &lt;zone-id&gt;         ID of the zone.
+  &lt;role-id&gt;         ID of the role.
+  &lt;node-id&gt;         ID of the node.
+  &lt;component&gt;       Name of the component.
+  &lt;component-file&gt;  File with extension .json describing the component to
+                    update. It is took from the operation role-component-json
+                    as reference.
+
+<span class="nv">$ </span>role-cpmponent-update 1 1 1 mysql role_component_update.json
++------------+--------------------------------------------+
+|  Property  |                   Value                    |
++------------+--------------------------------------------+
+|     id     |                     1                      |
+|    name    |                   mysql                    |
+| properties |                     <span class="o">{</span>                      |
+|            |                  <span class="s2">&quot;install&quot;</span>: <span class="o">{</span>              |
+|            |         <span class="s2">&quot;automation_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, |
+|            |          <span class="s2">&quot;automation_user&quot;</span>: <span class="s2">&quot;automation&quot;</span>,  |
+|            |           <span class="s2">&quot;cinder_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;cinder_user&quot;</span>: <span class="s2">&quot;cinder&quot;</span>,      |
+|            |           <span class="s2">&quot;glance_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;glance_user&quot;</span>: <span class="s2">&quot;glance&quot;</span>,      |
+|            |          <span class="s2">&quot;keystone_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,  |
+|            |            <span class="s2">&quot;keystone_user&quot;</span>: <span class="s2">&quot;keystone&quot;</span>,    |
+|            |            <span class="s2">&quot;nova_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,    |
+|            |                <span class="s2">&quot;nova_user&quot;</span>: <span class="s2">&quot;nova&quot;</span>,        |
+|            |          <span class="s2">&quot;quantum_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |             <span class="s2">&quot;quantum_user&quot;</span>: <span class="s2">&quot;quantum&quot;</span>,     |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |              <span class="s2">&quot;set_accounting&quot;</span>: <span class="o">{</span>           |
+|            |         <span class="s2">&quot;accounting_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, |
+|            |           <span class="s2">&quot;accounting_user&quot;</span>: <span class="s2">&quot;activity&quot;</span>,   |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |              <span class="s2">&quot;set_automation&quot;</span>: <span class="o">{</span>           |
+|            |         <span class="s2">&quot;automation_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, |
+|            |          <span class="s2">&quot;automation_user&quot;</span>: <span class="s2">&quot;automation&quot;</span>,  |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;set_cinder&quot;</span>: <span class="o">{</span>             |
+|            |           <span class="s2">&quot;cinder_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;cinder_user&quot;</span>: <span class="s2">&quot;cinder&quot;</span>,      |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;set_glance&quot;</span>: <span class="o">{</span>             |
+|            |           <span class="s2">&quot;glance_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;glance_user&quot;</span>: <span class="s2">&quot;glance&quot;</span>,      |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |               <span class="s2">&quot;set_keystone&quot;</span>: <span class="o">{</span>            |
+|            |          <span class="s2">&quot;keystone_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,  |
+|            |            <span class="s2">&quot;keystone_user&quot;</span>: <span class="s2">&quot;keystone&quot;</span>,    |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                 <span class="s2">&quot;set_nova&quot;</span>: <span class="o">{</span>              |
+|            |            <span class="s2">&quot;nova_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,    |
+|            |                <span class="s2">&quot;nova_user&quot;</span>: <span class="s2">&quot;nova&quot;</span>,        |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;set_portal&quot;</span>: <span class="o">{</span>             |
+|            |           <span class="s2">&quot;portal_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |              <span class="s2">&quot;portal_user&quot;</span>: <span class="s2">&quot;portal&quot;</span>,      |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;set_quantum&quot;</span>: <span class="o">{</span>            |
+|            |          <span class="s2">&quot;quantum_password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,   |
+|            |             <span class="s2">&quot;quantum_user&quot;</span>: <span class="s2">&quot;quantum&quot;</span>,     |
+|            |              <span class="s2">&quot;root_pass&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>,                   |
+|            |                <span class="s2">&quot;teardown&quot;</span>: <span class="o">{}</span>,             |
+|            |                 <span class="s2">&quot;validate&quot;</span>: <span class="o">{</span>              |
+|            |             <span class="s2">&quot;database_type&quot;</span>: <span class="s2">&quot;mysql&quot;</span>,      |
+|            |               <span class="s2">&quot;drop_schema&quot;</span>: <span class="nb">false</span>,        |
+|            |                <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;localhost&quot;</span>,        |
+|            |             <span class="s2">&quot;install_database&quot;</span>: <span class="nb">false</span>,     |
+|            |              <span class="s2">&quot;password&quot;</span>: <span class="s2">&quot;stackops&quot;</span>,       |
+|            |                  <span class="s2">&quot;port&quot;</span>: <span class="s2">&quot;3306&quot;</span>,           |
+|            |                 <span class="s2">&quot;schema&quot;</span>: <span class="s2">&quot;mysql&quot;</span>,         |
+|            |               <span class="s2">&quot;username&quot;</span>: <span class="s2">&quot;stackops&quot;</span>       |
+|            |                       <span class="o">}</span>                    |
+|            |                     <span class="o">}</span>                      |
++------------+--------------------------------------------+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="services-tasks-operations">
+<h3>Services (Tasks) Operations<a class="headerlink" href="#services-tasks-operations" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="list-services-that-are-be-able-to-execute-by-zone-role-and-component">
+<h4>List services that are be able to execute by zone, role and component<a class="headerlink" href="#list-services-that-are-be-able-to-execute-by-zone-role-and-component" title="Permalink to this headline">¶</a></h4>
+<p>To list the services you must specific th ID zone, ID role and name component</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>service-list
+usage: automation service-list &lt;zone-id&gt; &lt;role-id&gt; &lt;component&gt;
+
+List all the services by zone, role and component.
+
+Positional arguments:
+  &lt;zone-id&gt;    ID of the zone.
+  &lt;role-id&gt;    ID of the role.
+  &lt;component&gt;  Name of the component.
+
+<span class="nv">$ </span>service-list 1 1 mysql
++----------------+-------------------------------------------------------------------+
+|      Name      |                            description                            |
++----------------+-------------------------------------------------------------------+
+|    install     | Prepares a database and a user password <span class="k">for </span>each StackOps schemas |
+| set_accounting | Creates a new database <span class="k">for </span>accounting and grants privileges on it |
+| set_automation | Creates a new database <span class="k">for </span>automation and grants privileges on it |
+|   set_cinder   |   Creates a new database <span class="k">for </span>cinder and grants privileges on it   |
+|   set_glance   |   Creates a new database <span class="k">for </span>glance and grants privileges on it   |
+|  set_keystone  |  Creates a new database <span class="k">for </span>keystone and grants privileges on it  |
+|    set_nova    |    Creates a new database <span class="k">for </span>nova and grants privileges on it    |
+|   set_portal   |   Creates a new database <span class="k">for </span>portal and grants privileges on it   |
+|  set_quantum   |   Creates a new database <span class="k">for </span>quantum and grants privileges on it  |
+|    teardown    |                       Stop the mysql service                      |
+|    validate    |             Validates main database to operate with it            |
++----------------+-------------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-a-specific-service-that-are-be-able-to-execute-by-zone-role-and-component">
+<h4>Show a specific service that are be able to execute by zone, role and component<a class="headerlink" href="#show-a-specific-service-that-are-be-able-to-execute-by-zone-role-and-component" title="Permalink to this headline">¶</a></h4>
+<p>To show details about a specific service you must specific th ID zone, ID role, the name component and the name service</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span> &lt;zone-id&gt; &lt;role-id&gt; &lt;component&gt; &lt;service-name&gt;
+
+Show details about a service by zone, role and component.
+
+Positional arguments:
+  &lt;zone-id&gt;       ID of the zone.
+  &lt;role-id&gt;       ID of the role.
+  &lt;component&gt;     Name of the component.
+  &lt;service-name&gt;  Name of the service.
+
+<span class="nv">$ </span> service-show 1 1 mysql install
++-------------+--------------------------------------------------------------------------------------------------+
+|   Property  |                                              Value                                               |
++-------------+--------------------------------------------------------------------------------------------------+
+|    _links   | <span class="o">{</span><span class="s2">&quot;self&quot;</span>: <span class="o">{</span><span class="s2">&quot;href&quot;</span>: <span class="s2">&quot;http://0.0.0.0:8089/v1.1/zones/1/roles/1/components/mysql/services/install&quot;</span><span class="o">}}</span> |
+| description |                Prepares a database and a user password <span class="k">for </span>each StackOps schemas                 |
+|     name    |                                             install                                              |
++-------------+--------------------------------------------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="execute-a-specific-service-in-a-node-by-zone-role-and-component">
+<h4>Execute a specific service in a node by zone, role and component<a class="headerlink" href="#execute-a-specific-service-in-a-node-by-zone-role-and-component" title="Permalink to this headline">¶</a></h4>
+<p>To execute a specific service you must specific th ID zone, ID role, the name component, the name service and finally the ID node where it&#8217;ll be execute</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>service-execute
+usage: automation service-execute &lt;zone-id&gt; &lt;role-id&gt; &lt;component&gt;
+                                  &lt;service-name&gt; &lt;node&gt;
+
+Execute a service by zone, role and component.
+
+Positional arguments:
+  &lt;zone-id&gt;       ID of the zone.
+  &lt;role-id&gt;       ID of the role.
+  &lt;component&gt;     Name of the component.
+  &lt;service-name&gt;  Name of the service.
+  &lt;node&gt;          Identifier of the node.
+
+<span class="nv">$ </span>service-execute 1 1 mysql install 1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="nodes-operations">
+<h3>Nodes Operations<a class="headerlink" href="#nodes-operations" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
 </div>
 
 
@@ -63,12 +872,59 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Zones</a><ul>
+<li><a class="reference internal" href="#what-is-a-zone">What is a Zone?</a></li>
+<li><a class="reference internal" href="#what-can-i-do-with-a-zone">What can I do with a Zone?</a></li>
+<li><a class="reference internal" href="#zone-information">Zone information</a></li>
+<li><a class="reference internal" href="#zone-and-their-properties">Zone and their properties</a></li>
+<li><a class="reference internal" href="#what-is-a-role">What is a Role?</a></li>
+<li><a class="reference internal" href="#what-is-a-node">What is a Node?</a></li>
+<li><a class="reference internal" href="#what-is-a-task">What is a Task?</a></li>
+<li><a class="reference internal" href="#what-are-zone-properties">What are Zone Properties?</a></li>
+<li><a class="reference internal" href="#managing-zones">Managing Zones</a><ul>
+<li><a class="reference internal" href="#zone-operations">Zone Operations</a><ul>
+<li><a class="reference internal" href="#list-zones">List zones</a></li>
+<li><a class="reference internal" href="#show-a-specific-zone">Show a specific zone</a></li>
+<li><a class="reference internal" href="#create-a-zone">Create a zone</a></li>
+<li><a class="reference internal" href="#generate-json-file-from-a-zone">Generate JSON file from a zone</a></li>
+<li><a class="reference internal" href="#delete-a-specific-zone">Delete a specific zone</a></li>
+<li><a class="reference internal" href="#list-taks-from-zone">List taks from zone</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#properties-zone-operations">Properties Zone Operations</a><ul>
+<li><a class="reference internal" href="#create-a-zone-property">Create a zone property</a></li>
+<li><a class="reference internal" href="#modify-specifc-profile-property">Modify specifc profile property</a></li>
+<li><a class="reference internal" href="#remove-a-specific-profile-property">Remove a specific profile property</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#roles-operations">Roles Operations</a><ul>
+<li><a class="reference internal" href="#list-roles">List roles</a></li>
+<li><a class="reference internal" href="#show-details-about-a-specific-role">Show details about a specific role</a></li>
+<li><a class="reference internal" href="#associate-a-node-pyshical-server-discovered-and-in-the-pool-to-a-role">Associate a node (pyshical server discovered and in the pool) to a role</a></li>
+<li><a class="reference internal" href="#list-all-component-by-zone-and-role">List all component by zone and role</a></li>
+<li><a class="reference internal" href="#show-a-specific-component-in-a-node-by-zone-and-role">Show a specific component in a node by zone and role</a></li>
+<li><a class="reference internal" href="#generate-json-component-file-in-a-node-by-zone-and-role">Generate JSON component file in a node by zone and role</a></li>
+<li><a class="reference internal" href="#modify-a-specific-component-in-a-node-by-zone-and-role">Modify a specific component in a node by zone and role</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#services-tasks-operations">Services (Tasks) Operations</a><ul>
+<li><a class="reference internal" href="#list-services-that-are-be-able-to-execute-by-zone-role-and-component">List services that are be able to execute by zone, role and component</a></li>
+<li><a class="reference internal" href="#show-a-specific-service-that-are-be-able-to-execute-by-zone-role-and-component">Show a specific service that are be able to execute by zone, role and component</a></li>
+<li><a class="reference internal" href="#execute-a-specific-service-in-a-node-by-zone-role-and-component">Execute a specific service in a node by zone, role and component</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nodes-operations">Nodes Operations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="Node.html"
-                        title="previous chapter">Nodes</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="Global_Properties.html"
-                        title="next chapter">Global Properties</a></p>
+  <p class="topless"><a href="Profile.html"
+                        title="previous chapter">Profiles</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/Zone.txt"
@@ -98,10 +954,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Global_Properties.html" title="Global Properties"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="Node.html" title="Nodes"
+          <a href="Profile.html" title="Profiles"
              >previous</a> |</li>
         <li><a href="index.html">python-automationclient 0.1 documentation</a> &raquo;</li>
           <li><a href="Reference.html" >Reference</a> &raquo;</li>

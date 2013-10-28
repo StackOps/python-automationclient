@@ -70,7 +70,7 @@ At the moment to list profiles must be specified the ID architecture that has be
 Show a specific profile
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-To show details about a profiles this one must be reference by its ID and must be specified the ID architecture that has been taken as reference
+To show details about a profile, this one must be reference by its ID and must be specified the ID architecture that has been taken as reference
 
 .. code-block:: bash
 

@@ -2,15 +2,14 @@ Command-line Tool
 =================
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 4 
 
     Device    
     Component
+    Global_Properties
     Architecture
     Profile
-    Node
     Zone
-    Global_Properties
 
 In order to use the CLI, you must provide your Automation username, password, tenant, and auth endpoint. Use the corresponding configuration options (--os-username, --os-password, --os-tenant-id, and --os-auth-url) or set them in environment variables:
 
