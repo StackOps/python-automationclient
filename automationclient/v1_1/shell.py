@@ -46,7 +46,8 @@ def _validate_extension_file(file, extension):
 
 def _find_device(cs, device):
     """Get a device by ID."""
-    return utils.find_resource(cs.devices, device)
+
+    return cs.devices.get(device)
 
 
 def _find_component(cs, component):
@@ -193,6 +194,7 @@ def do_device_delete(cs, args):
 def do_device_activate(cs, args):
     """Activate a specific device in the pool."""
     kwargs = {'zone_id': args.zone_id}
+
     if args.lom_user is not None:
         kwargs['lom_user'] = args.lom_user
 
