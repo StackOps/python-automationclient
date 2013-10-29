@@ -17,12 +17,12 @@ One of the most tedious and repetitive tasks in a Data Center is the provisionin
    - Delivery to client
    - The server Pool management and activation within zones implements this process automatically in Automation.
 
-Basically the pool allows to provision new servers into the zones. But it can also perform other interesting feature:
+Basically the pool allows to **provision new servers into the zones**. But it can also perform other interesting feature:
 
 Replacement of failing servers (Failover): Automation offers the possibility to automatically replace malfunctioning servers in an unattended way. The images residing in the different VMs, the network and the general configuration is replicated.
 
-What is the a device?
-^^^^^^^^^^^^^^^^^^^^^
+What is a device?
+^^^^^^^^^^^^^^^^^
 
 A device is a server or another type of device identified by their MAC and it is a candidate to take part in an OpenStack Zone. A device is view in the pool once it has been added to.
 
@@ -39,7 +39,7 @@ The server Pool is the tool included in StackOps Automation, that automates this
 Managing the pool
 -----------------
 
-The operations allow in the python-automatioclient are.
+The operations allowed in the python-automatioclient are:
  
 .. code-block:: bash
 
@@ -107,7 +107,7 @@ To show details about a device this one must be reference by its MAC
 
 Modify a specific device from pool
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-To update a device all arguments are mandatory
+To update a device all arguments are mandatories
 
 .. code-block:: bash
   
@@ -183,7 +183,7 @@ To delete a device, this one must be reference by its MAC
 
 Power off a device
 ^^^^^^^^^^^^^^^^^^
-To power-off a device all arguments are mandatory
+To power-off a device all arguments are mandatories
 
 .. code-block:: bash
   
@@ -202,7 +202,7 @@ To power-off a device all arguments are mandatory
 
 Power on a device
 ^^^^^^^^^^^^^^^^^
-To power-on a device all arguments are mandatory
+To power-on a device all arguments are mandatories
 
 .. code-block:: bash
    
@@ -221,7 +221,7 @@ To power-on a device all arguments are mandatory
 
 Reboot a device
 ^^^^^^^^^^^^^^^
-To reboot a device all arguments are mandatory
+To reboot a device all arguments are mandatories
 
 .. code-block:: bash
 
@@ -321,7 +321,8 @@ Activate a device
 
 Replace a device
 ^^^^^^^^^^^^^^^^
-To replace a device to another one in a zone you must to provide mac, zone-id, role-id and node-id as manatories
+
+To replace a device to another one in a zone you must to provide its MAC, ID zone where it has been activated, ID role and ID node assigned at the moment to include it to a zone
 
 .. code-block:: bash
 

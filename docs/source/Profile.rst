@@ -6,7 +6,7 @@ What is a Profile?
 
 A profile is just a way to save **predefined templates of an architecture without creating a full zone**. User may want to use several common properties for all his zones, and some specific properties for each zone. A way to save the common properties without the need of fill the whole template each time, is by the use of profiles. The profile endpoint will never check the input properties (the zone endpoint will), so you can save any properties you like to use later on. Only the name attribute is mandatory.
 
-A profile is the set of architecture's properties. A profile can be empty (returned by the architecture-template operation) half-filled, or full-filled. Is a dictionary-like structure with all the properties ofthe **components** the architecture can have, this properties are recovered from **catalog components** managed by **FABuloso**.
+A profile is the set of architecture's properties. A profile can be empty (returned by the architecture-template operation) half-filled, or full-filled. Is a dictionary-like structure with all the properties of the **components** the architecture can have, this properties are recovered from **catalog components** managed by **FABuloso**.
 
 Profiles and their properties
 -----------------------------
@@ -15,18 +15,22 @@ A **global profile property** can be stored in a profile entity. To reference th
 
 If the next profile property is created:
 
-my_user=stackops_user
+.. code-block:: bash
+
+   my_user=stackops_user
 
 A **component property** can reference it by setting the value property as follows:
 
-nova.user=$profile.my_user
+.. code-block:: bash
 
-A profile can be empty (returned by the get_template) half-filled, or full-filled. Is a dictionary-like structure with all the properties of the components the architecture can have.
+   nova.user=$profile.my_user
 
 .. note:: A profile must be used as an input at the moment to create a zone
 
 Managing Profiles
 -----------------
+
+The operations allowed in the python-automatioclient are:
 
 .. code-block:: bash
 
@@ -47,7 +51,7 @@ Managing Profiles
 List profiles
 ^^^^^^^^^^^^^
 
-At the moment to list profiles must be specified the ID architecture that has been taken
+At the moment to list profiles must be specified the ID architecture that has been taken as reference
 
 .. code-block:: bash
 
@@ -70,7 +74,7 @@ At the moment to list profiles must be specified the ID architecture that has be
 Show a specific profile
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-To show details about a profile, this one must be reference by its ID and must be specified the ID architecture that has been taken as reference
+To show details about a specific profile, this one must be referenced by its ID and must be specified the ID architecture that has been taken as reference
 
 .. code-block:: bash
 
@@ -108,7 +112,7 @@ To show details about a profile, this one must be reference by its ID and must b
 Create a profile
 ^^^^^^^^^^^^^^^^
 
-To create a profile you must to specific the ID architecture to take as reference, the name of the profile and a JSON file that can be generate with the operation architecture-template.
+To create a profile you must specific the ID architecture to take as reference, the name of the profile and a JSON file that can be generate with the operation architecture-template.
 
 .. code-block:: bash
 
@@ -154,7 +158,7 @@ To create a profile you must to specific the ID architecture to take as referenc
 Modify a specific profile
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To update a profile you must to specific the ID architecture, the ID of the profile and a JSON file that can be generate with the operation profile-json and modify it.
+To update a profile you must specific the ID architecture, the ID of the profile and a JSON profile file that can be generate with the operation profile-json.
 
 .. code-block:: bash
 
@@ -167,7 +171,7 @@ To update a profile you must to specific the ID architecture, the ID of the prof
     <architecture-id>  ID of the architecture.
     <profile-id>       ID of the profile to update.
     <profile-file>     File with extension .json describing the profile to
-                     modify.
+                       modify.
 
 
    $ profile-update 1 2 profile-cli.json 
@@ -201,7 +205,7 @@ To update a profile you must to specific the ID architecture, the ID of the prof
 Remove a specific profile
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To delete you must to specific the ID architecture and the ID of the profile.
+To delete you must specific the ID architecture and the ID of the profile.
 
 .. code-block:: bash
 
@@ -210,9 +214,9 @@ To delete you must to specific the ID architecture and the ID of the profile.
 Generate a JSON output from a specific profile
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This is one of the most useful operations in the CLI given that to operate with the profiles' options most of times must be used a JSON profile file, also as input at the moment to create a zone.
+This is one of the most useful operations in the ptthon-automationclient given that operate with the 'profiles' options most of times must be used a JSON profile file, also as input at the moment to create a zone.
 
-To generate a JSON output you must to specific the ID architecture and the ID of the profile.
+To generate a JSON output you must specific the ID architecture and the ID of the profile.
 
 .. code-block:: bash 
 
@@ -322,7 +326,7 @@ To generate a JSON output you must to specific the ID architecture and the ID of
 Create a profile property
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To create a profile property you must to specific the ID architecture and the ID of the profile are mandatories, thus as the key and value of it
+To create a profile property you must specific the ID architecture and the ID of the profile as mandatories, thus as the key and value of it
 
 .. code-block:: bash
 
@@ -373,7 +377,7 @@ To create a profile property you must to specific the ID architecture and the ID
 Modify specifc profile property
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To update a profile property you must to specific the ID architecture, the ID of the profile are mandatories and the key of it.
+To update a profile property you must specific the ID architecture, the ID of the profile as mandatories and the key of it.
 
 .. code-block:: bash
    
@@ -424,7 +428,7 @@ To update a profile property you must to specific the ID architecture, the ID of
 Remove a specific profile property
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To delete a profile property you must to specific the ID architecture, the ID of the profile and the key of it
+To delete a profile property you must specific the ID architecture, the ID of the profile and the key of it
 
 .. code-block:: bash
 
