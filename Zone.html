@@ -53,8 +53,8 @@
 <h1>Zones<a class="headerlink" href="#zones" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-is-a-zone">
 <h2>What is a Zone?<a class="headerlink" href="#what-is-a-zone" title="Permalink to this headline">¶</a></h2>
-<p>An Openstack deployment <strong>zone</strong> is usually called a Server Zone as well. A Zone allows the division of deployments within logical groups enabling better instance distribution. A Zone requires, at least, an API node, a Scheduler, a MySQL database and a RabbitMQ. A Nova Zone commonly contains, as well, Volume Storage nodes and Computing nodes.</p>
-<p>A Zone does not share any component with others. The only way a Zone can communicate with another is through the Openstack API, although this requires the Zones to be hierarchically configured to be able to see one another.</p>
+<p>An Openstack deployment <strong>zone is usually called a Server Zone as well</strong>. A zone allows the division of deployments within logical groups enabling better instance distribution. A zone requires, at least, an API node, a Scheduler, a MySQL database and a RabbitMQ. A zone commonly contains, as well, Volume Storage nodes and Computing nodes.</p>
+<p>A zone does not share any component with others. The only way a zone can communicate with another is through the Openstack API, although this requires the zones to be hierarchically configured to be able to see one another.</p>
 </div>
 <div class="section" id="what-can-i-do-with-a-zone">
 <h2>What can I do with a Zone?<a class="headerlink" href="#what-can-i-do-with-a-zone" title="Permalink to this headline">¶</a></h2>
@@ -71,10 +71,11 @@ services.</li>
 </div>
 <div class="section" id="zone-information">
 <h2>Zone information<a class="headerlink" href="#zone-information" title="Permalink to this headline">¶</a></h2>
+<p>Each zone implements an architecture. This architecture helps to configure the different <strong>nodes</strong> of the zone based on the <strong>properties</strong> taken from the <strong>architecture profile</strong>.</p>
 </div>
 <div class="section" id="zone-and-their-properties">
 <h2>Zone and their properties<a class="headerlink" href="#zone-and-their-properties" title="Permalink to this headline">¶</a></h2>
-<p>Automation admininistrators are able to edit the content of the profile architecture propagated when creating the zone.</p>
+<p><strong>Automation</strong> admininistrators are able to edit the content of the profile architecture propagated when creating the zone.</p>
 <p>Similarly to system global properties and profile global properties, a global zone property can be stored in a zone. To reference this global zone property in any component property use $zone.zone_property_name convention. For example:</p>
 <p>If the next zone property is created:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">my_user</span><span class="o">=</span>stackops_user
@@ -91,14 +92,15 @@ services.</li>
 </div>
 <div class="section" id="what-is-a-role">
 <h2>What is a Role?<a class="headerlink" href="#what-is-a-role" title="Permalink to this headline">¶</a></h2>
-<p>To know what a is role, you first need to know what is a component. A <a class="reference external" href="http://stackops.github.io/python-automationclient/Component.html#what-is-a-component">component</a> is a configured entity of the zone that defines its behaviour. It have a set of services that actually are actions over the component (stop, power on, install, reconfigure... etc).</p>
+<p>To know what a role is, you first need to know what is a component. A <a class="reference external" href="http://stackops.github.io/python-automationclient/Component.html#what-is-a-component">component</a> is a configured entity of the zone that defines its behaviour. It have a set of services that actually are actions over the component (stop, power on, install, reconfigure... etc).</p>
 <p><strong>Roles</strong> are created when user creates the zone. They are a set of components. A role might or might not be associated to a node.</p>
 <p>Once user associates a role to a node then all the components of it will be deployed to the node through Fabuloso. When we associate a role to a node we are actually deploying all of its components in the target physical machine.</p>
 </div>
 <div class="section" id="what-is-a-node">
 <h2>What is a Node?<a class="headerlink" href="#what-is-a-node" title="Permalink to this headline">¶</a></h2>
-<p>Each zone is composed of different servers, the so-called Nodes. Each node can host different Openstack processes plus some components and applications that Nova needs to run.
-Node properties</p>
+<p>Each zone is composed of different servers, the so-called Nodes. Each node can host different Openstack processes plus some components and applications that Nova needs to run.</p>
+<div class="section" id="node-properties">
+<h3>Node properties<a class="headerlink" href="#node-properties" title="Permalink to this headline">¶</a></h3>
 <p>Each Node can be identified by this list of properties (example):</p>
 <div class="highlight-bash"><div class="highlight"><pre>+----------------------------------+-------------------------------------------------------------+
 |Property                          |                          Sample Value                       |
@@ -159,10 +161,11 @@ Node properties</p>
 </pre></div>
 </div>
 </div>
+</div>
 <div class="section" id="what-is-a-task">
 <h2>What is a Task?<a class="headerlink" href="#what-is-a-task" title="Permalink to this headline">¶</a></h2>
-<p>We define a task as the execution of a specific service of a role&#8217;s component. You can not perform any operation after the task is been launched, unless this in the PENDING state, in which case the task can be cancelled.
-Each task can be identified by this list of properties (example):</p>
+<p>We define a task as the execution of a specific service of a role&#8217;s component. You can not perform any operation after the task is been launched, unless this in the PENDING state, in which case the task can be cancelled.</p>
+<p>Each task can be identified by this list of properties (example):</p>
 <div class="highlight-bash"><div class="highlight"><pre>+-----------+--------------------------------------------------+
 |Property   | Sample Value                                     |
 +<span class="o">===========</span>+<span class="o">==================================================</span>+
@@ -195,6 +198,7 @@ In order to reference the value of these properties, use this nomenclature:</p>
 </div>
 <div class="section" id="managing-zones">
 <h2>Managing Zones<a class="headerlink" href="#managing-zones" title="Permalink to this headline">¶</a></h2>
+<p>The operations allowed in the python-automatioclient are:</p>
 <div class="highlight-bash"><div class="highlight"><pre>zone-list           List all the zones.
 zone-show           Show details about a zone.
 zone-create         Add a new zone by architecture according to a JSON
@@ -325,7 +329,7 @@ Positional arguments:
 <h3>Properties Zone Operations<a class="headerlink" href="#properties-zone-operations" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="create-a-zone-property">
 <h4>Create a zone property<a class="headerlink" href="#create-a-zone-property" title="Permalink to this headline">¶</a></h4>
-<p>To create a zone property you must to specific the ID zone</p>
+<p>To create a zone property you must specific the ID zone</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>zone-property-create
 usage: automation zone-property-create &lt;zone-id&gt; &lt;property-key&gt;
                                        &lt;property-value&gt;
@@ -353,7 +357,7 @@ Positional arguments:
 </div>
 <div class="section" id="modify-specifc-profile-property">
 <h4>Modify specifc profile property<a class="headerlink" href="#modify-specifc-profile-property" title="Permalink to this headline">¶</a></h4>
-<p>To update a zone property you must to specific the ID zone and the key of it.</p>
+<p>To update a zone property you must specific the ID zone and the key of it.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>zone-property-update
 usage: automation zone-property-update &lt;zone-id&gt; &lt;property-key&gt;
                                     &lt;property-value&gt;
@@ -381,7 +385,7 @@ Positional arguments:
 </div>
 <div class="section" id="remove-a-specific-profile-property">
 <h4>Remove a specific profile property<a class="headerlink" href="#remove-a-specific-profile-property" title="Permalink to this headline">¶</a></h4>
-<p>To delete a zone property you must to specific the ID zone and the key of it</p>
+<p>To delete a zone property you must specific the ID zone and the key of it</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>zone-property-delete
 usage: automation zone-property-delete &lt;zone-id&gt; &lt;property-key&gt;
 
@@ -701,7 +705,7 @@ Positional arguments:
                     update. It is took from the operation role-component-json
                     as reference.
 
-<span class="nv">$ </span>role-cpmponent-update 1 1 1 mysql role_component_update.json
+<span class="nv">$ </span>role-component-update 1 1 1 mysql role_component_update.json
 +------------+--------------------------------------------+
 |  Property  |                   Value                    |
 +------------+--------------------------------------------+
@@ -840,7 +844,7 @@ Positional arguments:
 </div>
 <div class="section" id="execute-a-specific-service-in-a-node-by-zone-role-and-component">
 <h4>Execute a specific service in a node by zone, role and component<a class="headerlink" href="#execute-a-specific-service-in-a-node-by-zone-role-and-component" title="Permalink to this headline">¶</a></h4>
-<p>To execute a specific service you must specific th ID zone, ID role, the name component, the name service and finally the ID node where it&#8217;ll be execute</p>
+<p>To execute a specific service you must specific the ID zone, ID role, the name component, the name service and finally the ID node where it&#8217;ll be execute</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>service-execute
 usage: automation service-execute &lt;zone-id&gt; &lt;role-id&gt; &lt;component&gt;
                                   &lt;service-name&gt; &lt;node&gt;
@@ -861,8 +865,8 @@ Positional arguments:
 </div>
 <div class="section" id="nodes-operations">
 <h3>Nodes Operations<a class="headerlink" href="#nodes-operations" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="list-all-nodes-activate-in-a-zone">
-<h4>List all nodes activate in a zone<a class="headerlink" href="#list-all-nodes-activate-in-a-zone" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="list-all-activate-nodes-in-a-zone">
+<h4>List all activate nodes in a zone<a class="headerlink" href="#list-all-activate-nodes-in-a-zone" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>node-list 1
 +----+-------------------+-------------------+-----------+
 | id |        name       |        mac        |   status  |
@@ -991,7 +995,10 @@ Positional arguments:
 <li><a class="reference internal" href="#zone-information">Zone information</a></li>
 <li><a class="reference internal" href="#zone-and-their-properties">Zone and their properties</a></li>
 <li><a class="reference internal" href="#what-is-a-role">What is a Role?</a></li>
-<li><a class="reference internal" href="#what-is-a-node">What is a Node?</a></li>
+<li><a class="reference internal" href="#what-is-a-node">What is a Node?</a><ul>
+<li><a class="reference internal" href="#node-properties">Node properties</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#what-is-a-task">What is a Task?</a></li>
 <li><a class="reference internal" href="#what-are-zone-properties">What are Zone Properties?</a></li>
 <li><a class="reference internal" href="#managing-zones">Managing Zones</a><ul>
@@ -1027,7 +1034,7 @@ Positional arguments:
 </ul>
 </li>
 <li><a class="reference internal" href="#nodes-operations">Nodes Operations</a><ul>
-<li><a class="reference internal" href="#list-all-nodes-activate-in-a-zone">List all nodes activate in a zone</a></li>
+<li><a class="reference internal" href="#list-all-activate-nodes-in-a-zone">List all activate nodes in a zone</a></li>
 <li><a class="reference internal" href="#show-details-about-a-node-in-a-zone">Show details about a node in a zone</a></li>
 <li><a class="reference internal" href="#show-tasks-on-the-node-in-a-zone">Show tasks on the node in a zone</a></li>
 <li><a class="reference internal" href="#show-a-specific-state-task-on-the-node-in-a-zone">Show a specific state task on the node in a zone</a></li>

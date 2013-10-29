@@ -57,12 +57,13 @@
 <h1>Global Properties<a class="headerlink" href="#global-properties" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-are-global-properties">
 <h2>What are Global Properties?<a class="headerlink" href="#what-are-global-properties" title="Permalink to this headline">¶</a></h2>
-<p>A global property is a global variable that is stored in automation and can be referenced by zone or architecture properties. The contents of a global property can vary, but they often include sensitive information (such as database passwords).</p>
-<p>Global properties is a high level repository that keeps a set of properties of the key/value form and are <strong>defined by Stackops or the same User</strong>; helps to define a <strong>component of the catalog</strong> and its properties previously, but also these properties (used in the catalog components: mysql, rabbitmq, keystone, etc) can be modified once again but setting its own value; but take into account the next:</p>
+<p>A global property is a global variable that is stored in <strong>Automation</strong> and can be referenced by zone or architecture properties. The contents of a global property can vary, but they often include sensitive information (such as database passwords).</p>
+<p>Global properties is a high level repository that keeps a set of properties of the key/value form and are <strong>defined by Stackops or the same User</strong>; help to define a <strong>component of the catalog</strong> and its properties previously, but also these properties (used in the catalog components: mysql, rabbitmq, keystone, etc) can be modified as much as you want taken into account the next consideration:</p>
 <blockquote>
 <div><ul class="simple">
 <li>The global property must be a reference of the whole componets that use it, that means if the property is called <strong>globals.user</strong> in the global properties and we going to work
-with the mysql component or rabbitmq component and this two components have a property called user the default value will be the given at the moment to define the global property:</li>
+with the <strong>mysql component or rabbitmq component</strong> and this two components have a property called <strong>user</strong> the default value will be the given at the moment to define the global
+property:</li>
 </ul>
 </div></blockquote>
 <div class="highlight-bash"><div class="highlight"><pre><span class="s1">&#39;mysql&#39;</span>: <span class="o">{</span><span class="s1">&#39;automation_user&#39;</span>: <span class="s1">&#39;$globals.user&#39;</span><span class="o">}</span>
@@ -72,18 +73,19 @@ with the mysql component or rabbitmq component and this two components have a pr
 </div>
 <div class="section" id="how-global-properties-can-be-referenced">
 <h2>How global properties can be referenced?<a class="headerlink" href="#how-global-properties-can-be-referenced" title="Permalink to this headline">¶</a></h2>
-<p>The basic way to use a global property is using the $globals prefix when setting a property. For instance, if a property mysql.host wants to use the global property database_password, the content of mysql.root_password should be:</p>
+<p>The basic way to use a global property is using the <strong>$globals prefix</strong> when setting a property. For instance, if a property <strong>mysql.host</strong> wants to use the global property <strong>database_password</strong>, the content of <strong>mysql.root_password</strong> should be:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">{</span>... : <span class="o">{</span><span class="s2">&quot;mysql&quot;</span>: <span class="o">{</span><span class="s2">&quot;root_password&quot;</span>: <span class="nv">$globals</span>.database_password<span class="o">}}}</span>
 </pre></div>
 </div>
-<p>In some situations, we want that general properties be referenced automatically by global properties. For example, if we want that every component property root_password had the same password content, we should first create a global property called root.property:</p>
+<p>In some situations, we want that general properties be referenced automatically by global properties. For example, if we want that every component property <strong>root_password</strong> had the same password content, we should first create a global property called <strong>root.property</strong>:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">{</span>... :<span class="o">{</span><span class="s2">&quot;mysql&quot;</span>: <span class="o">{</span><span class="s2">&quot;root_password&quot;</span>: my_secret<span class="o">}}}</span>
 </pre></div>
 </div>
-<p>Secondly, when the user will create a profile, every property matching component.root_password will be filled with $globals.root.password.</p>
+<p>Secondly, when the user will create a <strong>profile</strong>, every property matching <strong>component.root_password</strong> will be filled with <strong>$globals.root.password</strong>.</p>
 </div>
 <div class="section" id="managing-global-properties">
 <h2>Managing Global Properties<a class="headerlink" href="#managing-global-properties" title="Permalink to this headline">¶</a></h2>
+<p>The operations allowed in the python-automatioclient are:</p>
 <div class="highlight-bash"><div class="highlight"><pre>global-property-list
                     List all the properties that are available on
 global-property-create
@@ -97,7 +99,7 @@ global-property-delete
 </div>
 <div class="section" id="list-global-properties">
 <h3>List global properties<a class="headerlink" href="#list-global-properties" title="Permalink to this headline">¶</a></h3>
-<p>List all the properties that are available on automation.</p>
+<p>List alli global properties that are available in automation.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>global-property-list
 +----------------+-----------------+
 |    Property    |      Value      |
@@ -110,7 +112,7 @@ global-property-delete
 </div>
 <div class="section" id="create-a-new-global-property">
 <h3>Create a new global property<a class="headerlink" href="#create-a-new-global-property" title="Permalink to this headline">¶</a></h3>
-<p>To create a new global property you must to provide its key and value as mandatories</p>
+<p>To create a new global property you must provide its key and value as mandatories</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>global-property-create
 usage: automation global-property-create &lt;property-key&gt; &lt;property-value&gt;
 
@@ -133,7 +135,7 @@ Positional arguments:
 </div>
 <div class="section" id="update-a-specific-global-property">
 <h3>Update a specific global property<a class="headerlink" href="#update-a-specific-global-property" title="Permalink to this headline">¶</a></h3>
-<p>To modify a global property you must to provide its key and its new value as mandatories</p>
+<p>To modify a global property you must provide its key and its new value as mandatories</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>global-property-update
 usage: automation global-property-update &lt;property-key&gt; &lt;property-value&gt;
 
@@ -156,7 +158,7 @@ Positional arguments:
 </div>
 <div class="section" id="delete-a-specific-global-property">
 <h3>Delete a specific global property<a class="headerlink" href="#delete-a-specific-global-property" title="Permalink to this headline">¶</a></h3>
-<p>To delete a global property you must to provide its key as mandatory</p>
+<p>To delete a global property you must provide its key as mandatory</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>global-property-delete
 usage: automation global-property-delete &lt;property-key&gt;
 

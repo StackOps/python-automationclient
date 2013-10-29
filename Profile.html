@@ -58,16 +58,19 @@
 <div class="section" id="what-is-a-profile">
 <h2>What is a Profile?<a class="headerlink" href="#what-is-a-profile" title="Permalink to this headline">¶</a></h2>
 <p>A profile is just a way to save <strong>predefined templates of an architecture without creating a full zone</strong>. User may want to use several common properties for all his zones, and some specific properties for each zone. A way to save the common properties without the need of fill the whole template each time, is by the use of profiles. The profile endpoint will never check the input properties (the zone endpoint will), so you can save any properties you like to use later on. Only the name attribute is mandatory.</p>
-<p>A profile is the set of architecture&#8217;s properties. A profile can be empty (returned by the architecture-template operation) half-filled, or full-filled. Is a dictionary-like structure with all the properties ofthe <strong>components</strong> the architecture can have, this properties are recovered from <strong>catalog components</strong> managed by <strong>FABuloso</strong>.</p>
+<p>A profile is the set of architecture&#8217;s properties. A profile can be empty (returned by the architecture-template operation) half-filled, or full-filled. Is a dictionary-like structure with all the properties of the <strong>components</strong> the architecture can have, this properties are recovered from <strong>catalog components</strong> managed by <strong>FABuloso</strong>.</p>
 </div>
 <div class="section" id="profiles-and-their-properties">
 <h2>Profiles and their properties<a class="headerlink" href="#profiles-and-their-properties" title="Permalink to this headline">¶</a></h2>
 <p>A <strong>global profile property</strong> can be stored in a profile entity. To reference this global profile property in any component property use $property.profile_property_name convention. For example:</p>
 <p>If the next profile property is created:</p>
-<p>my_user=stackops_user</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">my_user</span><span class="o">=</span>stackops_user
+</pre></div>
+</div>
 <p>A <strong>component property</strong> can reference it by setting the value property as follows:</p>
-<p>nova.user=$profile.my_user</p>
-<p>A profile can be empty (returned by the get_template) half-filled, or full-filled. Is a dictionary-like structure with all the properties of the components the architecture can have.</p>
+<div class="highlight-bash"><div class="highlight"><pre>nova.user<span class="o">=</span><span class="nv">$profile</span>.my_user
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">A profile must be used as an input at the moment to create a zone</p>
@@ -75,6 +78,7 @@
 </div>
 <div class="section" id="managing-profiles">
 <h2>Managing Profiles<a class="headerlink" href="#managing-profiles" title="Permalink to this headline">¶</a></h2>
+<p>The operations allowed in the python-automatioclient are:</p>
 <div class="highlight-bash"><div class="highlight"><pre>profile-list        List all the profiles by architecture.
 profile-show        Show details about a profile by architecture.
 profile-create      Add a new profile by architecture.
@@ -91,7 +95,7 @@ profile-property-update
 </div>
 <div class="section" id="list-profiles">
 <h3>List profiles<a class="headerlink" href="#list-profiles" title="Permalink to this headline">¶</a></h3>
-<p>At the moment to list profiles must be specified the ID architecture that has been taken</p>
+<p>At the moment to list profiles must be specified the ID architecture that has been taken as reference</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>profile-list
 usage: automation profile-list &lt;architecture-id&gt;
 
@@ -111,7 +115,7 @@ Positional arguments:
 </div>
 <div class="section" id="show-a-specific-profile">
 <h3>Show a specific profile<a class="headerlink" href="#show-a-specific-profile" title="Permalink to this headline">¶</a></h3>
-<p>To show details about a profile, this one must be reference by its ID and must be specified the ID architecture that has been taken as reference</p>
+<p>To show details about a specific profile, this one must be referenced by its ID and must be specified the ID architecture that has been taken as reference</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>profile-show 1 1
 +------------+------------------------------------------------+
 |  Property  |                     Value                      |
@@ -146,7 +150,7 @@ Positional arguments:
 </div>
 <div class="section" id="create-a-profile">
 <h3>Create a profile<a class="headerlink" href="#create-a-profile" title="Permalink to this headline">¶</a></h3>
-<p>To create a profile you must to specific the ID architecture to take as reference, the name of the profile and a JSON file that can be generate with the operation architecture-template.</p>
+<p>To create a profile you must specific the ID architecture to take as reference, the name of the profile and a JSON file that can be generate with the operation architecture-template.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>profile-create
 usage: automation profile-create &lt;architecture-id&gt; &lt;name&gt; &lt;profile-file&gt;
 
@@ -190,7 +194,7 @@ Positional arguments:
 </div>
 <div class="section" id="modify-a-specific-profile">
 <h3>Modify a specific profile<a class="headerlink" href="#modify-a-specific-profile" title="Permalink to this headline">¶</a></h3>
-<p>To update a profile you must to specific the ID architecture, the ID of the profile and a JSON file that can be generate with the operation profile-json and modify it.</p>
+<p>To update a profile you must specific the ID architecture, the ID of the profile and a JSON profile file that can be generate with the operation profile-json.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span> <span class="nb">help </span>profile-update
 usage: automation profile-update &lt;architecture-id&gt; &lt;profile-id&gt; &lt;profile-file&gt;
 
@@ -200,7 +204,7 @@ Positional arguments:
  &lt;architecture-id&gt;  ID of the architecture.
  &lt;profile-id&gt;       ID of the profile to update.
  &lt;profile-file&gt;     File with extension .json describing the profile to
-                  modify.
+                    modify.
 
 
 <span class="nv">$ </span>profile-update 1 2 profile-cli.json
@@ -235,15 +239,15 @@ Positional arguments:
 </div>
 <div class="section" id="remove-a-specific-profile">
 <h3>Remove a specific profile<a class="headerlink" href="#remove-a-specific-profile" title="Permalink to this headline">¶</a></h3>
-<p>To delete you must to specific the ID architecture and the ID of the profile.</p>
+<p>To delete you must specific the ID architecture and the ID of the profile.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>profile-delete 1 2
 </pre></div>
 </div>
 </div>
 <div class="section" id="generate-a-json-output-from-a-specific-profile">
 <h3>Generate a JSON output from a specific profile<a class="headerlink" href="#generate-a-json-output-from-a-specific-profile" title="Permalink to this headline">¶</a></h3>
-<p>This is one of the most useful operations in the CLI given that to operate with the profiles&#8217; options most of times must be used a JSON profile file, also as input at the moment to create a zone.</p>
-<p>To generate a JSON output you must to specific the ID architecture and the ID of the profile.</p>
+<p>This is one of the most useful operations in the ptthon-automationclient given that operate with the &#8216;profiles&#8217; options most of times must be used a JSON profile file, also as input at the moment to create a zone.</p>
+<p>To generate a JSON output you must specific the ID architecture and the ID of the profile.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>profile-json 1 1
 <span class="o">{</span>
  <span class="s2">&quot;profile&quot;</span>: <span class="o">{</span>
@@ -351,7 +355,7 @@ Positional arguments:
 </div>
 <div class="section" id="create-a-profile-property">
 <h3>Create a profile property<a class="headerlink" href="#create-a-profile-property" title="Permalink to this headline">¶</a></h3>
-<p>To create a profile property you must to specific the ID architecture and the ID of the profile are mandatories, thus as the key and value of it</p>
+<p>To create a profile property you must specific the ID architecture and the ID of the profile as mandatories, thus as the key and value of it</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>profile-property-create
 usage: automation profile-property-create &lt;architecture-id&gt; &lt;profile-id&gt;
                                           &lt;property-key&gt; &lt;property-value&gt;
@@ -400,7 +404,7 @@ Positional arguments:
 </div>
 <div class="section" id="modify-specifc-profile-property">
 <h3>Modify specifc profile property<a class="headerlink" href="#modify-specifc-profile-property" title="Permalink to this headline">¶</a></h3>
-<p>To update a profile property you must to specific the ID architecture, the ID of the profile are mandatories and the key of it.</p>
+<p>To update a profile property you must specific the ID architecture, the ID of the profile as mandatories and the key of it.</p>
 <div class="highlight-bash"><div class="highlight"><pre> <span class="nv">$ </span><span class="nb">help </span>profile-property-update
  usage: automation profile-property-update &lt;architecture-id&gt; &lt;profile-id&gt;
                                            &lt;property-key&gt; &lt;property-value&gt;
@@ -449,7 +453,7 @@ Positional arguments:
 </div>
 <div class="section" id="remove-a-specific-profile-property">
 <h3>Remove a specific profile property<a class="headerlink" href="#remove-a-specific-profile-property" title="Permalink to this headline">¶</a></h3>
-<p>To delete a profile property you must to specific the ID architecture, the ID of the profile and the key of it</p>
+<p>To delete a profile property you must specific the ID architecture, the ID of the profile and the key of it</p>
 <div class="highlight-bash"><div class="highlight"><pre> <span class="nv">$ </span><span class="nb">help </span>profile-property-delete
  usage: automation profile-property-delete &lt;architecture-id&gt; &lt;profile-id&gt;
                                            &lt;property-key&gt;

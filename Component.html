@@ -57,7 +57,7 @@
 <h1>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-is-a-component">
 <h2>What is a Component?<a class="headerlink" href="#what-is-a-component" title="Permalink to this headline">¶</a></h2>
-<p>A component is the most fundamental configuration element in <strong>FABuloso</strong>, where each component has a set of gathered services, this services have methods that define a specific configuration of an <strong>Openstack or Stackops Service</strong>, previously a set of properties that defines to itself.</p>
+<p>A component is the most fundamental configuration element in <strong>FABuloso</strong>, where each component has a set of gathered services, these services have methods that define a specific configuration of an <strong>Openstack or Stackops Service</strong>, previously a set of properties that define to itself.</p>
 <p><a class="reference external" href="http://fabuloso.stackops.org/index.html">FABuloso</a> is a python tool to easily organize and deploy an OpenStack architecture using Fabric. FABuloso manages configuration with components within <strong>catalogs</strong>.</p>
 <div class="figure align-center">
 <img alt="Some Openstack Components" src="_images/openstackComponents.png" style="width: 800pt;" />
@@ -70,6 +70,7 @@
 </div>
 <div class="section" id="mananing-components">
 <h2>Mananing Components<a class="headerlink" href="#mananing-components" title="Permalink to this headline">¶</a></h2>
+<p>The operations allowed in the python-automatioclient are:</p>
 <div class="highlight-bash"><div class="highlight"><pre>component-list      List all the components that are available on
                     automation.
 component-show      Show details about a component
@@ -105,7 +106,7 @@ component-services  List all the services by a component
 </div>
 <div class="section" id="show-a-specific-component">
 <h3>Show a specific component<a class="headerlink" href="#show-a-specific-component" title="Permalink to this headline">¶</a></h3>
-<p>To show details about a component this one must be reference by its name</p>
+<p>To show details about a specific component this one must be reference by its name</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>component-show mysql
 +------------+--------------------------------------------+
 |  Property  |                   Value                    |
@@ -183,9 +184,9 @@ component-services  List all the services by a component
 </pre></div>
 </div>
 </div>
-<div class="section" id="list-services-by-a-specifi-component">
-<h3>List services by a specifi component<a class="headerlink" href="#list-services-by-a-specifi-component" title="Permalink to this headline">¶</a></h3>
-<p>To list the set of services about a component this one must be reference by its name</p>
+<div class="section" id="list-services-by-a-specific-component">
+<h3>List services by a specific component<a class="headerlink" href="#list-services-by-a-specific-component" title="Permalink to this headline">¶</a></h3>
+<p>To list the set of services of a component this one must be reference by its name</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>component-services mysql
 +----------------+-------------------------------------------------------------------+
 |      Name      |                            description                            |
@@ -222,7 +223,7 @@ component-services  List all the services by a component
 <li><a class="reference internal" href="#mananing-components">Mananing Components</a><ul>
 <li><a class="reference internal" href="#list-components">List components</a></li>
 <li><a class="reference internal" href="#show-a-specific-component">Show a specific component</a></li>
-<li><a class="reference internal" href="#list-services-by-a-specifi-component">List services by a specifi component</a></li>
+<li><a class="reference internal" href="#list-services-by-a-specific-component">List services by a specific component</a></li>
 </ul>
 </li>
 </ul>

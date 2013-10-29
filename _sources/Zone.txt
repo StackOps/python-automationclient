@@ -4,9 +4,9 @@ Zones
 What is a Zone?
 ---------------
 
-An Openstack deployment **zone** is usually called a Server Zone as well. A Zone allows the division of deployments within logical groups enabling better instance distribution. A Zone requires, at least, an API node, a Scheduler, a MySQL database and a RabbitMQ. A Nova Zone commonly contains, as well, Volume Storage nodes and Computing nodes.
+An Openstack deployment **zone is usually called a Server Zone as well**. A zone allows the division of deployments within logical groups enabling better instance distribution. A zone requires, at least, an API node, a Scheduler, a MySQL database and a RabbitMQ. A zone commonly contains, as well, Volume Storage nodes and Computing nodes.
 
-A Zone does not share any component with others. The only way a Zone can communicate with another is through the Openstack API, although this requires the Zones to be hierarchically configured to be able to see one another.
+A zone does not share any component with others. The only way a zone can communicate with another is through the Openstack API, although this requires the zones to be hierarchically configured to be able to see one another.
 
 What can I do with a Zone?
 --------------------------
@@ -25,11 +25,13 @@ These zones can be enabled to customers in different ways:
 Zone information
 ----------------
 
+Each zone implements an architecture. This architecture helps to configure the different **nodes** of the zone based on the **properties** taken from the **architecture profile**.
 
 Zone and their properties
 -------------------------
 
-Automation admininistrators are able to edit the content of the profile architecture propagated when creating the zone.
+**Automation** admininistrators are able to edit the content of the profile architecture propagated when creating the zone.
+
 
 Similarly to system global properties and profile global properties, a global zone property can be stored in a zone. To reference this global zone property in any component property use $zone.zone_property_name convention. For example:
 
@@ -54,7 +56,7 @@ Furthermore, zone properties propagated from the architecture profile may want t
 What is a Role?
 ---------------
 
-To know what a is role, you first need to know what is a component. A `component <http://stackops.github.io/python-automationclient/Component.html#what-is-a-component>`_ is a configured entity of the zone that defines its behaviour. It have a set of services that actually are actions over the component (stop, power on, install, reconfigure... etc).
+To know what a role is, you first need to know what is a component. A `component <http://stackops.github.io/python-automationclient/Component.html#what-is-a-component>`_ is a configured entity of the zone that defines its behaviour. It have a set of services that actually are actions over the component (stop, power on, install, reconfigure... etc).
 
 **Roles** are created when user creates the zone. They are a set of components. A role might or might not be associated to a node.
 
@@ -64,7 +66,9 @@ What is a Node?
 ---------------
 
 Each zone is composed of different servers, the so-called Nodes. Each node can host different Openstack processes plus some components and applications that Nova needs to run.
+
 Node properties
+^^^^^^^^^^^^^^^
 
 Each Node can be identified by this list of properties (example):
 
@@ -132,6 +136,7 @@ What is a Task?
 ---------------
 
 We define a task as the execution of a specific service of a role's component. You can not perform any operation after the task is been launched, unless this in the PENDING state, in which case the task can be cancelled.
+
 Each task can be identified by this list of properties (example):
 
 .. code-block:: bash
@@ -169,6 +174,8 @@ In order to reference the value of these properties, use this nomenclature:
 
 Managing Zones
 --------------
+
+The operations allowed in the python-automatioclient are:
 
 .. code-block:: bash
 
@@ -314,7 +321,7 @@ Properties Zone Operations
 Create a zone property
 ~~~~~~~~~~~~~~~~~~~~~~
 
-To create a zone property you must to specific the ID zone
+To create a zone property you must specific the ID zone
 
 .. code-block:: bash
    
@@ -344,7 +351,7 @@ To create a zone property you must to specific the ID zone
 Modify specifc profile property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To update a zone property you must to specific the ID zone and the key of it.
+To update a zone property you must specific the ID zone and the key of it.
 
 .. code-block:: bash
  
@@ -374,7 +381,7 @@ To update a zone property you must to specific the ID zone and the key of it.
 Remove a specific profile property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To delete a zone property you must to specific the ID zone and the key of it
+To delete a zone property you must specific the ID zone and the key of it
 
 
 .. code-block:: bash
@@ -712,7 +719,7 @@ To update a component configuration in a node you must specific the ID zone, the
                        update. It is took from the operation role-component-json
                        as reference.
 
-   $ role-cpmponent-update 1 1 1 mysql role_component_update.json
+   $ role-component-update 1 1 1 mysql role_component_update.json
    +------------+--------------------------------------------+
    |  Property  |                   Value                    |
    +------------+--------------------------------------------+
@@ -855,7 +862,7 @@ To show details about a specific service you must specific th ID zone, ID role, 
 Execute a specific service in a node by zone, role and component
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To execute a specific service you must specific th ID zone, ID role, the name component, the name service and finally the ID node where it'll be execute
+To execute a specific service you must specific the ID zone, ID role, the name component, the name service and finally the ID node where it'll be execute
 
 .. code-block:: bash 
 
@@ -877,8 +884,7 @@ To execute a specific service you must specific th ID zone, ID role, the name co
 Nodes Operations
 ^^^^^^^^^^^^^^^^
 
-
-List all nodes activate in a zone
+List all activate nodes in a zone
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash

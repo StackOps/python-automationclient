@@ -72,11 +72,11 @@
 <li>The server Pool management and activation within zones implements this process automatically in Automation.</li>
 </ul>
 </div></blockquote>
-<p>Basically the pool allows to provision new servers into the zones. But it can also perform other interesting feature:</p>
+<p>Basically the pool allows to <strong>provision new servers into the zones</strong>. But it can also perform other interesting feature:</p>
 <p>Replacement of failing servers (Failover): Automation offers the possibility to automatically replace malfunctioning servers in an unattended way. The images residing in the different VMs, the network and the general configuration is replicated.</p>
 </div>
-<div class="section" id="what-is-the-a-device">
-<h3>What is the a device?<a class="headerlink" href="#what-is-the-a-device" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="what-is-a-device">
+<h3>What is a device?<a class="headerlink" href="#what-is-a-device" title="Permalink to this headline">¶</a></h3>
 <p>A device is a server or another type of device identified by their MAC and it is a candidate to take part in an OpenStack Zone. A device is view in the pool once it has been added to.</p>
 </div>
 </div>
@@ -87,7 +87,7 @@
 </div>
 <div class="section" id="managing-the-pool">
 <h2>Managing the pool<a class="headerlink" href="#managing-the-pool" title="Permalink to this headline">¶</a></h2>
-<p>The operations allow in the python-automatioclient are.</p>
+<p>The operations allowed in the python-automatioclient are:</p>
 <div class="highlight-bash"><div class="highlight"><pre>device-list         List all the devices in the pool.
 device-show         Show details about a device.
 device-update       Update a device.
@@ -151,7 +151,7 @@ device-activate     Activate a specific device in the pool.
 </div>
 <div class="section" id="modify-a-specific-device-from-pool">
 <h3>Modify a specific device from pool<a class="headerlink" href="#modify-a-specific-device-from-pool" title="Permalink to this headline">¶</a></h3>
-<p>To update a device all arguments are mandatory</p>
+<p>To update a device all arguments are mandatories</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-update
   usage: automation device-update &lt;mac&gt; &lt;lom-ip&gt; &lt;lom-mac&gt;
                                   &lt;management-network-ip&gt;
@@ -223,7 +223,7 @@ device-activate     Activate a specific device in the pool.
 </div>
 <div class="section" id="power-off-a-device">
 <h3>Power off a device<a class="headerlink" href="#power-off-a-device" title="Permalink to this headline">¶</a></h3>
-<p>To power-off a device all arguments are mandatory</p>
+<p>To power-off a device all arguments are mandatories</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-power-off
   usage: automation device-power-off &lt;mac&gt; &lt;lom-user&gt; &lt;lom-password&gt;
 
@@ -240,7 +240,7 @@ device-activate     Activate a specific device in the pool.
 </div>
 <div class="section" id="power-on-a-device">
 <h3>Power on a device<a class="headerlink" href="#power-on-a-device" title="Permalink to this headline">¶</a></h3>
-<p>To power-on a device all arguments are mandatory</p>
+<p>To power-on a device all arguments are mandatories</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-power-on
   usage: automation device-power-on &lt;mac&gt; &lt;lom-user&gt; &lt;lom-password&gt;
 
@@ -257,7 +257,7 @@ device-activate     Activate a specific device in the pool.
 </div>
 <div class="section" id="reboot-a-device">
 <h3>Reboot a device<a class="headerlink" href="#reboot-a-device" title="Permalink to this headline">¶</a></h3>
-<p>To reboot a device all arguments are mandatory</p>
+<p>To reboot a device all arguments are mandatories</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-reboot
   usage: automation device-reboot &lt;mac&gt; &lt;lom-user&gt; &lt;lom-password&gt;
 
@@ -352,7 +352,7 @@ device-activate     Activate a specific device in the pool.
 </div>
 <div class="section" id="replace-a-device">
 <h3>Replace a device<a class="headerlink" href="#replace-a-device" title="Permalink to this headline">¶</a></h3>
-<p>To replace a device to another one in a zone you must to provide mac, zone-id, role-id and node-id as manatories</p>
+<p>To replace a device to another one in a zone you must to provide its MAC, ID zone where it has been activated, ID role and ID node assigned at the moment to include it to a zone</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>device-replace
   usage: automation device-replace
                                   <span class="o">[</span>--lom-user-node-to-remove &lt;lom-user-node-to-remove&gt;<span class="o">]</span>
@@ -425,7 +425,7 @@ device-activate     Activate a specific device in the pool.
 <li><a class="reference internal" href="#">Devices</a><ul>
 <li><a class="reference internal" href="#understandig-what-is-a-pool-and-why-devices">Understandig what is a Pool and why Devices?</a><ul>
 <li><a class="reference internal" href="#what-is-the-pool">What is the pool?</a></li>
-<li><a class="reference internal" href="#what-is-the-a-device">What is the a device?</a></li>
+<li><a class="reference internal" href="#what-is-a-device">What is a device?</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#life-cycle-management-basics">Life cycle management basics</a></li>

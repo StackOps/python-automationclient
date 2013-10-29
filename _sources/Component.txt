@@ -4,7 +4,7 @@ Components
 What is a Component?
 --------------------
 
-A component is the most fundamental configuration element in **FABuloso**, where each component has a set of gathered services, this services have methods that define a specific configuration of an **Openstack or Stackops Service**, previously a set of properties that defines to itself.
+A component is the most fundamental configuration element in **FABuloso**, where each component has a set of gathered services, these services have methods that define a specific configuration of an **Openstack or Stackops Service**, previously a set of properties that define to itself.
 
 `FABuloso <http://fabuloso.stackops.org/index.html>`_ is a python tool to easily organize and deploy an OpenStack architecture using Fabric. FABuloso manages configuration with components within **catalogs**.
 
@@ -23,6 +23,8 @@ The Catalog components are a set of components by itself, used to deploy an Open
 
 Mananing Components
 -------------------
+
+The operations allowed in the python-automatioclient are:
 
 .. code-block:: bash
 
@@ -63,7 +65,7 @@ List components
 Show a specific component
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To show details about a component this one must be reference by its name
+To show details about a specific component this one must be reference by its name
 
 .. code-block:: bash
 
@@ -142,10 +144,11 @@ To show details about a component this one must be reference by its name
    |            |                     }                      |
    +------------+--------------------------------------------+
 
-List services by a specifi component
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+List services by a specific component
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To list the set of services about a component this one must be reference by its name
+To list the set of services of a component this one must be reference by its name
+
 
 .. code-block:: bash
 
