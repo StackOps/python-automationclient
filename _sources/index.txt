@@ -6,14 +6,19 @@
 Welcome to python-automationclient's documentation!
 ===================================================
 
-Contents:
+   
+This is the **python-automationclient** documentation, a complete guide line reference to understand and operate as an administrator, using all the **Stackops** ecosystem to get a fully and ready Openstack installation from scratch.
+
+Table of Contents
+-----------------
 
 .. toctree::
-   :maxdepth: 2
-   
-   Reference
+    :maxdepth: 5
 
-
+    Overview
+    Install
+    Python_API
+    Command-line_tool
 
 Indices and tables
 ==================

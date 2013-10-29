@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="python-automationclient 0.1 documentation" href="#" />
-    <link rel="next" title="Reference" href="Reference.html" /> 
+    <link rel="next" title="Overview" href="Overview.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,7 +35,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Reference.html" title="Reference"
+          <a href="Overview.html" title="Overview"
              accesskey="N">next</a> |</li>
         <li><a href="#">python-automationclient 0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -48,17 +48,161 @@
             
   <div class="section" id="welcome-to-python-automationclient-s-documentation">
 <h1>Welcome to python-automationclient&#8217;s documentation!<a class="headerlink" href="#welcome-to-python-automationclient-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
+<p>This is the <strong>python-automationclient</strong> documentation, a complete guide line reference to understand and operate as an administrator, using all the <strong>Stackops</strong> ecosystem to get a fully and ready Openstack installation from scratch.</p>
+<div class="section" id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Reference.html">Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Overview.html">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Install.html">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Python_API.html">Python API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Command-line_tool.html">Command-line Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#automation">Automation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Install.html#from-apt">From Apt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Install.html#from-github">From Github</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Python_API.html">Python API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Command-line_tool.html">Command-line Tool</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Device.html">Devices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Device.html#understandig-what-is-a-pool-and-why-devices">Understandig what is a Pool and why Devices?</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#what-is-the-pool">What is the pool?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#what-is-a-device">What is a device?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Device.html#life-cycle-management-basics">Life cycle management basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Device.html#managing-the-pool">Managing the pool</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#list-devices-from-pool">List devices from pool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#show-a-specific-device-from-pool">Show a specific device from pool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#modify-a-specific-device-from-pool">Modify a specific device from pool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#delete-a-device-from-pool">Delete a device from pool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#power-off-a-device">Power off a device</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#power-on-a-device">Power on a device</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#reboot-a-device">Reboot a device</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#shutdown-a-device">Shutdown a device</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#soft-reboot-a-device">Soft reboot a device</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#activate-a-device">Activate a device</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Device.html#replace-a-device">Replace a device</a></li>
 </ul>
 </li>
 </ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Component.html">Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Component.html#what-is-a-component">What is a Component?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Component.html#what-is-catalog-components">What is Catalog Components?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Component.html#mananing-components">Mananing Components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Component.html#list-components">List components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Component.html#show-a-specific-component">Show a specific component</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Component.html#list-services-by-a-specific-component">List services by a specific component</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Global_Properties.html">Global Properties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Global_Properties.html#what-are-global-properties">What are Global Properties?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Global_Properties.html#how-global-properties-can-be-referenced">How global properties can be referenced?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Global_Properties.html#managing-global-properties">Managing Global Properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Global_Properties.html#list-global-properties">List global properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Global_Properties.html#create-a-new-global-property">Create a new global property</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Global_Properties.html#update-a-specific-global-property">Update a specific global property</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Global_Properties.html#delete-a-specific-global-property">Delete a specific global property</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Architecture.html">Architectures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Architecture.html#what-is-an-architecture">What is an Architecture?</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Architecture.html#general-architecture-and-automation">General Architecture and Automation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Architecture.html#dualnode-architecture-example">DualNode Architecture Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Architecture.html#multinode-ha-architecture-example">MultiNode HA Architecture Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Architecture.html#managing-architectures">Managing Architectures</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Architecture.html#list-architectures">List architectures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Architecture.html#show-a-specific-architecture">Show a specific architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Architecture.html#delete-a-specific-architecture">Delete a specific architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Architecture.html#show-template-from-a-specific-architecture">Show template from a specific architecture</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profile.html">Profiles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profile.html#what-is-a-profile">What is a Profile?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profile.html#profiles-and-their-properties">Profiles and their properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profile.html#managing-profiles">Managing Profiles</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profile.html#list-profiles">List profiles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profile.html#show-a-specific-profile">Show a specific profile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profile.html#create-a-profile">Create a profile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profile.html#modify-a-specific-profile">Modify a specific profile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profile.html#remove-a-specific-profile">Remove a specific profile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profile.html#generate-a-json-output-from-a-specific-profile">Generate a JSON output from a specific profile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profile.html#create-a-profile-property">Create a profile property</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profile.html#modify-specifc-profile-property">Modify specifc profile property</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profile.html#remove-a-specific-profile-property">Remove a specific profile property</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Zone.html">Zones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Zone.html#what-is-a-zone">What is a Zone?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Zone.html#what-can-i-do-with-a-zone">What can I do with a Zone?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Zone.html#zone-information">Zone information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Zone.html#zone-and-their-properties">Zone and their properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Zone.html#what-is-a-role">What is a Role?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Zone.html#what-is-a-node">What is a Node?</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Zone.html#node-properties">Node properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Zone.html#what-is-a-task">What is a Task?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Zone.html#what-are-zone-properties">What are Zone Properties?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Zone.html#managing-zones">Managing Zones</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Zone.html#zone-operations">Zone Operations</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#list-zones">List zones</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#show-a-specific-zone">Show a specific zone</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#create-a-zone">Create a zone</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#generate-json-file-from-a-zone">Generate JSON file from a zone</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#delete-a-specific-zone">Delete a specific zone</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#list-taks-from-zone">List taks from zone</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Zone.html#properties-zone-operations">Properties Zone Operations</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#create-a-zone-property">Create a zone property</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#modify-specifc-profile-property">Modify specifc profile property</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#remove-a-specific-profile-property">Remove a specific profile property</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Zone.html#roles-operations">Roles Operations</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#list-roles">List roles</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#show-details-about-a-specific-role">Show details about a specific role</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#associate-a-node-pyshical-server-discovered-and-in-the-pool-to-a-role">Associate a node (pyshical server discovered and in the pool) to a role</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#list-all-component-by-zone-and-role">List all component by zone and role</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#show-a-specific-component-in-a-node-by-zone-and-role">Show a specific component in a node by zone and role</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#generate-json-component-file-in-a-node-by-zone-and-role">Generate JSON component file in a node by zone and role</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#modify-a-specific-component-in-a-node-by-zone-and-role">Modify a specific component in a node by zone and role</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Zone.html#services-tasks-operations">Services (Tasks) Operations</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#list-services-that-are-be-able-to-execute-by-zone-role-and-component">List services that are be able to execute by zone, role and component</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#show-a-specific-service-that-are-be-able-to-execute-by-zone-role-and-component">Show a specific service that are be able to execute by zone, role and component</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#execute-a-specific-service-in-a-node-by-zone-role-and-component">Execute a specific service in a node by zone, role and component</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Zone.html#nodes-operations">Nodes Operations</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#list-all-activate-nodes-in-a-zone">List all activate nodes in a zone</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#show-details-about-a-node-in-a-zone">Show details about a node in a zone</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#show-tasks-on-the-node-in-a-zone">Show tasks on the node in a zone</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#show-a-specific-state-task-on-the-node-in-a-zone">Show a specific state task on the node in a zone</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Zone.html#cancel-a-specific-task-on-the-node-in-a-zone">Cancel a specific task on the node in a zone</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
@@ -79,14 +223,17 @@
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Welcome to python-automationclient&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#table-of-contents">Table of Contents</a><ul>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
   <h4>Next topic</h4>
-  <p class="topless"><a href="Reference.html"
-                        title="next chapter">Reference</a></p>
+  <p class="topless"><a href="Overview.html"
+                        title="next chapter">Overview</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -116,7 +263,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Reference.html" title="Reference"
+          <a href="Overview.html" title="Overview"
              >next</a> |</li>
         <li><a href="#">python-automationclient 0.1 documentation</a> &raquo;</li> 
       </ul>
