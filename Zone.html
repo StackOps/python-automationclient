@@ -71,7 +71,6 @@ services.</li>
 </div>
 <div class="section" id="zone-information">
 <h2>Zone information<a class="headerlink" href="#zone-information" title="Permalink to this headline">¶</a></h2>
-<p>Each zone implements an <strong>architecture</strong>. This architecture helps to configure the different <strong>Nodes</strong> of the zone based on the <strong>Properties taken from the architecture profile</strong>.</p>
 </div>
 <div class="section" id="zone-and-their-properties">
 <h2>Zone and their properties<a class="headerlink" href="#zone-and-their-properties" title="Permalink to this headline">¶</a></h2>
@@ -862,6 +861,118 @@ Positional arguments:
 </div>
 <div class="section" id="nodes-operations">
 <h3>Nodes Operations<a class="headerlink" href="#nodes-operations" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="list-all-nodes-activate-in-a-zone">
+<h4>List all nodes activate in a zone<a class="headerlink" href="#list-all-nodes-activate-in-a-zone" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>node-list 1
++----+-------------------+-------------------+-----------+
+| id |        name       |        mac        |   status  |
++----+-------------------+-------------------+-----------+
+| 1  | 08:00:27:1e:b6:cd | 08:00:27:1e:b6:cd | ACTIVATED |
++----+-------------------+-------------------+-----------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-details-about-a-node-in-a-zone">
+<h4>Show details about a node in a zone<a class="headerlink" href="#show-details-about-a-node-in-a-zone" title="Permalink to this headline">¶</a></h4>
+<p>To show details about a specific node you must specific the ID node and the ID zone where it has been activated</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>node-show &lt;zone-id&gt; &lt;node-id&gt;
+
+Show details about a node in a zone.
+
+Positional arguments:
+  &lt;zone-id&gt;  ID of the zone.
+  &lt;node-id&gt;  ID of the node.
+
+<span class="nv">$ </span>node-show 1 1
++----------------------------+----------------------------------------------------------------------------------------+
+|          Property          |                                         Value                                          |
++----------------------------+----------------------------------------------------------------------------------------+
+|         certified          |                                         False                                          |
+|      connection_data       | <span class="o">{</span><span class="s2">&quot;username&quot;</span>: <span class="s2">&quot;stackops&quot;</span>, <span class="s2">&quot;key_name&quot;</span>: <span class="s2">&quot;nonsecure&quot;</span>, <span class="s2">&quot;host&quot;</span>: <span class="s2">&quot;180.10.10.119&quot;</span>, <span class="s2">&quot;port&quot;</span>: 22<span class="o">}</span> |
+|           cores            |                                           1                                            |
+|          created           |                                  2013-10-09 11:18:39                                   |
+|         disk_size          |                                       8589934592                                       |
+|             id             |                                           1                                            |
+|             ip             |                                     180.10.10.119                                      |
+|           lom_ip           |                                        0.0.0.0                                         |
+|          lom_mac           |                                      00:00:00:00                                       |
+|            mac             |                                   08:00:27:1e:b6:cd                                    |
+|   management_network_dns   |                                        8.8.8.8                                         |
+| management_network_gateway |                                      180.10.10.1                                       |
+|   management_network_ip    |                                     180.10.10.119                                      |
+| management_network_netmask |                                     255.255.255.0                                      |
+|         megaherzs          |                                           0                                            |
+|           memory           |                                       515497984                                        |
+|            name            |                                   08:00:27:1e:b6:cd                                    |
+|           ports            |                                           1                                            |
+|          product           |                                     VirtualBox <span class="o">()</span>                                      |
+|           status           |                                       ACTIVATED                                        |
+|          threads           |                                           1                                            |
+|          updated           |                                  2013-10-09 15:18:20                                   |
+|           vendor           |                                      innotek GmbH                                      |
+|          zone_id           |                                           1                                            |
++----------------------------+----------------------------------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-tasks-on-the-node-in-a-zone">
+<h4>Show tasks on the node in a zone<a class="headerlink" href="#show-tasks-on-the-node-in-a-zone" title="Permalink to this headline">¶</a></h4>
+<p>To list all tasks on an specific node you must specific the ID node and the ID zone where it has been activated</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>node-tasks-list
+usage: automation node-tasks-list &lt;zone-id&gt; &lt;node-id&gt;
+
+List all tasks from a node in a zone.
+
+Positional arguments:
+  &lt;zone-id&gt;  ID of the zone.
+  &lt;node-id&gt;  ID of the node.
+</pre></div>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>node-tasks-list 1 1
+node-tasks-list 1 1
++----+------+------+-------+
+| id | name | uuid | state |
++----+------+------+-------+
++----+------+------+-------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-a-specific-state-task-on-the-node-in-a-zone">
+<h4>Show a specific state task on the node in a zone<a class="headerlink" href="#show-a-specific-state-task-on-the-node-in-a-zone" title="Permalink to this headline">¶</a></h4>
+<p>To show a specific task on a node you must specific the ID node and the ID zone where it has been activated and the ID task executed on it</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>node-tasks-list
+usage: automation node-task-state &lt;zone-id&gt; &lt;node-id&gt; &lt;task-id&gt;
+
+Show details about a task from a node in a zone.
+
+Positional arguments:
+  &lt;zone-id&gt;  ID of the zone.
+  &lt;node-id&gt;  ID of the node.
+  &lt;task-id&gt;  ID of the task.
+</pre></div>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>node-task-show 1 1 1
+</pre></div>
+</div>
+</div>
+<div class="section" id="cancel-a-specific-task-on-the-node-in-a-zone">
+<h4>Cancel a specific task on the node in a zone<a class="headerlink" href="#cancel-a-specific-task-on-the-node-in-a-zone" title="Permalink to this headline">¶</a></h4>
+<p>To cancel a specific task on a node you must specific the ID node and the ID zone where it has been activated and the ID task executed on it</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>node-task-cancel
+usage: automation node-task-cancel &lt;zone-id&gt; &lt;node-id&gt; &lt;task-id&gt;
+
+Cancel a task from a node in a zone.
+
+Positional arguments:
+  &lt;zone-id&gt;  ID of the zone.
+  &lt;node-id&gt;  ID of the node.
+  &lt;task-id&gt;  ID of the task.
+</pre></div>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>node-task-cancel 1 1 1
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -915,7 +1026,14 @@ Positional arguments:
 <li><a class="reference internal" href="#execute-a-specific-service-in-a-node-by-zone-role-and-component">Execute a specific service in a node by zone, role and component</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#nodes-operations">Nodes Operations</a></li>
+<li><a class="reference internal" href="#nodes-operations">Nodes Operations</a><ul>
+<li><a class="reference internal" href="#list-all-nodes-activate-in-a-zone">List all nodes activate in a zone</a></li>
+<li><a class="reference internal" href="#show-details-about-a-node-in-a-zone">Show details about a node in a zone</a></li>
+<li><a class="reference internal" href="#show-tasks-on-the-node-in-a-zone">Show tasks on the node in a zone</a></li>
+<li><a class="reference internal" href="#show-a-specific-state-task-on-the-node-in-a-zone">Show a specific state task on the node in a zone</a></li>
+<li><a class="reference internal" href="#cancel-a-specific-task-on-the-node-in-a-zone">Cancel a specific task on the node in a zone</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
