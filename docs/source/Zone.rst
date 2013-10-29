@@ -25,7 +25,6 @@ These zones can be enabled to customers in different ways:
 Zone information
 ----------------
 
-Each zone implements an **architecture**. This architecture helps to configure the different **Nodes** of the zone based on the **Properties taken from the architecture profile**.
 
 Zone and their properties
 -------------------------
@@ -854,7 +853,7 @@ To show details about a specific service you must specific th ID zone, ID role, 
    +-------------+--------------------------------------------------------------------------------------------------+
 
 Execute a specific service in a node by zone, role and component
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To execute a specific service you must specific th ID zone, ID role, the name component, the name service and finally the ID node where it'll be execute
 
@@ -877,3 +876,130 @@ To execute a specific service you must specific th ID zone, ID role, the name co
 
 Nodes Operations
 ^^^^^^^^^^^^^^^^
+
+
+List all nodes activate in a zone
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   $ node-list 1
+   +----+-------------------+-------------------+-----------+
+   | id |        name       |        mac        |   status  |
+   +----+-------------------+-------------------+-----------+
+   | 1  | 08:00:27:1e:b6:cd | 08:00:27:1e:b6:cd | ACTIVATED |
+   +----+-------------------+-------------------+-----------+
+
+Show details about a node in a zone
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To show details about a specific node you must specific the ID node and the ID zone where it has been activated
+
+.. code-block:: bash
+
+   $ node-show <zone-id> <node-id>
+
+   Show details about a node in a zone.
+
+   Positional arguments:
+     <zone-id>  ID of the zone.
+     <node-id>  ID of the node.
+
+   $ node-show 1 1
+   +----------------------------+----------------------------------------------------------------------------------------+
+   |          Property          |                                         Value                                          |
+   +----------------------------+----------------------------------------------------------------------------------------+
+   |         certified          |                                         False                                          |
+   |      connection_data       | {"username": "stackops", "key_name": "nonsecure", "host": "180.10.10.119", "port": 22} |
+   |           cores            |                                           1                                            |
+   |          created           |                                  2013-10-09 11:18:39                                   |
+   |         disk_size          |                                       8589934592                                       |
+   |             id             |                                           1                                            |
+   |             ip             |                                     180.10.10.119                                      |
+   |           lom_ip           |                                        0.0.0.0                                         |
+   |          lom_mac           |                                      00:00:00:00                                       |
+   |            mac             |                                   08:00:27:1e:b6:cd                                    |
+   |   management_network_dns   |                                        8.8.8.8                                         |
+   | management_network_gateway |                                      180.10.10.1                                       |
+   |   management_network_ip    |                                     180.10.10.119                                      |
+   | management_network_netmask |                                     255.255.255.0                                      |
+   |         megaherzs          |                                           0                                            |
+   |           memory           |                                       515497984                                        |
+   |            name            |                                   08:00:27:1e:b6:cd                                    |
+   |           ports            |                                           1                                            |
+   |          product           |                                     VirtualBox ()                                      |
+   |           status           |                                       ACTIVATED                                        |
+   |          threads           |                                           1                                            |
+   |          updated           |                                  2013-10-09 15:18:20                                   |
+   |           vendor           |                                      innotek GmbH                                      |
+   |          zone_id           |                                           1                                            |
+   +----------------------------+----------------------------------------------------------------------------------------+
+
+
+Show tasks on the node in a zone
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To list all tasks on an specific node you must specific the ID node and the ID zone where it has been activated
+
+.. code-block:: bash
+   
+   $ help node-tasks-list
+   usage: automation node-tasks-list <zone-id> <node-id>
+
+   List all tasks from a node in a zone.
+
+   Positional arguments:
+     <zone-id>  ID of the zone.
+     <node-id>  ID of the node.
+
+.. code-block:: bash
+   
+   $ help node-tasks-list 1 1
+   node-tasks-list 1 1
+   +----+------+------+-------+
+   | id | name | uuid | state |
+   +----+------+------+-------+
+   +----+------+------+-------+
+
+Show a specific state task on the node in a zone
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To show a specific task on a node you must specific the ID node and the ID zone where it has been activated and the ID task executed on it
+
+.. code-block:: bash
+   
+   $ help node-tasks-list
+   usage: automation node-task-state <zone-id> <node-id> <task-id>
+
+   Show details about a task from a node in a zone.
+
+   Positional arguments:
+     <zone-id>  ID of the zone.
+     <node-id>  ID of the node.
+     <task-id>  ID of the task.
+
+
+.. code-block:: bash
+   
+   $ help node-task-show 1 1 1
+
+Cancel a specific task on the node in a zone
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To cancel a specific task on a node you must specific the ID node and the ID zone where it has been activated and the ID task executed on it
+
+.. code-block:: bash
+
+   $ help node-task-cancel
+   usage: automation node-task-cancel <zone-id> <node-id> <task-id>
+
+   Cancel a task from a node in a zone.
+
+   Positional arguments:
+     <zone-id>  ID of the zone.
+     <node-id>  ID of the node.
+     <task-id>  ID of the task.
+
+.. code-block:: bash
+   
+   $ help node-task-cancel 1 1 1
