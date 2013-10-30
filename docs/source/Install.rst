@@ -21,6 +21,28 @@ And now you can run ``update`` and install *python-automationclient*:
     sudo apt-get update
     sudo apt-get install python-automationclient
 
+From PyPI
+---------
+
+Automatic
+^^^^^^^^^^
+
+To install *python-automationclient* on Linux/Mac operating systems from the public Python Package index just run:
+
+.. code-block:: bash
+
+    $ pip install python-automationclient
+
+Manually
+^^^^^^^^
+
+To manually install *python-automationclient* from the Python Package Index on Linux/Mac operating systems, download python-automationclient.tar.gz from https://pypi.python.org/pypi/python-automationclient. Then change to the directory you downloaded python-automationclient.tar.gz to and execute the following in a terminal
+
+.. code-block:: bash 
+
+   $ tar python-automationclient.tar.gz
+   $ cd python-automationclient
+   $ python setup.py install
 
 From Github
 -----------
