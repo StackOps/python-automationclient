@@ -46,7 +46,7 @@ def read_file(file_name):
 setuptools.setup(
     name=project,
     # version=setup.get_version(project),
-    version=1.0,
+    version=1.1,
     author="StackOps Contributors",
     author_email="developers@stackops.org",
     description="Client library for StackOps Automation API.",
@@ -61,7 +61,7 @@ setuptools.setup(
     include_package_data=True,
     dependency_links=depend_links,
     classifiers=[
-        "Development Status :: 5 - Production/Stable",
+        "Development Status :: 4 - Beta",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "Intended Audience :: Information Technology",
