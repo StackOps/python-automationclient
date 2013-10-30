@@ -9,7 +9,7 @@ See the `Stackops Automation CLI guide`_ for information on how to use the ``aut
 command-line tool. You may also want to look at the
 `Stackops Automation API documentation`_.
 
-.. _Stackops Automation CLI guide: http://stackops.github.io/python-automationclient/
+.. _Stackops Automation CLI guide: http://automationclient.stackops.org/
 .. _Stackops Automation API documentation: http://docs.stackops.org/display/STACKOPSDOCS/RESTful+API
 
 The code is hosted on `Github`_.
