@@ -51,7 +51,7 @@ class TaskManager(base.ManagerWithFind):
         """
         return self._list("/zones/%s/tasks" % zone.id, "tasks")
 
-    def get(self, zone, node, task):
+    def get(self, zone, task):
         """Get a specific task by zone.
 
         :param zone: The ID of the :class: `Zone` to get.
@@ -60,9 +60,8 @@ class TaskManager(base.ManagerWithFind):
         :param task: The ID of the :class: `Task` to get.
         :rtype: :class:`Task`
         """
-        return self._get("/zones/%s/nodes/%s/tasks/%s" % (base.getid(zone),
-                                                          base.getid(node),
-                                                          base.getid(task)),
+        return self._get("/zones/%s/tasks/%s" % (base.getid(zone),
+                                                 task),
                          "task")
 
     def deploy(self, zone, role, node, bypass, hostname, dhcp_reload):
@@ -183,3 +182,25 @@ class TaskManager(base.ManagerWithFind):
         res.zone = zone
         res.node = node
         return res
+
+    def delete(self, zone, task, node=None):
+        """
+        Delete a specific task.
+
+        :param zone: The  ID of the :class: `Zone` to get.
+        :rtype: :class:`Zone`
+
+        :param task: The UUID of the :class: `Task` to delete.
+        :rtype: :class:`Task`
+
+        :param node: The ID of the :class: `Node` to get
+        :rtype: :class:`Node`
+        """
+
+        if node is None:
+            self._delete("/zones/%s/tasks/%s" % (base.getid(zone),
+                                                 task.uuid))
+        else:
+            self._delete("/zones/%s/nodes/%s/tasks/%s" % (base.getid(zone),
+                                                          base.getid(node),
+                                                          task.uuid))

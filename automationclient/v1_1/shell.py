@@ -93,8 +93,11 @@ def _find_service(cs, zone, role, component, service):
 
 def _find_task(cs, zone, node, task):
     obj_zone = _find_zone(cs, zone)
-    obj_node = _find_node(cs, zone, node)
-    return cs.tasks.get_node(obj_zone, obj_node, task)
+    if node is not None:
+        obj_node = _find_node(cs, zone, node)
+        return cs.tasks.get_node(obj_zone, obj_node, task)
+    else:
+        return cs.tasks.get(obj_zone, task)
 
 
 @utils.service_type('automation')
@@ -731,6 +734,20 @@ def do_zone_tasks_list(cs, args):
 
 @utils.arg('zone', metavar='<zone-id>',
            type=int,
+           help='ID of the zone.')
+@utils.arg('task', metavar='<task-id>',
+           type=str,
+           help='ID of the task.')
+@utils.service_type('automation')
+def do_zone_task_delete(cs, args):
+    """Remove a task by zone from automation DB."""
+    zone = _find_zone(cs, args.zone)
+    task = _find_task(cs, args.zone, None, args.task)
+    cs.tasks.delete(zone, task)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
            help='ID of the zone to create a property.')
 @utils.arg('property_key', metavar='<property-key>',
            help='The key property.')
@@ -842,6 +859,24 @@ def do_node_task_state(cs, args):
     """Show details about a task from a node in a zone."""
     task = _find_task(cs, args.zone, args.node, args.task)
     utils.print_dict(task._info)
+
+
+@utils.arg('zone', metavar='<zone-id>',
+           type=int,
+           help='ID of the zone.')
+@utils.arg('node', metavar='<node-id>',
+           type=int,
+           help='ID of the node.')
+@utils.arg('task', metavar='<task-id>',
+           type=str,
+           help='ID of the task.')
+@utils.service_type('automation')
+def do_node_task_delete(cs, args):
+    """Remove a task from a node in a zone from automation DB."""
+    zone = _find_zone(cs, args.zone)
+    node = _find_node(cs, args.zone, args.node)
+    task = _find_task(cs, args.zone, None, args.task)
+    cs.tasks.delete(zone, task, node)
 
 
 @utils.arg('zone', metavar='<zone-id>',

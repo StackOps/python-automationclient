@@ -538,6 +538,7 @@ def _stub_task(**kwargs):
         {
             "state": "PENDING",
             "id": "1234",
+            "uuid": "1234",
             "result": "NOT_READY"
         }
 
@@ -722,6 +723,12 @@ class FakeHTTPClient(base_client.HTTPClient):
             {'id': 5678, 'name': 'sample-tasks2'}
         ]})
 
+    def get_zones_1234_tasks_1234(self, **kw):
+        return (200, {}, {'task': _stub_task(id='1234')})
+
+    def delete_zones_1234_tasks_1234(self):
+        return (204, {}, {})
+
     def put_zones_1234(self, **kw):
         return (200, {}, {'zone': _stub_zone(id='1234')})
 
@@ -807,6 +814,9 @@ class FakeHTTPClient(base_client.HTTPClient):
 
     def get_zones_1234_nodes_1234_tasks_1234(self):
         return (200, {}, {'task': _stub_task(id='1234')})
+
+    def delete_zones_1234_nodes_1234_tasks_1234(self):
+        return (204, {}, {})
 
     def post_zones_1234_nodes_1234_tasks_1234_cancel(self):
         return (200, {}, {'task': _stub_task(id='1234')})

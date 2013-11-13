@@ -63,6 +63,19 @@ class NodeTest(utils.TestCase):
         cs.assert_called('GET', '/zones/1234/nodes/1234/tasks/1234')
         self.assertIsInstance(task, Task)
 
+    def test_zone_task_delete(self):
+        zone = cs.zones.get(1234)
+        cs.assert_called('GET', '/zones/1234')
+        self.assertIsInstance(zone, Zone)
+        node = cs.nodes.get(zone, 1234)
+        cs.assert_called('GET', '/zones/1234/nodes/1234')
+        self.assertIsInstance(node, Node)
+        task = cs.tasks.get(zone, 1234)
+        cs.assert_called('GET', '/zones/1234/tasks/1234')
+        self.assertIsInstance(task, Task)
+        cs.tasks.delete(zone, task, node)
+        cs.assert_called('DELETE', '/zones/1234/nodes/1234/tasks/1234')
+
     def test_node_task_cancel(self):
         zone = cs.zones.get(1234)
         cs.assert_called('GET', '/zones/1234')
