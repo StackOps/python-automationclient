@@ -600,6 +600,10 @@ class ShellTest(utils.TestCase):
         self.run_command('zone-tasks-list 1234')
         self.assert_called('GET', '/zones/1234/tasks')
 
+    def test_zone_task_delete(self):
+        self.run_command('zone-task-delete 1234 1234')
+        self.assert_called('DELETE', '/zones/1234/tasks/1234')
+
     def test_zone_property_create(self):
         self.run_command('zone-property-create '
                          '1234 new_fake_property_key new_fake_property_value')
@@ -727,6 +731,10 @@ class ShellTest(utils.TestCase):
     def test_node_tasks_list(self):
         self.run_command('node-tasks-list 1234 1234')
         self.assert_called('GET', '/zones/1234/nodes/1234/tasks')
+
+    def test_node_task_delete(self):
+        self.run_command('node-task-delete 1234 1234 1234')
+        self.assert_called('DELETE', '/zones/1234/nodes/1234/tasks/1234')
 
     def test_node_task_state(self):
         self.run_command('node-task-state 1234 1234 1234')
