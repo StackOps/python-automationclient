@@ -1022,9 +1022,6 @@ def do_role_component_list(cs, args):
 @utils.arg('role', metavar='<role-id>',
            type=int,
            help='ID of the role.')
-@utils.arg('node', metavar='<node-id>',
-           type=int,
-           help='ID of the node.')
 @utils.arg('component', metavar='<component>',
            help='Name of the component.')
 @utils.service_type('automation')
@@ -1047,9 +1044,6 @@ def do_role_component_show(cs, args):
 @utils.arg('role', metavar='<role-id>',
            type=int,
            help='ID of the role.')
-@utils.arg('node', metavar='<node-id>',
-           type=int,
-           help='ID of the node.')
 @utils.arg('component', metavar='<component>',
            help='Name of the component.')
 @utils.service_type('automation')
@@ -1071,9 +1065,6 @@ def do_role_component_json(cs, args):
 @utils.arg('role', metavar='<role-id>',
            type=int,
            help='ID of the role.')
-@utils.arg('node', metavar='<node-id>',
-           type=int,
-           help='ID of the node.')
 @utils.arg('component', metavar='<component>',
            help='Name of the component.')
 @utils.arg('component_file', metavar='<component-file>',
