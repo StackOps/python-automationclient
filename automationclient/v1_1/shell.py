@@ -857,7 +857,9 @@ def do_node_tasks_list(cs, args):
 @utils.service_type('automation')
 def do_node_task_state(cs, args):
     """Show details about a task from a node in a zone."""
-    task = _find_task(cs, args.zone, args.node, args.task)
+    zone = _find_zone(cs, args.zone)
+    node = _find_node(cs, args.zone, args.node)
+    task = cs.tasks.state(zone, node, args.task)
     utils.print_dict(task._info)
 
 
@@ -875,7 +877,7 @@ def do_node_task_delete(cs, args):
     """Remove a task from a node in a zone from automation DB."""
     zone = _find_zone(cs, args.zone)
     node = _find_node(cs, args.zone, args.node)
-    task = _find_task(cs, args.zone, None, args.task)
+    task = _find_task(cs, args.zone, args.node, args.task)
     cs.tasks.delete(zone, task, node)
 
 
