@@ -118,7 +118,7 @@ class TaskManager(base.ManagerWithFind):
         return self.api.client.post("/zones/%s/nodes/%s/tasks/%s/cancel"
                                     % (base.getid(zone),
                                        base.getid(node),
-                                       base.getid(task)))
+                                       task.uuid))
 
     def list_node(self, zone, node):
         """Get all tasks by zone and node.

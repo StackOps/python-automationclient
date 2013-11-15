@@ -83,7 +83,9 @@ class NodeTest(utils.TestCase):
         node = cs.nodes.get(zone, 1234)
         cs.assert_called('GET', '/zones/1234/nodes/1234')
         self.assertIsInstance(node, Node)
-        task = cs.tasks.cancel(zone, node, 1234)
+        task = cs.tasks.get_node(zone, node, 1234)
+        self.assertIsInstance(task, Task)
+        task = cs.tasks.cancel(zone, node, task)
         cs.assert_called('POST', '/zones/1234/nodes/1234/tasks/1234/cancel')
         self.assertIsInstance(task, tuple)
 
