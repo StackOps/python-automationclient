@@ -192,6 +192,7 @@ The operations allowed in the python-automatioclient are:
    zone-property-delete
                        Delete a zone property.
    zone-tasks-list     List all the tasks by zone.
+   zone-task-delete    Remove a task by zone from automation DB.
    role-list           List all the roles by zone.
    role-show           Show details about a role.
    role-deploy         Associate a role to a node.
@@ -212,6 +213,8 @@ The operations allowed in the python-automatioclient are:
    node-tasks-list     List all tasks from a node in a zone.
    node-task-state     Show details about a task from a node in a zone.
    node-task-cancel    Cancel a task from a node in a zone.
+   node-task-delete    Remove a task from a node in a zone from automation
+                       DB.
 
 
 Zone Operations
@@ -310,10 +313,31 @@ To list all taks by zone, this one must be referenced by its ID
 .. code-block:: bash
 
    $ zone-tasks-list 1
-   +----+------+------+-------+--------+
-   | id | name | uuid | state | result |
-   +----+------+------+-------+--------+
-   +----+------+------+-------+--------+
+   +----+---------------------------+--------------------------------------+---------+-----------+
+   | id |            name           |                 uuid                 |  state  |   result  |
+   +----+---------------------------+--------------------------------------+---------+-----------+
+   | 1  |     os.change_hostname    | f6a8803b-05ab-4304-8205-42dba949c8af | PENDING | NOT_READY |
+   | 2  |      os.dhcp_request      | d087839f-1674-44ce-b5c2-aacdb57c6ede | PENDING | NOT_READY |
+   | 3  |    folsom.mysql.install   | 1c1db42f-980f-43e5-81da-d0e1075b19cb | PENDING | NOT_READY |
+   | 4  |  folsom.rabbitmq.install  | c0c1f104-9f91-4336-8454-ba10319eb811 | PENDING | NOT_READY |
+   | 5  |  folsom.keystone.install  | 5c15219f-3e23-479b-9d98-92b4db09d46b | PENDING | NOT_READY |
+   | 6  |   folsom.glance.install   | ae285677-e1c3-41e4-95d8-827cca027f16 | PENDING | NOT_READY |
+   | 7  |    folsom.nova.install    | a24e21d1-1f49-4c21-af96-a494f6acd965 | PENDING | NOT_READY |
+   | 8  |   folsom.quantum.install  | f9d07df1-83f8-46fc-9383-716e070219e1 | PENDING | NOT_READY |
+   | 9  |   folsom.cinder.install   | 64ff7066-4739-4c78-87c4-ddea2b35d06f | PENDING | NOT_READY |
+   | 10 |   folsom.apache.install   | cf658905-e130-497f-becc-f47e0565115f | PENDING | NOT_READY |
+   | 11 |   folsom.portal.install   | 0b030a67-fd01-441a-948e-bcfb8a8a4aa8 | PENDING | NOT_READY |
+   | 12 | folsom.chargeback.install | ddeb14e7-94a3-4191-8285-0ced3b5351d6 | PENDING | NOT_READY |
+   +----+---------------------------+--------------------------------------+---------+-----------+
+
+Delete task from zone in automation DB
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To delete a specific task from database automation not from celery manager tasks at zone level, you must provide the ID zone and ID task.
+
+.. code-block:: bash
+
+   $ zone-task-delete 1 1
 
 Properties Zone Operations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -478,10 +502,22 @@ To deploy a node must be specified the ID zone, ID role and the ID node as manda
 
   
    $ role-deploy 1 1 1
-   +----+------+------+-------+--------+
-   | id | name | uuid | state | result |
-   +----+------+------+-------+--------+
-   +----+------+------+-------+--------+
+   +----+---------------------------+--------------------------------------+---------+-----------+
+   | id |            name           |                 uuid                 |  state  |   result  |
+   +----+---------------------------+--------------------------------------+---------+-----------+
+   | 1  |     os.change_hostname    | f6a8803b-05ab-4304-8205-42dba949c8af | PENDING | NOT_READY |
+   | 2  |      os.dhcp_request      | d087839f-1674-44ce-b5c2-aacdb57c6ede | PENDING | NOT_READY |
+   | 3  |    folsom.mysql.install   | 1c1db42f-980f-43e5-81da-d0e1075b19cb | PENDING | NOT_READY |
+   | 4  |  folsom.rabbitmq.install  | c0c1f104-9f91-4336-8454-ba10319eb811 | PENDING | NOT_READY |
+   | 5  |  folsom.keystone.install  | 5c15219f-3e23-479b-9d98-92b4db09d46b | PENDING | NOT_READY |
+   | 6  |   folsom.glance.install   | ae285677-e1c3-41e4-95d8-827cca027f16 | PENDING | NOT_READY |
+   | 7  |    folsom.nova.install    | a24e21d1-1f49-4c21-af96-a494f6acd965 | PENDING | NOT_READY |
+   | 8  |   folsom.quantum.install  | f9d07df1-83f8-46fc-9383-716e070219e1 | PENDING | NOT_READY |
+   | 9  |   folsom.cinder.install   | 64ff7066-4739-4c78-87c4-ddea2b35d06f | PENDING | NOT_READY |
+   | 10 |   folsom.apache.install   | cf658905-e130-497f-becc-f47e0565115f | PENDING | NOT_READY |
+   | 11 |   folsom.portal.install   | 0b030a67-fd01-441a-948e-bcfb8a8a4aa8 | PENDING | NOT_READY |
+   | 12 | folsom.chargeback.install | ddeb14e7-94a3-4191-8285-0ced3b5351d6 | PENDING | NOT_READY |
+   +----+---------------------------+--------------------------------------+---------+-----------+
 
 List all component by zone and role
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -508,26 +544,24 @@ To list all the components by zone and role defined at the moment to create the 
    | 3  | storage  |
    +----+----------+
 
-Show a specific component in a node by zone and role
+Show a specific component by zone and role
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To show details about a component configuration in a node you must specific the ID zone, the ID role, the ID node and the Name of the component
+To show details about a component configuration in an zone you must specific the ID zone, the ID role, and the Name of the component
 
 .. code-block:: bash
 
    $ help role-component-show
-   usage: automation role-component-show <zone-id> <role-id> <node-id>
-                                         <component>
+   usage: automation role-component-show <zone-id> <role-id> <component>
    
    Show details about a component by zone and role.
 
    Positional arguments:
      <zone-id>    ID of the zone.
      <role-id>    ID of the role.
-     <node-id>    ID of the node.
      <component>  Name of the component.
 
-   $  role-component-show 1 1 1 mysql
+   $  role-component-show 1 1 mysql
    +------------+--------------------------------------------+
    |  Property  |                   Value                    |
    +------------+--------------------------------------------+
@@ -603,26 +637,25 @@ To show details about a component configuration in a node you must specific the 
    |            |                     }                      |
    +------------+--------------------------------------------+
 
-Generate JSON component file in a node by zone and role
+Generate JSON component file by zone and role
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To generate a JSON file of a component configuration in a node you must specific the ID zone, the ID role, the ID node and the Name component
+To generate a JSON file of a component configuration in a zone you must specific the ID zone, the ID role and the Name component
 
 .. code-block:: bash
 
    $  help role-component-json
-   usage: automation role-component-json <zone-id> <role-id> <node-id>
-                                         <component>
+   usage: automation role-component-json <zone-id> <role-id> <component>
 
    Gets the JSON of the component by zone and role.
 
    Positional arguments:
      <zone-id>    ID of the zone.
      <role-id>    ID of the role.
-     <node-id>    ID of the node.
      <component>  Name of the component.
 
-   $ {
+   $ role-component-json 1 1 mysql
+     {
       "component": {
         "id": 1,
         "properties": {
@@ -697,29 +730,27 @@ To generate a JSON file of a component configuration in a node you must specific
       }
      }
 
-Modify a specific component in a node by zone and role
+Modify a specific component by zone and role
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To update a component configuration in a node you must specific the ID zone, the ID role, the ID node, the Name component and the JSON file with the component to update generated through the operation **component-role-json** as input
+To update a component configuration in a zone you must specific the ID zone, the ID role, the Name component and the JSON file with the component to update generated through the operation **component-role-json** as input
 
 .. code-block:: bash
 
    $ help role-component-update
-   usage: automation role-component-update <zone-id> <role-id> <node-id>
-                                           <component> <component-file>
+   usage: automation role-component-update <zone-id> <role-id> <component> <component-file>
 
    Update a component by zone and role .
 
    Positional arguments:
      <zone-id>         ID of the zone.
      <role-id>         ID of the role.
-     <node-id>         ID of the node.
      <component>       Name of the component.
      <component-file>  File with extension .json describing the component to
                        update. It is took from the operation role-component-json
                        as reference.
 
-   $ role-component-update 1 1 1 mysql role_component_update.json
+   $ role-component-update 1 1 mysql role_component_update.json
    +------------+--------------------------------------------+
    |  Property  |                   Value                    |
    +------------+--------------------------------------------+
@@ -961,20 +992,40 @@ To list all tasks on an specific node you must specific the ID node and the ID z
 .. code-block:: bash
    
    $ help node-tasks-list 1 1
-   node-tasks-list 1 1
-   +----+------+------+-------+
-   | id | name | uuid | state |
-   +----+------+------+-------+
-   +----+------+------+-------+
+   usage: automation node-tasks-list <zone-id> <node-id>
+
+   List all tasks from a node in a zone.
+
+   Positional arguments:
+     <zone-id>  ID of the zone.
+     <node-id>  ID of the node.
+
+   $ node-tasks-list 1 1
+   +----+---------------------------+--------------------------------------+---------+
+   | id |            name           |                 uuid                 |  state  |
+   +----+---------------------------+--------------------------------------+---------+
+   | 1  |     os.change_hostname    | f6a8803b-05ab-4304-8205-42dba949c8af | PENDING |
+   | 2  |      os.dhcp_request      | d087839f-1674-44ce-b5c2-aacdb57c6ede | PENDING |
+   | 3  |    folsom.mysql.install   | 1c1db42f-980f-43e5-81da-d0e1075b19cb | PENDING |
+   | 4  |  folsom.rabbitmq.install  | c0c1f104-9f91-4336-8454-ba10319eb811 | PENDING |
+   | 5  |  folsom.keystone.install  | 5c15219f-3e23-479b-9d98-92b4db09d46b | PENDING |
+   | 6  |   folsom.glance.install   | ae285677-e1c3-41e4-95d8-827cca027f16 | PENDING |
+   | 7  |    folsom.nova.install    | a24e21d1-1f49-4c21-af96-a494f6acd965 | PENDING |
+   | 8  |   folsom.quantum.install  | f9d07df1-83f8-46fc-9383-716e070219e1 | PENDING |
+   | 9  |   folsom.cinder.install   | 64ff7066-4739-4c78-87c4-ddea2b35d06f | PENDING |
+   | 10 |   folsom.apache.install   | cf658905-e130-497f-becc-f47e0565115f | PENDING |
+   | 11 |   folsom.portal.install   | 0b030a67-fd01-441a-948e-bcfb8a8a4aa8 | PENDING |
+   | 12 | folsom.chargeback.install | ddeb14e7-94a3-4191-8285-0ced3b5351d6 | REVOKED |
+   +----+---------------------------+--------------------------------------+---------+
 
 Show a specific state task on the node in a zone
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To show a specific task on a node you must specific the ID node and the ID zone where it has been activated and the ID task executed on it
+To show a specific task state on a node you must specific the ID node and the ID zone where it has been activated and the ID task executed on it
 
 .. code-block:: bash
    
-   $ help node-tasks-list
+   $ help node-task-state
    usage: automation node-task-state <zone-id> <node-id> <task-id>
 
    Show details about a task from a node in a zone.
@@ -984,10 +1035,21 @@ To show a specific task on a node you must specific the ID node and the ID zone 
      <node-id>  ID of the node.
      <task-id>  ID of the task.
 
-
-.. code-block:: bash
-   
-   $ help node-task-show 1 1 1
+   $ help node-task-state 1 1 12
+   +-------------+--------------------------------------------------------------------------------------------------------------+
+   |   Property  |                                                    Value                                                     |
+   +-------------+--------------------------------------------------------------------------------------------------------------+
+   |    _links   | {u'self': {u'href': u'http://0.0.0.0:8089/v1.1/zones/1/nodes/1/tasks/ddeb14e7-94a3-4191-8285-0ced3b5351d6'}} |
+   | finished_at |                                                     None                                                     |
+   |      id     |                                                      12                                                      |
+   | launched_at |                                             2013-11-18 09:11:14                                              |
+   |     name    |                                          folsom.chargeback.install                                           |
+   |   node_id   |                                                      1                                                       |
+   |    result   |                                                  NOT_READY                                                   |
+   |  started_at |                                                     None                                                     |
+   |    state    |                                                   REVOKED                                                    |
+   |     uuid    |                                     ddeb14e7-94a3-4191-8285-0ced3b5351d6                                     |
+   +-------------+--------------------------------------------------------------------------------------------------------------+
 
 Cancel a specific task on the node in a zone
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1009,3 +1071,19 @@ To cancel a specific task on a node you must specific the ID node and the ID zon
 .. code-block:: bash
    
    $ help node-task-cancel 1 1 1
+   +----------+--------------------------------------+
+   | Property |                Value                 |
+   +----------+--------------------------------------+
+   |    id    | f6a8803b-05ab-4304-8205-42dba949c8af |
+   |  result  |              NOT_READY               |
+   |  state   |               REVOKED                |
+   +----------+--------------------------------------+
+
+Delete a specific task on the node in a zone from automation DB
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To delete a specific task from database automation not from celery manager tasks at node level, you must provide the ID zone, ID node and ID task.
+
+.. code-block:: bash
+
+   $ node-task-delete 1 1 1

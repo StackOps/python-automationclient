@@ -211,6 +211,7 @@ zone-property-update
 zone-property-delete
                     Delete a zone property.
 zone-tasks-list     List all the tasks by zone.
+zone-task-delete    Remove a task by zone from automation DB.
 role-list           List all the roles by zone.
 role-show           Show details about a role.
 role-deploy         Associate a role to a node.
@@ -231,6 +232,8 @@ node-show           Show details about a node in a zone.
 node-tasks-list     List all tasks from a node in a zone.
 node-task-state     Show details about a task from a node in a zone.
 node-task-cancel    Cancel a task from a node in a zone.
+node-task-delete    Remove a task from a node in a zone from automation
+                    DB.
 </pre></div>
 </div>
 <div class="section" id="zone-operations">
@@ -316,10 +319,29 @@ Positional arguments:
 <h4>List taks from zone<a class="headerlink" href="#list-taks-from-zone" title="Permalink to this headline">¶</a></h4>
 <p>To list all taks by zone, this one must be referenced by its ID</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>zone-tasks-list 1
-+----+------+------+-------+--------+
-| id | name | uuid | state | result |
-+----+------+------+-------+--------+
-+----+------+------+-------+--------+
++----+---------------------------+--------------------------------------+---------+-----------+
+| id |            name           |                 uuid                 |  state  |   result  |
++----+---------------------------+--------------------------------------+---------+-----------+
+| 1  |     os.change_hostname    | f6a8803b-05ab-4304-8205-42dba949c8af | PENDING | NOT_READY |
+| 2  |      os.dhcp_request      | d087839f-1674-44ce-b5c2-aacdb57c6ede | PENDING | NOT_READY |
+| 3  |    folsom.mysql.install   | 1c1db42f-980f-43e5-81da-d0e1075b19cb | PENDING | NOT_READY |
+| 4  |  folsom.rabbitmq.install  | c0c1f104-9f91-4336-8454-ba10319eb811 | PENDING | NOT_READY |
+| 5  |  folsom.keystone.install  | 5c15219f-3e23-479b-9d98-92b4db09d46b | PENDING | NOT_READY |
+| 6  |   folsom.glance.install   | ae285677-e1c3-41e4-95d8-827cca027f16 | PENDING | NOT_READY |
+| 7  |    folsom.nova.install    | a24e21d1-1f49-4c21-af96-a494f6acd965 | PENDING | NOT_READY |
+| 8  |   folsom.quantum.install  | f9d07df1-83f8-46fc-9383-716e070219e1 | PENDING | NOT_READY |
+| 9  |   folsom.cinder.install   | 64ff7066-4739-4c78-87c4-ddea2b35d06f | PENDING | NOT_READY |
+| 10 |   folsom.apache.install   | cf658905-e130-497f-becc-f47e0565115f | PENDING | NOT_READY |
+| 11 |   folsom.portal.install   | 0b030a67-fd01-441a-948e-bcfb8a8a4aa8 | PENDING | NOT_READY |
+| 12 | folsom.chargeback.install | ddeb14e7-94a3-4191-8285-0ced3b5351d6 | PENDING | NOT_READY |
++----+---------------------------+--------------------------------------+---------+-----------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete-task-from-zone-in-automation-db">
+<h4>Delete task from zone in automation DB<a class="headerlink" href="#delete-task-from-zone-in-automation-db" title="Permalink to this headline">¶</a></h4>
+<p>To delete a specific task from database automation not from celery manager tasks at zone level, you must provide the ID zone and ID task.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>zone-task-delete 1 1
 </pre></div>
 </div>
 </div>
@@ -471,10 +493,22 @@ Optional arguments:
 
 
 <span class="nv">$ </span>role-deploy 1 1 1
-+----+------+------+-------+--------+
-| id | name | uuid | state | result |
-+----+------+------+-------+--------+
-+----+------+------+-------+--------+
++----+---------------------------+--------------------------------------+---------+-----------+
+| id |            name           |                 uuid                 |  state  |   result  |
++----+---------------------------+--------------------------------------+---------+-----------+
+| 1  |     os.change_hostname    | f6a8803b-05ab-4304-8205-42dba949c8af | PENDING | NOT_READY |
+| 2  |      os.dhcp_request      | d087839f-1674-44ce-b5c2-aacdb57c6ede | PENDING | NOT_READY |
+| 3  |    folsom.mysql.install   | 1c1db42f-980f-43e5-81da-d0e1075b19cb | PENDING | NOT_READY |
+| 4  |  folsom.rabbitmq.install  | c0c1f104-9f91-4336-8454-ba10319eb811 | PENDING | NOT_READY |
+| 5  |  folsom.keystone.install  | 5c15219f-3e23-479b-9d98-92b4db09d46b | PENDING | NOT_READY |
+| 6  |   folsom.glance.install   | ae285677-e1c3-41e4-95d8-827cca027f16 | PENDING | NOT_READY |
+| 7  |    folsom.nova.install    | a24e21d1-1f49-4c21-af96-a494f6acd965 | PENDING | NOT_READY |
+| 8  |   folsom.quantum.install  | f9d07df1-83f8-46fc-9383-716e070219e1 | PENDING | NOT_READY |
+| 9  |   folsom.cinder.install   | 64ff7066-4739-4c78-87c4-ddea2b35d06f | PENDING | NOT_READY |
+| 10 |   folsom.apache.install   | cf658905-e130-497f-becc-f47e0565115f | PENDING | NOT_READY |
+| 11 |   folsom.portal.install   | 0b030a67-fd01-441a-948e-bcfb8a8a4aa8 | PENDING | NOT_READY |
+| 12 | folsom.chargeback.install | ddeb14e7-94a3-4191-8285-0ced3b5351d6 | PENDING | NOT_READY |
++----+---------------------------+--------------------------------------+---------+-----------+
 </pre></div>
 </div>
 </div>
@@ -501,22 +535,20 @@ Positional arguments:
 </pre></div>
 </div>
 </div>
-<div class="section" id="show-a-specific-component-in-a-node-by-zone-and-role">
-<h4>Show a specific component in a node by zone and role<a class="headerlink" href="#show-a-specific-component-in-a-node-by-zone-and-role" title="Permalink to this headline">¶</a></h4>
-<p>To show details about a component configuration in a node you must specific the ID zone, the ID role, the ID node and the Name of the component</p>
+<div class="section" id="show-a-specific-component-by-zone-and-role">
+<h4>Show a specific component by zone and role<a class="headerlink" href="#show-a-specific-component-by-zone-and-role" title="Permalink to this headline">¶</a></h4>
+<p>To show details about a component configuration in an zone you must specific the ID zone, the ID role, and the Name of the component</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>role-component-show
-usage: automation role-component-show &lt;zone-id&gt; &lt;role-id&gt; &lt;node-id&gt;
-                                      &lt;component&gt;
+usage: automation role-component-show &lt;zone-id&gt; &lt;role-id&gt; &lt;component&gt;
 
 Show details about a component by zone and role.
 
 Positional arguments:
   &lt;zone-id&gt;    ID of the zone.
   &lt;role-id&gt;    ID of the role.
-  &lt;node-id&gt;    ID of the node.
   &lt;component&gt;  Name of the component.
 
-<span class="nv">$ </span> role-component-show 1 1 1 mysql
+<span class="nv">$ </span> role-component-show 1 1 mysql
 +------------+--------------------------------------------+
 |  Property  |                   Value                    |
 +------------+--------------------------------------------+
@@ -594,22 +626,21 @@ Positional arguments:
 </pre></div>
 </div>
 </div>
-<div class="section" id="generate-json-component-file-in-a-node-by-zone-and-role">
-<h4>Generate JSON component file in a node by zone and role<a class="headerlink" href="#generate-json-component-file-in-a-node-by-zone-and-role" title="Permalink to this headline">¶</a></h4>
-<p>To generate a JSON file of a component configuration in a node you must specific the ID zone, the ID role, the ID node and the Name component</p>
+<div class="section" id="generate-json-component-file-by-zone-and-role">
+<h4>Generate JSON component file by zone and role<a class="headerlink" href="#generate-json-component-file-by-zone-and-role" title="Permalink to this headline">¶</a></h4>
+<p>To generate a JSON file of a component configuration in a zone you must specific the ID zone, the ID role and the Name component</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span> <span class="nb">help </span>role-component-json
-usage: automation role-component-json &lt;zone-id&gt; &lt;role-id&gt; &lt;node-id&gt;
-                                      &lt;component&gt;
+usage: automation role-component-json &lt;zone-id&gt; &lt;role-id&gt; &lt;component&gt;
 
 Gets the JSON of the component by zone and role.
 
 Positional arguments:
   &lt;zone-id&gt;    ID of the zone.
   &lt;role-id&gt;    ID of the role.
-  &lt;node-id&gt;    ID of the node.
   &lt;component&gt;  Name of the component.
 
-<span class="nv">$ </span><span class="o">{</span>
+<span class="nv">$ </span>role-component-json 1 1 mysql
+  <span class="o">{</span>
    <span class="s2">&quot;component&quot;</span>: <span class="o">{</span>
      <span class="s2">&quot;id&quot;</span>: 1,
      <span class="s2">&quot;properties&quot;</span>: <span class="o">{</span>
@@ -686,25 +717,23 @@ Positional arguments:
 </pre></div>
 </div>
 </div>
-<div class="section" id="modify-a-specific-component-in-a-node-by-zone-and-role">
-<h4>Modify a specific component in a node by zone and role<a class="headerlink" href="#modify-a-specific-component-in-a-node-by-zone-and-role" title="Permalink to this headline">¶</a></h4>
-<p>To update a component configuration in a node you must specific the ID zone, the ID role, the ID node, the Name component and the JSON file with the component to update generated through the operation <strong>component-role-json</strong> as input</p>
+<div class="section" id="modify-a-specific-component-by-zone-and-role">
+<h4>Modify a specific component by zone and role<a class="headerlink" href="#modify-a-specific-component-by-zone-and-role" title="Permalink to this headline">¶</a></h4>
+<p>To update a component configuration in a zone you must specific the ID zone, the ID role, the Name component and the JSON file with the component to update generated through the operation <strong>component-role-json</strong> as input</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>role-component-update
-usage: automation role-component-update &lt;zone-id&gt; &lt;role-id&gt; &lt;node-id&gt;
-                                        &lt;component&gt; &lt;component-file&gt;
+usage: automation role-component-update &lt;zone-id&gt; &lt;role-id&gt; &lt;component&gt; &lt;component-file&gt;
 
 Update a component by zone and role .
 
 Positional arguments:
   &lt;zone-id&gt;         ID of the zone.
   &lt;role-id&gt;         ID of the role.
-  &lt;node-id&gt;         ID of the node.
   &lt;component&gt;       Name of the component.
   &lt;component-file&gt;  File with extension .json describing the component to
                     update. It is took from the operation role-component-json
                     as reference.
 
-<span class="nv">$ </span>role-component-update 1 1 1 mysql role_component_update.json
+<span class="nv">$ </span>role-component-update 1 1 mysql role_component_update.json
 +------------+--------------------------------------------+
 |  Property  |                   Value                    |
 +------------+--------------------------------------------+
@@ -932,18 +961,38 @@ Positional arguments:
 </pre></div>
 </div>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>node-tasks-list 1 1
-node-tasks-list 1 1
-+----+------+------+-------+
-| id | name | uuid | state |
-+----+------+------+-------+
-+----+------+------+-------+
+usage: automation node-tasks-list &lt;zone-id&gt; &lt;node-id&gt;
+
+List all tasks from a node in a zone.
+
+Positional arguments:
+  &lt;zone-id&gt;  ID of the zone.
+  &lt;node-id&gt;  ID of the node.
+
+<span class="nv">$ </span>node-tasks-list 1 1
++----+---------------------------+--------------------------------------+---------+
+| id |            name           |                 uuid                 |  state  |
++----+---------------------------+--------------------------------------+---------+
+| 1  |     os.change_hostname    | f6a8803b-05ab-4304-8205-42dba949c8af | PENDING |
+| 2  |      os.dhcp_request      | d087839f-1674-44ce-b5c2-aacdb57c6ede | PENDING |
+| 3  |    folsom.mysql.install   | 1c1db42f-980f-43e5-81da-d0e1075b19cb | PENDING |
+| 4  |  folsom.rabbitmq.install  | c0c1f104-9f91-4336-8454-ba10319eb811 | PENDING |
+| 5  |  folsom.keystone.install  | 5c15219f-3e23-479b-9d98-92b4db09d46b | PENDING |
+| 6  |   folsom.glance.install   | ae285677-e1c3-41e4-95d8-827cca027f16 | PENDING |
+| 7  |    folsom.nova.install    | a24e21d1-1f49-4c21-af96-a494f6acd965 | PENDING |
+| 8  |   folsom.quantum.install  | f9d07df1-83f8-46fc-9383-716e070219e1 | PENDING |
+| 9  |   folsom.cinder.install   | 64ff7066-4739-4c78-87c4-ddea2b35d06f | PENDING |
+| 10 |   folsom.apache.install   | cf658905-e130-497f-becc-f47e0565115f | PENDING |
+| 11 |   folsom.portal.install   | 0b030a67-fd01-441a-948e-bcfb8a8a4aa8 | PENDING |
+| 12 | folsom.chargeback.install | ddeb14e7-94a3-4191-8285-0ced3b5351d6 | REVOKED |
++----+---------------------------+--------------------------------------+---------+
 </pre></div>
 </div>
 </div>
 <div class="section" id="show-a-specific-state-task-on-the-node-in-a-zone">
 <h4>Show a specific state task on the node in a zone<a class="headerlink" href="#show-a-specific-state-task-on-the-node-in-a-zone" title="Permalink to this headline">¶</a></h4>
-<p>To show a specific task on a node you must specific the ID node and the ID zone where it has been activated and the ID task executed on it</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>node-tasks-list
+<p>To show a specific task state on a node you must specific the ID node and the ID zone where it has been activated and the ID task executed on it</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>node-task-state
 usage: automation node-task-state &lt;zone-id&gt; &lt;node-id&gt; &lt;task-id&gt;
 
 Show details about a task from a node in a zone.
@@ -952,9 +1001,22 @@ Positional arguments:
   &lt;zone-id&gt;  ID of the zone.
   &lt;node-id&gt;  ID of the node.
   &lt;task-id&gt;  ID of the task.
-</pre></div>
-</div>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>node-task-show 1 1 1
+
+<span class="nv">$ </span><span class="nb">help </span>node-task-state 1 1 12
++-------------+--------------------------------------------------------------------------------------------------------------+
+|   Property  |                                                    Value                                                     |
++-------------+--------------------------------------------------------------------------------------------------------------+
+|    _links   | <span class="o">{</span>u<span class="s1">&#39;self&#39;</span>: <span class="o">{</span>u<span class="s1">&#39;href&#39;</span>: u<span class="s1">&#39;http://0.0.0.0:8089/v1.1/zones/1/nodes/1/tasks/ddeb14e7-94a3-4191-8285-0ced3b5351d6&#39;</span><span class="o">}}</span> |
+| finished_at |                                                     None                                                     |
+|      id     |                                                      12                                                      |
+| launched_at |                                             2013-11-18 09:11:14                                              |
+|     name    |                                          folsom.chargeback.install                                           |
+|   node_id   |                                                      1                                                       |
+|    result   |                                                  NOT_READY                                                   |
+|  started_at |                                                     None                                                     |
+|    state    |                                                   REVOKED                                                    |
+|     uuid    |                                     ddeb14e7-94a3-4191-8285-0ced3b5351d6                                     |
++-------------+--------------------------------------------------------------------------------------------------------------+
 </pre></div>
 </div>
 </div>
@@ -973,6 +1035,20 @@ Positional arguments:
 </pre></div>
 </div>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">help </span>node-task-cancel 1 1 1
++----------+--------------------------------------+
+| Property |                Value                 |
++----------+--------------------------------------+
+|    id    | f6a8803b-05ab-4304-8205-42dba949c8af |
+|  result  |              NOT_READY               |
+|  state   |               REVOKED                |
++----------+--------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete-a-specific-task-on-the-node-in-a-zone-from-automation-db">
+<h4>Delete a specific task on the node in a zone from automation DB<a class="headerlink" href="#delete-a-specific-task-on-the-node-in-a-zone-from-automation-db" title="Permalink to this headline">¶</a></h4>
+<p>To delete a specific task from database automation not from celery manager tasks at node level, you must provide the ID zone, ID node and ID task.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>node-task-delete 1 1 1
 </pre></div>
 </div>
 </div>
@@ -1008,6 +1084,7 @@ Positional arguments:
 <li><a class="reference internal" href="#generate-json-file-from-a-zone">Generate JSON file from a zone</a></li>
 <li><a class="reference internal" href="#delete-a-specific-zone">Delete a specific zone</a></li>
 <li><a class="reference internal" href="#list-taks-from-zone">List taks from zone</a></li>
+<li><a class="reference internal" href="#delete-task-from-zone-in-automation-db">Delete task from zone in automation DB</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#properties-zone-operations">Properties Zone Operations</a><ul>
@@ -1021,9 +1098,9 @@ Positional arguments:
 <li><a class="reference internal" href="#show-details-about-a-specific-role">Show details about a specific role</a></li>
 <li><a class="reference internal" href="#associate-a-node-pyshical-server-discovered-and-in-the-pool-to-a-role">Associate a node (pyshical server discovered and in the pool) to a role</a></li>
 <li><a class="reference internal" href="#list-all-component-by-zone-and-role">List all component by zone and role</a></li>
-<li><a class="reference internal" href="#show-a-specific-component-in-a-node-by-zone-and-role">Show a specific component in a node by zone and role</a></li>
-<li><a class="reference internal" href="#generate-json-component-file-in-a-node-by-zone-and-role">Generate JSON component file in a node by zone and role</a></li>
-<li><a class="reference internal" href="#modify-a-specific-component-in-a-node-by-zone-and-role">Modify a specific component in a node by zone and role</a></li>
+<li><a class="reference internal" href="#show-a-specific-component-by-zone-and-role">Show a specific component by zone and role</a></li>
+<li><a class="reference internal" href="#generate-json-component-file-by-zone-and-role">Generate JSON component file by zone and role</a></li>
+<li><a class="reference internal" href="#modify-a-specific-component-by-zone-and-role">Modify a specific component by zone and role</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#services-tasks-operations">Services (Tasks) Operations</a><ul>
@@ -1038,6 +1115,7 @@ Positional arguments:
 <li><a class="reference internal" href="#show-tasks-on-the-node-in-a-zone">Show tasks on the node in a zone</a></li>
 <li><a class="reference internal" href="#show-a-specific-state-task-on-the-node-in-a-zone">Show a specific state task on the node in a zone</a></li>
 <li><a class="reference internal" href="#cancel-a-specific-task-on-the-node-in-a-zone">Cancel a specific task on the node in a zone</a></li>
+<li><a class="reference internal" href="#delete-a-specific-task-on-the-node-in-a-zone-from-automation-db">Delete a specific task on the node in a zone from automation DB</a></li>
 </ul>
 </li>
 </ul>
