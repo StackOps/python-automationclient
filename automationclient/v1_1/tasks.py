@@ -118,7 +118,7 @@ class TaskManager(base.ManagerWithFind):
         return self.api.client.post("/zones/%s/nodes/%s/tasks/%s/cancel"
                                     % (base.getid(zone),
                                        base.getid(node),
-                                       base.getid(task)))
+                                       task.uuid))
 
     def list_node(self, zone, node):
         """Get all tasks by zone and node.
@@ -148,6 +148,24 @@ class TaskManager(base.ManagerWithFind):
         return self._get("/zones/%s/nodes/%s/tasks/%s" % (base.getid(zone),
                                                           base.getid(node),
                                                           task),
+                         "task")
+
+    def state(self, zone, node, task):
+        """Get a specific task by zone and node.
+
+        :param zone: The ID of the :class: `Zone` to get.
+        :rtype: :class:`Zone`
+
+        :param profile: The ID of the :class: `Node` to get.
+        :rtype: :class:`Node`
+
+        :param profile: The ID of the :class: `Task` to get.
+        :rtype: :class:`Task`
+        """
+        return self._get("/zones/%s/nodes/%s/tasks/%s/state"
+                         % (base.getid(zone),
+                            base.getid(node),
+                            task),
                          "task")
 
     def execute_service(self, zone, role, component, service, node):
