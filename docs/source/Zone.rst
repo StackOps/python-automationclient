@@ -192,6 +192,7 @@ The operations allowed in the python-automatioclient are:
    zone-property-delete
                        Delete a zone property.
    zone-tasks-list     List all the tasks by zone.
+   zone-task-delete    Remove a task by zone from automation DB.
    role-list           List all the roles by zone.
    role-show           Show details about a role.
    role-deploy         Associate a role to a node.
@@ -212,6 +213,8 @@ The operations allowed in the python-automatioclient are:
    node-tasks-list     List all tasks from a node in a zone.
    node-task-state     Show details about a task from a node in a zone.
    node-task-cancel    Cancel a task from a node in a zone.
+   node-task-delete    Remove a task from a node in a zone from automation
+                       DB.
 
 
 Zone Operations
