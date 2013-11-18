@@ -10,7 +10,7 @@ command-line tool. You may also want to look at the
 `Stackops Automation API documentation`_.
 
 .. _Stackops Automation CLI guide: http://automationclient.stackops.org/
-.. _Stackops Automation API documentation: http://docs.stackops.org/display/STACKOPSDOCS/RESTful+API
+.. _Stackops Automation API documentation: http://docs.stackops.org/display/STACKOPSAUTOMATION/StackOps+Automation
 
 The code is hosted on `Github`_.
 
@@ -83,7 +83,8 @@ You'll find complete documentation on the shell by running
                   [--service-name <service-name>]
                   [--endpoint-type <endpoint-type>]
                   [--os-automation-api-version <automation-api-ver>]
-                  [--os-cacert <ca-certificate>] [--retries <retries>]
+                  [--os-cacert <ca-certificate>] [--insecure]
+                  [--retries <retries>]
                   <subcommand> ...
 
     Command-line interface to the Stackops Automation API.
@@ -109,6 +110,8 @@ You'll find complete documentation on the shell by running
         device-power-off    Power off a specific device in the pool.
         device-power-on     Power on a specific device in the pool.
         device-reboot       Reboot a specific device in the pool.
+        device-replace      Replaces a node in a zone by a specific device in the
+                            pool.
         device-show         Show details about a device.
         device-shutdown     Shutdown a specific device in the pool.
         device-soft-reboot  Soft reboot a specific device in the pool.
@@ -124,9 +127,13 @@ You'll find complete documentation on the shell by running
                             automation.
         global-property-update
                             Updates a property.
+        node-deactivate     Deactivates a zone node. Moves an activated node from
+                            the zone
         node-list           List all activate devices in a zone.
         node-show           Show details about a node in a zone.
         node-task-cancel    Cancel a task from a node in a zone.
+        node-task-delete    Remove a task from a node in a zone from automation
+                        DB.
         node-task-state     Show details about a task from a node in a zone.
         node-tasks-list     List all tasks from a node in a zone.
         profile-create      Add a new profile by architecture.
@@ -153,12 +160,13 @@ You'll find complete documentation on the shell by running
         role-list           List all the roles by zone.
         role-show           Show details about a role.
         service-execute     Execute a service by zone, role and component.
-        service-list        List all services by zone, role and component.
+        service-list        List all the services by zone, role and component.
         service-show        Show details about a service by zone, role and
                             component.
-        zone-create         Add a new zone by architecture.
+        zone-create         Add a new zone by architecture according to a JSON
+                            profile.
         zone-delete         Remove a specific zone.
-        zone-get            Gets the JSON of the zone.
+        zone-json           Gets the JSON of the zone.
         zone-list           List all the zones.
         zone-property-create
                             Create a zone property.
@@ -167,7 +175,8 @@ You'll find complete documentation on the shell by running
         zone-property-update
                             Update a zone property.
         zone-show           Show details about a zone.
-        zone-tasks-list     List all tasks by zone.
+        zone-task-delete    Remove a task by zone from automation DB.
+        zone-tasks-list     List all the tasks by zone.
         bash-completion     Print arguments for bash_completion.
         help                Display help about this program or one of its
                             subcommands.
@@ -196,11 +205,16 @@ You'll find complete documentation on the shell by running
                             Defaults to env[AUTOMATION_ENDPOINT_TYPE] or
                             publicURL.
       --os-automation-api-version <automation-api-ver>
-                            Accepts 1 or 2,defaults to
+                            Accepts 1.1 or 2,defaults to
                             env[OS_AUTOMATION_API_VERSION].
       --os-cacert <ca-certificate>
                             Specify a CA bundle file to use in verifying a TLS
                             (https) server certificate. Defaults to env[OS_CACERT]
+      --insecure            Explicitly allow automationclient to perform
+                            "insecure" TLS (https) requests. The server's
+                            certificate will not be verified against any
+                            certificate authorities. This option should be used
+                            with caution.
       --retries <retries>   Number of retries.
 
     See "automation help COMMAND" for help on a specific command.
