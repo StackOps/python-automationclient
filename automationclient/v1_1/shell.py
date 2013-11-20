@@ -729,15 +729,15 @@ def do_zone_tasks_list(cs, args):
     """List all the tasks by zone."""
     zone = _find_zone(cs, args.zone)
     tasks = cs.tasks.list(zone)
-    utils.print_list(tasks, ['id', 'name', 'uuid', 'state', 'result'])
+    utils.print_list(tasks, ['id', 'name', 'uuid', 'state'])
 
 
 @utils.arg('zone', metavar='<zone-id>',
            type=int,
            help='ID of the zone.')
-@utils.arg('task', metavar='<task-id>',
+@utils.arg('task', metavar='<task-uuid>',
            type=str,
-           help='ID of the task.')
+           help='UUID of the task.')
 @utils.service_type('automation')
 def do_zone_task_delete(cs, args):
     """Remove a task by zone from automation DB."""
@@ -851,15 +851,16 @@ def do_node_tasks_list(cs, args):
 @utils.arg('node', metavar='<node-id>',
            type=int,
            help='ID of the node.')
-@utils.arg('task', metavar='<task-id>',
-           type=int,
-           help='ID of the task.')
+@utils.arg('task', metavar='<task-uuid>',
+           type=str,
+           help='UUID of the task.')
 @utils.service_type('automation')
 def do_node_task_state(cs, args):
     """Show details about a task from a node in a zone."""
     zone = _find_zone(cs, args.zone)
     node = _find_node(cs, args.zone, args.node)
-    task = cs.tasks.state(zone, node, args.task)
+    task = _find_task(cs, args.zone, args.node, args.task)
+    task = cs.tasks.state(zone, node, task)
     utils.print_dict(task._info)
 
 
@@ -869,9 +870,9 @@ def do_node_task_state(cs, args):
 @utils.arg('node', metavar='<node-id>',
            type=int,
            help='ID of the node.')
-@utils.arg('task', metavar='<task-id>',
+@utils.arg('task', metavar='<task-uuid>',
            type=str,
-           help='ID of the task.')
+           help='UUID of the task.')
 @utils.service_type('automation')
 def do_node_task_delete(cs, args):
     """Remove a task from a node in a zone from automation DB."""
@@ -887,9 +888,9 @@ def do_node_task_delete(cs, args):
 @utils.arg('node', metavar='<node-id>',
            type=int,
            help='ID of the node.')
-@utils.arg('task', metavar='<task-id>',
-           type=int,
-           help='ID of the task.')
+@utils.arg('task', metavar='<task-uuid>',
+           type=str,
+           help='UUID of the task.')
 @utils.service_type('automation')
 def do_node_task_cancel(cs, args):
     """Cancel a task from a node in a zone."""

@@ -165,7 +165,7 @@ class TaskManager(base.ManagerWithFind):
         return self._get("/zones/%s/nodes/%s/tasks/%s/state"
                          % (base.getid(zone),
                             base.getid(node),
-                            task),
+                            task.uuid),
                          "task")
 
     def execute_service(self, zone, role, component, service, node):
