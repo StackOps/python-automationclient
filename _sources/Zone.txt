@@ -192,7 +192,6 @@ The operations allowed in the python-automatioclient are:
    zone-property-delete
                        Delete a zone property.
    zone-tasks-list     List all the tasks by zone.
-   zone-task-delete    Remove a task by zone from automation DB.
    role-list           List all the roles by zone.
    role-show           Show details about a role.
    role-deploy         Associate a role to a node.
@@ -329,15 +328,6 @@ To list all taks by zone, this one must be referenced by its ID
    | 11 |   folsom.portal.install   | 0b030a67-fd01-441a-948e-bcfb8a8a4aa8 | PENDING | NOT_READY |
    | 12 | folsom.chargeback.install | ddeb14e7-94a3-4191-8285-0ced3b5351d6 | PENDING | NOT_READY |
    +----+---------------------------+--------------------------------------+---------+-----------+
-
-Delete task from zone in automation DB
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To delete a specific task from database automation not from celery manager tasks at zone level, you must provide the ID zone and ID task.
-
-.. code-block:: bash
-
-   $ zone-task-delete 1 1
 
 Properties Zone Operations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
