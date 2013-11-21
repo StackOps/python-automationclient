@@ -175,16 +175,6 @@ class ZonesTest(utils.TestCase):
         self.assertEqual(len(tasks), 2)
         [self.assertTrue(isinstance(task, Task)) for task in tasks]
 
-    def test_zone_task_delete(self):
-        zone = cs.zones.get(1234)
-        cs.assert_called('GET', '/zones/1234')
-        self.assertIsInstance(zone, Zone)
-        task = cs.tasks.get(zone, 1234)
-        cs.assert_called('GET', '/zones/1234/tasks/1234')
-        self.assertIsInstance(task, Task)
-        cs.tasks.delete(zone, task)
-        cs.assert_called('DELETE', '/zones/1234/tasks/1234')
-
     def test_zone_propery_create(self):
         zone = cs.zones.get(1234)
         cs.assert_called('GET', '/zones/1234')

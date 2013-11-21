@@ -93,11 +93,8 @@ def _find_service(cs, zone, role, component, service):
 
 def _find_task(cs, zone, node, task):
     obj_zone = _find_zone(cs, zone)
-    if node is not None:
-        obj_node = _find_node(cs, zone, node)
-        return cs.tasks.get_node(obj_zone, obj_node, task)
-    else:
-        return cs.tasks.get(obj_zone, task)
+    obj_node = _find_node(cs, zone, node)
+    return cs.tasks.get_node(obj_zone, obj_node, task)
 
 
 @utils.service_type('automation')
@@ -730,20 +727,6 @@ def do_zone_tasks_list(cs, args):
     zone = _find_zone(cs, args.zone)
     tasks = cs.tasks.list(zone)
     utils.print_list(tasks, ['id', 'name', 'uuid', 'state'])
-
-
-@utils.arg('zone', metavar='<zone-id>',
-           type=int,
-           help='ID of the zone.')
-@utils.arg('task', metavar='<task-uuid>',
-           type=str,
-           help='UUID of the task.')
-@utils.service_type('automation')
-def do_zone_task_delete(cs, args):
-    """Remove a task by zone from automation DB."""
-    zone = _find_zone(cs, args.zone)
-    task = _find_task(cs, args.zone, None, args.task)
-    cs.tasks.delete(zone, task)
 
 
 @utils.arg('zone', metavar='<zone-id>',

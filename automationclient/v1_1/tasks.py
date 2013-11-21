@@ -201,7 +201,7 @@ class TaskManager(base.ManagerWithFind):
         res.node = node
         return res
 
-    def delete(self, zone, task, node=None):
+    def delete(self, zone, task, node):
         """
         Delete a specific task.
 
@@ -215,10 +215,6 @@ class TaskManager(base.ManagerWithFind):
         :rtype: :class:`Node`
         """
 
-        if node is None:
-            self._delete("/zones/%s/tasks/%s" % (base.getid(zone),
-                                                 task.uuid))
-        else:
-            self._delete("/zones/%s/nodes/%s/tasks/%s" % (base.getid(zone),
-                                                          base.getid(node),
-                                                          task.uuid))
+        self._delete("/zones/%s/nodes/%s/tasks/%s" % (base.getid(zone),
+                                                      base.getid(node),
+                                                      task.uuid))

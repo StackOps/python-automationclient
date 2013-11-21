@@ -600,10 +600,6 @@ class ShellTest(utils.TestCase):
         self.run_command('zone-tasks-list 1234')
         self.assert_called('GET', '/zones/1234/tasks')
 
-    def test_zone_task_delete(self):
-        self.run_command('zone-task-delete 1234 1234')
-        self.assert_called('DELETE', '/zones/1234/tasks/1234')
-
     def test_zone_property_create(self):
         self.run_command('zone-property-create '
                          '1234 new_fake_property_key new_fake_property_value')

@@ -175,7 +175,6 @@ You'll find complete documentation on the shell by running
         zone-property-update
                             Update a zone property.
         zone-show           Show details about a zone.
-        zone-task-delete    Remove a task by zone from automation DB.
         zone-tasks-list     List all the tasks by zone.
         bash-completion     Print arguments for bash_completion.
         help                Display help about this program or one of its
