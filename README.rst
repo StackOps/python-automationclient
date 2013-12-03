@@ -1,5 +1,5 @@
 Python bindings to the Stackops Automation API
-===========================================
+==============================================
 
 This is a client for the Stackops Automation API. There's a Python API (the
 ``automationclient`` module), and a command-line script (``automation``). Each
@@ -26,9 +26,15 @@ __ https://github.com/openstack/cinder
 .. contents:: Contents:
    :local:
 
+Latest release version
+----------------------
+
+The latest release version of Stackops python-automationclient is ``v1.2.1``
+that correspond with the current release of ``Stackops automation package``
+who has the same number version as well.
 
 Important Installation for development purpose (Temporal)
-----------------------------------------------
+---------------------------------------------------------
 Stackops python-automationclient is under development taking as groundwork the project
 Openstack python-cinderclient, therefore to recreate the current project you need to clone this one
 throught the command ``git clone https://github.com/StackOps/python-automationclient`` and then follow the
