@@ -86,6 +86,8 @@ Once you've configured your authentication parameters, you can run 'automation h
     node-task-cancel    Cancel a task from a node in a zone.
     node-task-state     Show details about a task from a node in a zone.
     node-tasks-list     List all tasks from a node in a zone.
+    node-task-delete    Remove a task from a node in a zone from automation
+                        DB.
     profile-create      Add a new profile by architecture.
     profile-delete      Remove a specific profile by architecture.
     profile-json        Gets the JSON of the profile.
