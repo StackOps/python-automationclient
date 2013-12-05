@@ -10,6 +10,7 @@ Command-line Tool
     Architecture
     Profile
     Zone
+    Datastore
 
 In order to use the CLI, you must provide your Automation username, password, tenant, and auth endpoint. Use the corresponding configuration options (--os-username, --os-password, --os-tenant-id, and --os-auth-url) or set them in environment variables:
 
@@ -56,6 +57,20 @@ Once you've configured your authentication parameters, you can run 'automation h
                         automation.
     component-services  List all the services by a component.
     component-show      Show details about a component.
+    datastore-add       Validate and add to the pool a NFS endpoint or GLUSTER
+                        endpoint.
+    datastore-attach    Attach a specific datastore to a zone.
+    datastore-content   List top content (first level) of a specific
+                        datastore.
+    datastore-delete    Delete specific datastore.
+    datastore-detach    Detach a specific datastore from a zone.
+    datastore-discovery
+                        Discovery endpoints from NFS.
+    datastore-list      List a pool of datastores.
+    datastore-show      Show details about a datastore.
+    datastore-space     Show the space of a specific datastore.
+    datastore-update    Update parameters of a specific datastore.
+    datastore-validate  Validate a discovered NFS endpoint or just a GLUSTER
     device-activate     Activate a specific device in the pool.
     device-delete       Remove a specific device from pool.
     device-list         List all the devices in the pool.

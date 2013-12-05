@@ -26,6 +26,7 @@ from automationclient.v1_1 import zones
 from automationclient.v1_1 import tasks
 from automationclient.v1_1 import roles
 from automationclient.v1_1 import nodes
+from automationclient.v1_1 import datastores
 
 
 class Client(object):
@@ -65,6 +66,7 @@ class Client(object):
         self.nodes = nodes.NodeManager(self)
         self.tasks = tasks.TaskManager(self)
         self.roles = roles.RoleManager(self)
+        self.datastores = datastores.DatastoreManager(self)
 
         # Add in any extensions...
         if extensions:
