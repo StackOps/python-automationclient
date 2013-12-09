@@ -18,6 +18,10 @@ What is a datastore?
 
 A **shared storage resource over a network** in a server identified by its endpoint, store, type of implementation and others who it is a candidate to take part in an OpenStack Zone. A datastore is view in the datastores' pool once it has been added to.
 
+How to use the datastore information once it has been attached to a zone (Reference its properties to be used in a zone)
+------------------------------------------------------------------------------------------------------------------------
+
+To do a reference about a specific datastore property and use it (once it has been attached to a zone) just you need to do $zone.id.property. For further information http://docs.stackops.org/display/STACKOPSAUTOMATION/Properties
 
 Life cycle management basics
 ----------------------------
@@ -27,6 +31,8 @@ The datastores' pool is the tool included in StackOps Automation that automates 
 .. image:: images/datastores.png
     :alt: Datastores' pool life cycle for a datastore
     :align: center
+
+
 
 Managing Datastores
 -------------------
@@ -186,8 +192,6 @@ Show all the information related with a specific datastore.
    |       href            | http://0.0.0.0:8089/v1.1/datastores/14 |
    |        id             |                   14                   |
    |   id_nova_zone        |                  None                  |
-   |      id_role          |                  None                  |
-   | id_component_name     |                  None                  |
    |  id_storage_types     |                  NFS                   |
    |    identifier         |                  nfs1                  |
    |    parameters         |                                        |
@@ -256,8 +260,6 @@ Update a specific datastore parameters
    |       href       | http://0.0.0.0:8089/v1.1/datastores/14 |
    |        id        |                   14                   |
    |   id_nova_zone   |                  None                  |
-   |      id_role     |                  None                  |
-   | id_component_name|                  None                  |
    | id_storage_types |                  NFS                   |
    |    identifier    |                  nfs1                  |
    |    parameters    |             par1 par2 par3             |
@@ -278,17 +280,13 @@ This service allows to link a specific datastore to a zone and resource (volumes
 
    $ help datastore-attach
    usage: automation datastore-attach [--secure <secure>]
-                                      <datastore-id> <zone> <role>
-                                      <component-name> <resource>
+                                   <datastore-id> <zone> <resource>
 
    Attach a specific datastore to a zone.
 
    Positional arguments:
      <datastore-id>     ID of the datastore/store/volume in the pool
      <zone>             ID of the zone to attach the resource
-     <role>             ID of the role to attach the resource
-     <component-name>   Name of the component catalog used that has the
-                        properties related with storage
      <resource>         Indicates the kind of the resource will be used. Images,
                         instances or volumes
 
@@ -296,7 +294,7 @@ This service allows to link a specific datastore to a zone and resource (volumes
      --secure <secure>  Indicates whether the datastore/store/volume in the pool
                         won't be detached.
 
-   $ datastore-attach 14 2 4 folsom.storage images
+   $ datastore-attach 14 2 images
    +------------------+----------------------------------------+
    |     Property     |                 Value                  |
    +------------------+----------------------------------------+
@@ -304,8 +302,6 @@ This service allows to link a specific datastore to a zone and resource (volumes
    |       href       | http://0.0.0.0:8089/v1.1/datastores/14 |
    |        id        |                   14                   |
    |   id_nova_zone   |                   2                    |
-   |      id_role     |                   4                    |
-   | id_component_name|             folsom.storage             |
    | id_storage_types |                  NFS                   |
    |    identifier    |                  nfs1                  |
    |    parameters    |             par1 par2 par3             |
@@ -326,24 +322,19 @@ This service allows to unlink a specific datastore from a zone and resource (vol
 .. code-block:: bash
 
    $ help datastore-detach
-   usage: automation datastore-detach [--force <force>]
-                                      <datastore-id> <role> <component-name>
+   usage: automation datastore-detach [--force <force>] <datastore-id>
 
    Detach a specific datastore from a zone.
 
    Positional arguments:
-      <datastore-id>    ID of the datastore/store/volume in the pool
-      <role>            ID of the role attached the datastore/store/volume
-      <component-name>  Name of the component catalog used that have the
-                        properties related with storage attached with the
-                        datastore and/or store
+     <datastore-id>   ID of the datastore/store/volume in the pool
 
    Optional arguments:
-      --force <force>   Indicates whether the datastore/store/volume in the pool
-                        will be detached perforce. Type the word 'force' to force
-                        the operation
+     --force <force>  Indicates whether the datastore/store/volume in the pool
+                      will be detached perforce. Type the word 'force' to force
+                      the operation
  
-   $ datastore-detach 14 4 folsom.storage --force force
+   $ datastore-detach 14 --force force
    +------------------+----------------------------------------+
    |     Property     |                 Value                  |
    +------------------+----------------------------------------+
@@ -351,8 +342,6 @@ This service allows to unlink a specific datastore from a zone and resource (vol
    |       href       | http://0.0.0.0:8089/v1.1/datastores/14 |
    |        id        |                   14                   |
    |   id_nova_zone   |                  None                  |
-   |      id_role     |                  None                  |
-   | id_component_name|                  None                  |
    | id_storage_types |                  NFS                   |
    |    identifier    |                  nfs1                  |
    |    parameters    |                defaults                |

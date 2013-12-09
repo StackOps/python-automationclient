@@ -1263,13 +1263,6 @@ def do_datastore_delete(cs, args):
 @utils.arg('zone', metavar='<zone>',
            type=int,
            help='ID of the zone to attach the resource')
-@utils.arg('role', metavar='<role>',
-           type=int,
-           help='ID of the role to attach the resource')
-@utils.arg('component', metavar='<component-name>',
-           type=str,
-           help='Name of the component catalog used that has the properties '
-                'related with storage')
 @utils.arg('resource', metavar='<resource>',
            type=str,
            help='Indicates the kind of the resource will be used. '
@@ -1287,13 +1280,9 @@ def do_datastore_attach(cs, args):
     else:
         secure = ''
     zone = _find_zone(cs, args.zone)
-    role = _find_role(cs, args.zone, args.role)
-    component = _find_component(cs, args.component)
     datastore = _find_datastore(cs, args.datastore)
     options = {
         'id_zone': zone.id,
-        'id_role': role.id,
-        'component_name': component.name,
         'resource': args.resource,
         'secure': secure
     }
